@@ -1,0 +1,32 @@
+\documentclass[12pt,a4paper,oneside]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[english,russian]{babel}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{enumerate}
+\usepackage[left=2cm,right=2cm,top=2cm,bottom=2cm,bindingoffset=0cm]{geometry}
+\usepackage{proof}
+
+\title{Введение в Теорию Типов\\\it{Конспект лекций}}
+\author{Штукенберг Д.~Г.\\Университет ИТМО}
+
+\begin{document}
+
+\theoremstyle{definition}
+\newtheorem{definition}{Определение}[section]
+\newtheorem*{example}{Пример}
+\newtheorem{theorem}{Теорема}[section]
+\newtheorem{axiom}{Аксиома}[section]
+\newtheorem{lemma}[theorem]{Лемма}
+
+\def\from#1{\par \parbox{0.7\textwidth}{\par \hfill\raggedleft \it #1}} 
+
+\newenvironment{epigraph}% 
+{\begin{list}{}{\setlength{\leftmargin}{0.3\textwidth}}\item[]}% 
+{\end{list}} 
+
+\maketitle
+\input{intro}
+
+\end{document}
