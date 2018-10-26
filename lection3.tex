@@ -1,0 +1,22 @@
+\section{Лекция 3}
+\begin{definition}
+	Комбинатором называется $\lambda$-выражение, не имеющее свободных переменных
+\end{definition}
+
+\begin{definition}($Y$-комбинатор)
+	\[
+	Y = \lambda f . (\lambda x . f (x x)) (\lambda x . f (x x))
+	\]
+\end{definition}
+
+Очевидно, $Y$-комбинатор является комбинатором.
+
+\begin{theorem}
+	$Y f =_{\beta} f (Y f)$
+	
+	\begin{proof}
+		$\beta$-редуцируем выражение $Y f$
+		
+		$Y f =_{\beta} (\lambda f . (\lambda x . f (x x)) (\lambda x . f (x x))) f$
+	\end{proof}
+\end{theorem}
