@@ -1,4 +1,7 @@
 \section{Лекция 3}
+
+\subsection{Y-комбинатор}
+
 \begin{definition}
 	Комбинатором называется $\lambda$-выражение, не имеющее свободных переменных
 \end{definition}
@@ -17,6 +20,21 @@
 	\begin{proof}
 		$\beta$-редуцируем выражение $Y f$
 		
-		$Y f =_{\beta} (\lambda f . (\lambda x . f (x x)) (\lambda x . f (x x))) f$
+		\begin{align*}
+			 =_{\beta} \textcolor{magenta}{(\lambda f . (\lambda x . f (x x)) (\lambda x . f (x x)))}\textcolor{blue}{f} \\ =_{\beta} \textcolor{magenta}{(\lambda x . f (x x))} \textcolor{blue}{(\lambda x . f (x x))} \\ =_{\beta} f ((\lambda x . f (x x))(\lambda x . f (x x))) \\ =_{\beta} f(Y f)
+		\end{align*}
+		Так как при второй редукции мы получили, что $Y f =_{\beta} (\lambda x . f (x x))(\lambda x . f (x x))$
+	\end{proof}	
+\end{theorem}
+
+Следствием этого утверждения является теорема о неподвижной точки для бестипового лямбда-ичисления
+
+\begin{theorem}
+	В лямбда-исчислении каждый терм $f$ имеет неподвижную точку, то есть такое $p$, что $f \; p =_{\beta} p$
+	
+	\begin{proof}
+		Возьмём в качестве $p$ терм $Y f$. По предыдущей теореме, $f(Y f) =_{\beta} Y f$, то есть $Y f$ является неподвижной точкой для $f$. Для любого терма $f$ существует терм $Y f$, значит, у любого терма есть неподвижная точка.
 	\end{proof}
 \end{theorem}
+
+\subsection{Рекурсия}
