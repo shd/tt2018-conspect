@@ -38,3 +38,34 @@
 \end{theorem}
 
 \subsection{Рекурсия}
+
+С помощью $Y$-комбинатора можо определять рекурсивные функции, например, функцию, вычисляющую факториал Чёрчевского нумерала. Для этого определим вспомогательную функцию
+
+$fact' = \lambda f. \lambda n. isZero\; n \; \overline{1} (mul \; n \; f((-1) n))$
+
+Тогда $fact = Y fact'$
+
+Для понимания того, как это работает, посчитаем $fact \; \overline{2}$
+
+\begin{align*}
+	fact \; \overline{2} \\ =_{\beta} Y \; fact' \; \overline{2}\\ =_{\beta} fact' (Y \; fact' \; \overline{2}) \\=_{\beta}\textcolor{magenta}{(\lambda f. \lambda n. isZero\; n \; \overline{1} (mul \; n \; f((-1) n)))} \textcolor{blue}{(Y \; fact') \overline{2}} \\
+	=_{\beta}isZero\; \overline{2} \; \overline{1} (mul \; \overline{2} \; ((Y \; fact')((-1) \overline{2}))) \\ =_{\beta} mul \; \overline{2} \; ((Y \; fact')((-1) \overline{2})) \\ =_{\beta} mul \; \overline{2} \; (Y \; fact' \; \overline{1}) \\ =_{\beta} mul \; \overline{2} \; (fact' \;(Y \; fact' \; \overline{1}))
+\end{align*}
+
+Раскрывая $fact' \;(Y \; fact' \; \overline{1})$ так же, как мы раскрывали  $fact' \;(Y \; fact' \; \overline{2})$, получаем
+
+\begin{align*}
+	=_{\beta} mul \; \overline{2} \; (mul \; \overline{1} \; (Y \; fact' \; \overline{0}))
+\end{align*}
+
+Посчитаем $(Y \; fact' \; \overline{0})$.
+
+\begin{align*}
+	(Y \; fact' \; \overline{0}) \\ =_{\beta} fact' \; (Y \; fact') \; \overline{0} \\ =_{\beta} \textcolor{magenta}{(\lambda f. \lambda n. isZero\; n \; \overline{1} (mul \; n \; f((-1) n)))} \; \textcolor{blue}{(Y \; fact') \; \overline{0}} \\ =_{\beta}  isZero\; \overline{0} \; \overline{1} (mul \; \overline{0} \; ((Y \; fact'))((-1) \overline{0})) =_{\beta} \overline{1}
+\end{align*}
+
+Таким образом,
+
+\begin{align*}
+	fact \; \overline{2} \\ =_{\beta} mul \; \overline{2} \; (mul \; \overline{1} \; (Y \; fact' \; \overline{0})) \\=_{\beta} mul \; \overline{2} \; (mul \; \overline{1} \; \overline{1}) =_{\beta} mul \; \overline{2} \; \overline{1} =_{\beta} \overline{2}
+\end{align*}
