@@ -1,0 +1,51 @@
+\documentclass[12pt, a4paper]{article}
+\usepackage[T1,T2A]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[english,russian]{babel}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{makeidx}
+\begin{document}
+	\begin{titlepage}
+		\title{Лекция 5 \\ Изоморфизм Карри-Ховарда (завершение), Унификация}
+		\date{}
+	\end{titlepage}
+		\maketitle
+	\par \textbf{Определение}
+	\\	
+	Изоморфизм Карри-Ховарда
+	\begin{enumerate}
+		\item $\Gamma$ $\vdash$ M:$\sigma$ влечет |$\Gamma$|$\vdash$ $\sigma$
+		\item $\Gamma$ $\vdash$ $\sigma$, то существует M и существует $\Delta$, такое что |$\Delta$|=$\Gamma$, что $\Delta$ $\vdash$M:$\sigma$, где $\Delta$=\{$x_{\sigma}$:$\sigma$|$\sigma$ $\in$ $\Gamma$  \}
+	\end{enumerate}
+	Рассмотрим пример:
+	\{f:$\alpha\rightarrow\beta$, x:$\beta$\}$\vdash$fx:$\beta$ \\Применив изоморфизм Карри-Ховарда получим: \{$\alpha\rightarrow\beta$, $\beta$\}$\vdash\beta$\\
+\par П.1 доказывается индукцией по длине выражения т.е. есть 3 правила вывода. убирая P и Q.
+\par П.2 доказывается аналогичным способом но действия обратные.\\
+Т.е. отношения между типами в системе типов могут рассматриваться как образ отношений между высказываниями в логической системе, и наоборот.
+\\
+\\
+\par \textbf{Определение}
+\par расширенный полином определяется формулой:
+	\[
+    E(p,q)= 
+		\begin{cases}
+    C,& \text{if }p=q=0\\
+    p_1(p),& \text{if }q=0\\
+    p_2(q),& \text{if }p=0\\
+    p_3(p,q),& \text{if } p,q\neq0
+		\end{cases}
+	\]
+	\[\text{, где }C-\text{константа, }\\p_1,p_2,p_3-\text{выражения, составленные из }*,+,p,q\text{ и констант}\]
+	по сути расширенный полином это множество функций над натуральными числами(черчевскими нумералами)
+	\par \textbf{Теорема}
+	\par Функция определенная в просто типизиреумом $\lambda$ исчислении соответствует расширенному полиному.
+\par \textbf{Ссылки}
+\begin{enumerate}
+\item https://www.quora.com/What-is-an-intuitive-explanation-of-the-Curry-Howard-correspondence
+\item https://habr.com/post/269907/
+\item https://arxiv.org/pdf/cs/0701022.pdf
+\end{enumerate}
+
+\end{document}
