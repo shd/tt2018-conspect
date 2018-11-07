@@ -41,21 +41,51 @@
 	по сути расширенный полином это множество функций над натуральными числами(черчевскими нумералами).\par
 	Пусть $\upsilon$ = $(\alpha\to\alpha)\to(\alpha\to\alpha)$, где $\alpha-$произвольный тип и пусть $F\in\Lambda\text{, что }F:\upsilon\to\upsilon\to\upsilon$, то существует расширенный полином $E$, такой что $\forall a,b\in \mathbb{N}$ $F(\overline{a},\overline{b})=_\beta \overline{E(a,b)}$, где $\overline{a}-$черчевский нумерал
 	
-	\par \textbf{Теорема}
-	\par У каждого терма в просто типизиреумом $\lambda$ исчислении существует расширенный полином.\par	
-	
-	
-	\par
-	\par
-	\par
-	\par
-	\par
-	\par
-	\par
-	
-	
-	
-	
+	\par \textbf{Теорема}\par 
+		У каждого терма в просто типизиреумом $\lambda$ исчислении существует расширенный полином.\par	
+	\textbf{Основные задачи типизации $\lambda$ исчисления}\par
+		\begin{enumerate}
+			\item \emph{Проверка типа$-$}выполняется ли $\Gamma\vdash M:\sigma$ для контекста $\Gamma\text{ терма }M\text{ и типа }\sigma$ (для проверки типа обычно откидывают $\sigma$ и рассматривают п.2).
+			\item \emph{Реконструкция типа$-$}можно ли подставить вместо $?$ и $?_1$ в $?_1\vdash M:?$ подставить конкретный тип $\sigma$ в $?$ и контекст $\Gamma$ в $?_1$.
+			\item \emph{Обитаемость типа$-$}пытается подобрать, такой \textbf{замкнутый} терм $M$ и контекст $\Gamma$, что бы было выполнено $\Gamma\vdash M:\sigma$.
+		\end{enumerate}			
+	\par Определение \textbf{Алгебраический терм}$-$выражение типа $\Theta=a|(f_k \Theta_1\dotsb\Theta_n)$, \par где $а-$переменная, $(f_k \Theta_1\dotsb\Theta_n)-$применение функции\par
+	Примеры:
+	\begin{enumerate}
+	\item $(f a b ( g a))$ 
+	\item Известно, что $\to-$функция, тогда выражение $((a\to b)\to c)$ $\Longleftrightarrow$ $(\to (\to a b) c)$
+\end{enumerate}		
+	\par \textbf{Уравнение в алгебраических термах} $\Theta_1=\Theta_2$\par
+	\par \textbf{Система уравнений в алгебраических термах}\par
+	$		
+		\begin{cases}			
+			\Theta_1=\sigma_1&\\
+			\vdots&\\
+			\Theta_n=\sigma_n&\\
+		\end{cases}
+	$\par где $\Theta_i \text{ и } \sigma_i-\text{термы}$\par
+	\par Определение $\{a_i\}=A-$множество перменных, $\{\Theta_i\}=T-$множество термов.\par
+	\par Определение \textbf{Подстановка}$-$отображение вида: $S_0:A\to T$, которое является решением в алгебраических термах.\par Т.е. $S_0-$конечное множество переменных $a_1\dotsb a_n$ на которых $S_0(a_i)=\Theta_i\text{ либо }S_0(a_i)=a_i$.\par
+	Доопределим $S$ на все $T$ т.е. $S:T\to T$, где \begin{enumerate}
+		\item $S(a)=S_0(a)$
+		\item $S(f(\Theta_1 \dotsb \Theta_k))=f(S(\Theta_1) \dotsb S(\Theta_k))$
+	\end{enumerate}
+	По сути $S$ тоже самое что и много $if'$ов либо $map$ строк\par 
+	Определение \textbf{Решить уравнение в алгебраических термах}$-$найти такое $S$, что $S(\Theta_1)=S(\Theta_2)$\par 
+	Например:\par 
+		Заранее обозначим: $a,b-\text{переменные},$ $f,g,h-\text{функции}$
+		\begin{enumerate}
+			\item $f(a(gb))=f(he)d$ имеет решение $S(a)=he\text{ и }S(d)=gb$
+				\begin{enumerate}
+					\item $S(fa(gb))=f(he)(gb)$
+					\item $S(f(he)d)=f(he)(gb)$
+					\item $f(he)(gb)=f(he)(gb)$
+				\end{enumerate}
+			\item $fa=gb-$решений не имеет
+		\end{enumerate}
+		Таким образом, что бы существовало решение необходимо равенство строк полученной подстановки\par
+		\textbf{Алгоритм Унификации}\par
+		
 \par \textbf{Ссылки}
 \begin{enumerate}
 \item https://www.quora.com/What-is-an-intuitive-explanation-of-the-Curry-Howard-correspondence
