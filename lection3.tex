@@ -137,3 +137,32 @@ $\Gamma, \varphi \vdash \varphi$
 	\infer{\Gamma \vdash \psi}{\Gamma \vdash \varphi \to \psi && \Gamma \vdash \varphi}
 	\]
 \end{enumerate}
+
+\begin{example}
+	Докажем $\vdash \alpha \rightarrow \beta \rightarrow \alpha$
+	
+	\[
+	\infer[(\text{Введение импликации})]
+	{ \vdash \varphi \to (\psi \to \varphi) }
+	{ \infer[(\text{Введение импликации})]
+		{ \varphi \vdash \psi \to \varphi }
+		{\varphi, \psi \vdash \varphi}
+	}
+	\]
+\end{example}
+
+\begin{example}
+	Докажем $\alpha \rightarrow \beta \rightarrow \gamma, \; \alpha, \; \beta \vdash \gamma$
+	
+	\[
+	\infer[(\text{Удаление импликации})]
+	{ \alpha \rightarrow \beta \rightarrow \gamma, \; \alpha, \; \beta \vdash \gamma}
+	{ \infer[(\text{Удаление импликации})]
+		{\alpha \rightarrow \beta \rightarrow \gamma, \; \alpha, \; \beta \vdash \beta \rightarrow \gamma \;\;\;\;\;\;\;\;\;\; \alpha \rightarrow \beta \rightarrow \gamma, \alpha, \; \beta \vdash \beta}
+		{\alpha \rightarrow \beta \rightarrow \gamma, \; \alpha, \; \beta \vdash \alpha \rightarrow \beta \rightarrow \gamma && \alpha \rightarrow \beta \rightarrow \gamma, \; \alpha, \; \beta \vdash \alpha}
+	}
+	\]
+	
+\end{example}
+
+\subsection{Просто типизированное по Карри лямбда-исчисление}
