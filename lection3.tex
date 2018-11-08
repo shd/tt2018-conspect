@@ -114,3 +114,26 @@ $\Phi_{\alpha} = F_{\alpha}  \; F_{\alpha}  = (\lambda x. (x \; x) \rightarrow \
 Таким образом, введённая логика оказывается противоречивой.
 
 \subsection{Импликационный фрагмент интуиционистского исчисления высказываний}
+
+Рассмотрим подмножество ИИВ, со следующей грамматикой:
+
+$\Phi ::= x \; | \; \Phi \rightarrow \Phi$
+
+То есть состоящее только из меременных и импликаций. 
+
+Добавим в него одну схему аксиом
+
+$\Gamma, \varphi \vdash \varphi$
+
+И два правила вывода
+
+\begin{enumerate}
+	\item Правило введения импликации:
+	\[
+	\infer{\Gamma \vdash \varphi \to \psi}{\Gamma, \varphi \vdash \psi}
+	\]
+	\item Правило удаления импликации:
+	\[
+	\infer{\Gamma \vdash \psi}{\Gamma \vdash \varphi \to \psi && \Gamma \vdash \varphi}
+	\]
+\end{enumerate}
