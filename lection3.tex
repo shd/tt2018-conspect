@@ -71,3 +71,46 @@ $fact' = \lambda f. \lambda n. isZero\; n \; \overline{1} (mul \; n \; f((-1) n)
 \begin{align*}
 	fact \; \overline{2} \\ =_{\beta} mul \; \overline{2} \; (mul \; \overline{1} \; (Y \; fact' \; \overline{0})) \\=_{\beta} mul \; \overline{2} \; (mul \; \overline{1} \; \overline{1}) =_{\beta} mul \; \overline{2} \; \overline{1} =_{\beta} \overline{2}
 \end{align*}
+
+\subsection{Парадокс Карри}
+
+Попробуем построить логику на основе $\lambda$-исчисления. Введём логический символ $\rightarrow$. 
+
+Будем тредовать от этого исчисления наличия следующих схем аксиом:
+
+\begin{enumerate}
+	\item $\vdash A \rightarrow A$
+	\item $\vdash (A \rightarrow (A \rightarrow B)) \rightarrow (A \rightarrow B)$
+	\item $\vdash A =_{\beta} B$, тогда $A \rightarrow B$
+\end{enumerate}
+
+А так же правила вывода MP:
+
+$$\infer{\vdash B}{\vdash A \rightarrow B, \; \vdash A}$$
+
+Не вводя дополнительные правила вывода и схемы аксиом, покажем, что данная логика является противоречивой. Для чего введём следующие условные обозначения:
+
+$F_{\alpha} = \lambda x. (x \; x) \rightarrow \alpha$
+
+$\Phi_{\alpha} = F_{\alpha}  \; F_{\alpha}  = (\lambda x. (x \; x) \rightarrow \alpha) \; (\lambda x. (x \; x) \rightarrow \alpha)$
+
+Редуцируя $\Phi_{\alpha}$, получаем 
+
+\begin{align*}
+\Phi_{\alpha} \\ =_{\beta} \textcolor{magenta}{(\lambda x. (x \; x) \rightarrow \alpha)} \; \textcolor{blue}{(\lambda x. (x \; x) \rightarrow \alpha)} \\=_{\beta} (\lambda x. (x \; x) \rightarrow \alpha) \; (\lambda x. (x \; x) \rightarrow \alpha) \rightarrow \alpha \\=_{\beta} \Phi_{\alpha} \rightarrow \alpha
+\end{align*}
+
+Таким образом, для доказательства $\alpha$ нужно всего лишь доказать $\Phi_{\alpha}$ и применить правило MP.
+
+\begin{tabular}{ll}
+	1) $\vdash\Phi_\alpha\rightarrow\Phi_\alpha\rightarrow\alpha$ & Так как $\Phi_{\alpha} =_{\beta} \Phi_{\alpha} \rightarrow \alpha$\\
+	2) $\vdash(\Phi_\alpha\rightarrow\Phi_\alpha\rightarrow\alpha)\rightarrow(\Phi_\alpha\rightarrow\alpha)$ & Так как $\vdash (A \rightarrow (A \rightarrow B)) \rightarrow (A \rightarrow B)$\\
+	3) $\vdash\Phi_\alpha\rightarrow\alpha$ & MP 2, 3\\
+	4) $\vdash (\Phi_\alpha \rightarrow \alpha) \rightarrow \Phi_\alpha$ & Так как $\vdash \Phi_\alpha \rightarrow \alpha =_{\beta} \Phi_\alpha$\\
+	5) $\vdash\Phi_\alpha$ & MP 3, 4\\
+	6) $\vdash\alpha$ & MP 3, 5
+\end{tabular}
+
+Таким образом, введённая логика оказывается противоречивой.
+
+\subsection{Импликационный фрагмент интуиционистского исчисления высказываний}
