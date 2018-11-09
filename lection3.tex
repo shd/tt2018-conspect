@@ -155,12 +155,9 @@ $\Gamma, \varphi \vdash \varphi$
 	Докажем $\alpha \rightarrow \beta \rightarrow \gamma, \; \alpha, \; \beta \vdash \gamma$
 	
 	\[
-	\infer[(\text{Удаление импликации})]
-	{ \alpha \rightarrow \beta \rightarrow \gamma, \; \alpha, \; \beta \vdash \gamma}
-	{ \infer[(\text{Удаление импликации})]
-		{\alpha \rightarrow \beta \rightarrow \gamma, \; \alpha, \; \beta \vdash \beta \rightarrow \gamma \;\;\;\;\;\;\;\;\;\; \alpha \rightarrow \beta \rightarrow \gamma, \alpha, \; \beta \vdash \beta}
-		{\alpha \rightarrow \beta \rightarrow \gamma, \; \alpha, \; \beta \vdash \alpha \rightarrow \beta \rightarrow \gamma && \alpha \rightarrow \beta \rightarrow \gamma, \; \alpha, \; \beta \vdash \alpha}
-	}
+	\infer
+	{ \alpha \rightarrow \beta \rightarrow \gamma, \; \alpha, \; \beta \vdash \gamma}{\infer
+		{\alpha \rightarrow \beta \rightarrow \gamma, \; \alpha, \; \beta \vdash \beta \rightarrow \gamma }{\alpha \rightarrow \beta \rightarrow \gamma, \; \alpha, \; \beta \vdash \alpha \rightarrow \beta \rightarrow \gamma && \alpha \rightarrow \beta \rightarrow \gamma, \; \alpha, \; \beta \vdash \alpha} && \alpha \rightarrow \beta \rightarrow \gamma, \alpha, \; \beta \vdash \beta}
 	\]
 	
 \end{example}
@@ -188,7 +185,7 @@ $\Gamma, \varphi \vdash \varphi$
 	
 	Рассмотрим исчисление с единственной схемой аксиом:
 	
-	$\Gamma, x : \theta \vdash x : \theta$, если $x$ не входит в $\Gamma$
+	$$\Gamma, x : \theta \vdash x : \theta, \text{если } x \text{ не входит в } \Gamma$$
 	
 	И следующими правилами вывода
 	
@@ -203,3 +200,7 @@ $\Gamma, \varphi \vdash \varphi$
 		\]
 	\end{enumerate}
 \end{definition}
+
+\begin{example}
+	Докажем $\vdash \lambda \; x. \; \lambda \; y. \; : \alpha \rightarrow \beta \rightarrow \alpha$
+\end{example}
