@@ -123,7 +123,7 @@ $\Phi ::= x \; | \; \Phi \rightarrow \Phi$
 
 Добавим в него одну схему аксиом
 
-$\Gamma, \varphi \vdash \varphi$
+$$\Gamma, \varphi \vdash \varphi$$
 
 И два правила вывода
 
@@ -244,3 +244,32 @@ $\Gamma, \varphi \vdash \varphi$
 <кукарек></кукарек>
 
 \subsection{Изоморфизм Карри-Ховарда}
+
+Заметим, что аксиомы и правила вывода импликационного фрагмента ИИВ и просто типизированного по Карри лямбда-исчисления точно соответсвуют друг другу. 
+
+$\newline$
+\begin{tabular}{ | p{8cm} | p{8cm} | }
+	\hline
+	Просто типизирпованное $\lambda$-исчисление & Импликативный фрагмент ИИВ \\ \hline
+	$\Gamma, x : \theta \vdash x : \theta$ & $\Gamma, \varphi \vdash \varphi$ \\
+	\\
+	$\infer{\Gamma \vdash (\lambda \; x. \; P) : \varphi \rightarrow \psi}{\Gamma, x : \varphi \vdash P : \psi}$ & $\infer{\Gamma \vdash \varphi \to \psi}{\Gamma, \varphi \vdash \psi}$  \\
+	\\
+	$\infer{\Gamma \vdash PQ : \psi}{\Gamma \vdash P : \varphi \to \psi && \Gamma \vdash Q : \varphi}$ & $\infer{\Gamma \vdash \psi}{\Gamma \vdash \varphi \to \psi && \Gamma \vdash \varphi}$ \\
+	\hline
+\end{tabular}
+
+$\newline$
+Установим соответствие и между прочими сущностями ИИВ и просто типизированного по Карри лямбда-исчисления.
+
+$\newline$
+\begin{tabular}{ | p{8cm} | p{8cm} | }
+	\hline
+	Просто типизирпованное $\lambda$-исчисление & Импликативный фрагмент ИИВ \\ \hline
+	Тип & Высказывание \\
+	Терм & Доказательство высказывания  \\
+	Проверка того, что терм имеет заданный тип & Проверка доказательства на корректность \\
+	Обитаемый тип & Доказуемое высказывание \\
+	Проверка того, что существует терм, имеющий заданный тип & Проверка того, что заданное  высказывание имеет доказательство \\
+	\hline
+\end{tabular}
