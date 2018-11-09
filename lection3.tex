@@ -199,6 +199,8 @@ $$\Gamma, \varphi \vdash \varphi$$
 		\infer{\Gamma \vdash PQ : \psi}{\Gamma \vdash P : \varphi \to \psi && \Gamma \vdash Q : \varphi}
 		\]
 	\end{enumerate}
+
+	Если $\lambda$-выражение типизируется с использованием этихъ двух правил и одной схемы аксиом, то будем говорить, что оно типизируется по Карри.
 \end{definition}
 
 \begin{example}
@@ -235,13 +237,9 @@ $$\Gamma, \varphi \vdash \varphi$$
 
 \subsection{Отсутствие типа у Y-комбинатора}
 
-ЫЫЫ, как-нибудь допишу
-
 \begin{theorem}
 	$Y$-комбинатор не типизируется в просто типизированном по Карри лямбда исчислении
 \end{theorem}
-
-<кукарек></кукарек>
 
 \subsection{Изоморфизм Карри-Ховарда}
 
