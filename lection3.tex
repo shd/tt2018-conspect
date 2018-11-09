@@ -202,5 +202,14 @@ $\Gamma, \varphi \vdash \varphi$
 \end{definition}
 
 \begin{example}
-	Докажем $\vdash \lambda \; x. \; \lambda \; y. \; : \alpha \rightarrow \beta \rightarrow \alpha$
+	Докажем $\vdash \lambda \; x. \; \lambda \; y. \; x : \alpha \rightarrow \beta \rightarrow \alpha$
+	
+	\[
+	\infer[(\text{Правило типизации импликации})]
+	{ \vdash \lambda \; x. \; \lambda \; y. \; x : \alpha \rightarrow \beta \rightarrow \alpha }
+	{ \infer[(\text{Правило типизации импликации})]
+		{x: \alpha \vdash \lambda \; y. \; x : \beta \rightarrow \alpha}
+		{x: \alpha, y : \beta \vdash x : \alpha}
+	}
+	\]
 \end{example}
