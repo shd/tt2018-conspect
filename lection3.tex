@@ -166,3 +166,40 @@ $\Gamma, \varphi \vdash \varphi$
 \end{example}
 
 \subsection{Просто типизированное по Карри лямбда-исчисление}
+
+\begin{definition}
+	Тип в просто типизированном лямбда-исчислении по Карри это либо маленькая греческая буква ($\alpha, \phi, \theta, \ldots$), либо импликация ($\theta_1 \rightarrow \theta_2$)
+	
+	Таким образом, $\Theta ::= \theta_{i} | \Theta \rightarrow \Theta | (\Theta)$
+	
+	Импликация при этом считается правоассоциативной операцией.
+\end{definition}
+
+\begin{definition}
+	Язык просто типизированного лямбда-исчисления это язык бестипового лямбда-исчисления.
+\end{definition}
+
+\begin{definition}
+	Контекст $\Gamma$ это список выражений вида $A: \theta$, где $A$ - лямбда-терм, а $\theta$ - тип
+\end{definition}
+
+\begin{definition}
+	Просто типизипрованное лямбда-исчисление по Карри.
+	
+	Рассмотрим исчисление с единственной схемой аксиом:
+	
+	$\Gamma, x : \theta \vdash x : \theta$, если $x$ не входит в $\Gamma$
+	
+	И следующими правилами вывода
+	
+	\begin{enumerate}
+		\item Правило типизации абстракции
+		\[
+		\infer{\Gamma \vdash (\lambda \; x. \; P) : \varphi \rightarrow \psi}{\Gamma, x : \varphi \vdash P : \psi}
+		\]
+		\item Правило типизации импликации:
+		\[
+		\infer{\Gamma \vdash PQ : \psi}{\Gamma \vdash P : \varphi \to \psi && \Gamma \vdash Q : \varphi}
+		\]
+	\end{enumerate}
+\end{definition}
