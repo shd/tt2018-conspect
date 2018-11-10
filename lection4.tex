@@ -169,3 +169,28 @@ case \; (in_1 A) \; F \; G \\ =_\beta (\lambda \; algebraic. \; \lambda \; f. \;
 	\]
 \end{enumerate}
 
+\subsection{Изоморфизм Карри-Ховарда для расширения просто типизированного $\lambda$-исчисления}
+
+Заметим точное соответствие только что введённых конструкций аксиомам ИИВ.
+
+$\newline$
+\begin{tabular}{ | p{8cm} | p{8cm} | }
+	\hline
+	Расширенное просто типизирпованное $\lambda$-исчисление & ИИВ \\ \hline
+	$\infer{\Gamma \vdash <A, B>: \varphi \text{\&} \psi}{\Gamma\vdash A: \varphi && \Gamma\vdash B: \psi}$ & $\vdash \varphi \to \psi \to \varphi \text{\&} \psi$ \\
+	\\
+	$\infer{\Gamma \vdash \Pi_1 <M, N> : \varphi}{\Gamma \vdash <A, B>: \varphi \text{\&} \psi}$ & $\vdash \varphi \text{\&} \psi \to \varphi$  \\
+	\\
+	$\infer{\Gamma \vdash \Pi_2 <M, N> : \psi}{\Gamma \vdash <A, B>: \varphi \text{\&} \psi}$ & $\vdash \varphi \text{\&} \psi \to \psi$  \\
+	
+	\\
+	
+	$\infer{\Gamma \vdash in_1 \; A: \varphi \vee \psi}{\Gamma\vdash A: \varphi}$ & $\vdash \varphi \to \varphi \vee \psi$ \\
+	\\
+	$\infer{\Gamma \vdash in_2 \; B: \varphi \vee \psi}{\Gamma\vdash B: \psi}$ & $\vdash \psi \to \varphi \vee \psi$ \\
+	\\
+	$\infer{case \; L \; f \; g : \tau}{\Gamma \vdash L: \varphi \vee \psi, \;\; \Gamma \vdash f : \varphi \to \tau, \;\; \Gamma \vdash g: \psi \to \tau}$ & $\vdash  (\varphi \to \tau) \to (\psi \to \tau) \to (\varphi \vee \psi) \to \tau$  \\
+	\hline
+\end{tabular}
+
+$\newline$
