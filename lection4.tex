@@ -244,3 +244,16 @@ $\newline$
 \end{theorem}
 
 \subsection{Связь типизации по Чёрчу и по Карри}
+
+\begin{definition}[Стирание] Функцией стирания называется следующая функция: 
+	
+$|\cdot| : \Lambda_{\text{ч}}$ в $\Lambda_{\text{к}}$:
+	\[
+	|{A}| =
+	\begin{cases}
+	x                                   & A \equiv x \\
+	|M| \; |N| & A \equiv M \; N \\
+	\lambda x . |P|           & A \equiv \lambda \; x : \tau. \; P
+	\end{cases}
+	\]
+\end{definition}
