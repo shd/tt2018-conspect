@@ -31,13 +31,13 @@
 Тот факт, что выражение, типизированное как \mintinline{scala}{Nothing}, может быть типизировано любым другим типом, позволяет писать следующие функции:
 
 \begin{minted}{scala}
-	def assertStringNotEmpty(s: String): String = {
-		if (s.length != 0) {
-			s
-		} else {
-			throw new Error("Empty string")
-		}
+def assertStringNotEmpty(s: String): String = {
+	if (s.length != 0) {
+		s
+	} else {
+		throw new Error("Empty string")
 	}
+}
 \end{minted}
 
 так как \mintinline{scala}{throw new Error("Empty string"): Nothing}, то 
@@ -56,13 +56,18 @@ def throwError(a: A) = throw new Error()
 
 Функция $makePair$ будет выглядеть следующим образом:
 
-$makePair = \lambda \; first. \; \lambda \; second. \; \lambda \; f. \; f \; first \; second$ 
+$$makePair = \lambda \; first. \; \lambda \; second. \; \lambda \; f. \; f \; first \; second$$
 
-Тогда $<first, second> = makePair \; first \; second$. 
+Тогда 
+
+$$<first, second> = makePair \; first \; second$$
 
 Надо также написать функции, которые будут доставать из пары упакованные в неё значения. Назовём иъ $\Pi_1$ и $\Pi_2$. 
 
-Пусть $\Pi_1 = \lambda \; Pair. \; Pair \; (\lambda \; a. \lambda \; b. \; a), \;\;\;\; \Pi_2 = \lambda \; Pair. \; Pair \; (\lambda \; a. \lambda \; b. \; b)$
+Пусть 
+$$\Pi_1 = \lambda \; Pair. \; Pair \; (\lambda \; a. \lambda \; b. \; a)$$
+
+$$\Pi_2 = \lambda \; Pair. \; Pair \; (\lambda \; a. \lambda \; b. \; b)$$
 
 Заметим, что 
 
@@ -101,4 +106,66 @@ $makePair = \lambda \; first. \; \lambda \; second. \; \lambda \; f. \; f \; fir
 
 Заметим, что определение алгебраического типа похоже на определение дизъюнкции в ИИВ (в ИИВ если выполнено $\vdash a \vee b$, известно, что из $\vdash a$ и $\vdash b$ выполнено).
 
+Для реализации алгебраических типов в $\lambda$-исчислении напишем три функции:
+
+\begin{enumerate}
+	\item $in_1$, создающее экземпляр алгебраического типа из первой альтернативы, то есть запаковывающее первую альтернативу в алгебраический тип
+	
+	\item $in_2$, выполняющее аналогичные действия, но со второй альтернативой.
+	
+	\item $case$, принимающую три параметра: экземпляр алгебраического типа, функцию, определяющую, что делать, если этот экземпляр был создан из первой альтернативы (то есть с использованием $in_1$), и функцию, определяющую, что делать, если этот экземпляр был создан из второй альтернативы (то есть с использованием $in_2$)
+\end{enumerate}
+
+Аналогом $case$ в программировании является конструкция, известная как pattern-mathcing, или сопоставление с образцом.
+
+\begin{minted}{ocaml}
+let isEmptyList list = match list with
+	| Nil -> true
+	| Cons(_, _) -> false
+;;
+\end{minted}
+
+Функция $in_1$ будет выглядеть следующим образом: 
+
+$$in_1 = \lambda \; x. \; \lambda \; f. \; \lambda \; g. \; f \; x$$
+
+А $in_1$ -  следующим:
+
+$$in_2 = \lambda \; x. \; \lambda \; f. \; \lambda \; g. \; g \; x$$
+
+То есть $in_1$ принимает две функции, и применяет первую к $x$, а $in_2$ применяет вторую.
+
+Тогда $case$ будет выглядеть следующим образом:
+
+$$case = \lambda \; algebraic. \; \lambda \; f. \; \lambda \; g. \; algebraic \; f \; g$$
+
+Заметим, что 
+
+\begin{align*}
+case \; (in_1 A) \; F \; G \\ =_\beta (\lambda \; algebraic. \; \lambda \; f. \; \lambda \; g. \; algebraic \; f \; g) \; (\textcolor{magenta}{(\lambda \; x. \; \lambda \; h. \; \lambda \; s. \; h \; x)} \textcolor{blue}{A}) \; F \; G \\ =_\beta  \textcolor{magenta}{(\lambda \; algebraic. \; \lambda \; f. \; \lambda \; g. \; algebraic \; f \; g)} \; \textcolor{blue}{(\lambda \; h. \; \lambda \; s. \; h \; A)} \; F \; G \\ =_\beta \textcolor{magenta}{(\lambda \; f. \; \lambda \; g. \; (\lambda \; h. \; \lambda \; s. \; h \; A) \; f \; g)} \; \textcolor{blue}{F} \; G \\ =_\beta \textcolor{magenta}{(\lambda \; g. \; (\lambda \; h. \; \lambda \; s. \; h \; A) \; F \; g)} \; \textcolor{blue}{G}  \\ =_\beta \textcolor{magenta}{(\lambda \; h. \; \lambda \; s. \; h \; A)} \; \textcolor{blue}{F} \; G \\ =_\beta \textcolor{magenta}{(\lambda \; s. \; F \; A)} \; \textcolor{blue}{G} \\ =_\beta F \; A
+\end{align*}
+
+Аналогично, $case \; (in_2 B) \; F \; G =_\beta G \; B$. 
+
+То есть $case, in_1$ и $in_2$ умеют применять нужную функцию к запакованной в экземпляр алгебраического типа одной из альтернатив.
+
+Теперь добавим к просто типизированному $\lambda$-исчислению правила вывода, позволяющие типизировать эти конструкции.
+
+Добавим три новых правила вывода:
+
+\begin{enumerate}
+	\item Правило типизации левой инъекции
+	\[
+	\infer{\Gamma \vdash in_1 \; A: \varphi \vee \psi}{\Gamma\vdash A: \varphi}
+	\]
+	\item Правило типизации правой инъекции:
+	\[
+	\infer{\Gamma \vdash in_2 \; B: \varphi \vee \psi}{\Gamma\vdash B: \psi}
+	\]
+	
+	\item Правило типизации case:
+	\[
+	\infer{case \; L \; f \; g : \tau}{\Gamma \vdash L: \varphi \vee \psi, \;\;\;\; \Gamma \vdash f : \varphi \to \tau, \;\;\;\; \Gamma \vdash g: \psi \to \tau}
+	\]
+\end{enumerate}
 
