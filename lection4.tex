@@ -52,3 +52,53 @@ def throwError(a: A) = throw new Error()
 
 \subparagraph{Упорядоченные пары}
 
+Введём возможность запаковывать значения в пары.
+
+Функция $makePair$ будет выглядеть следующим образом:
+
+$makePair = \lambda \; first. \; \lambda \; second. \; \lambda \; f. \; f \; first \; second$ 
+
+Тогда $<first, second> = makePair \; first \; second$. 
+
+Надо также написать функции, которые будут доставать из пары упакованные в неё значения. Назовём иъ $\Pi_1$ и $\Pi_2$. 
+
+Пусть $\Pi_1 = \lambda \; Pair. \; Pair \; (\lambda \; a. \lambda \; b. \; a), \;\;\;\; \Pi_2 = \lambda \; Pair. \; Pair \; (\lambda \; a. \lambda \; b. \; b)$
+
+Заметим, что 
+
+\begin{align*}
+	\Pi_1 <A, B> \\
+	=_{\beta} (\lambda \; Pair. \; Pair \; (\lambda \; a. \lambda \; b. \; a)) (makePair \; A \; B)\\ =_\beta (\lambda \; Pair. \; Pair \; (\lambda \; a. \lambda \; b. \; a)) (\textcolor{magenta}{(\lambda \; first. \; \lambda \; second. \; \lambda \; f. \; f \; first \; second)} \; \textcolor{blue}{A} \; B) \\ =_\beta (\lambda \; Pair. \; Pair \; (\lambda \; a. \lambda \; b. \; a)) (\textcolor{magenta}{(\lambda \; second. \; \lambda \; f. \; f \; A \; second)} \; \textcolor{blue}{B}) \\ =_\beta \textcolor{magenta}{(\lambda \; Pair. \; Pair \; (\lambda \; a. \lambda \; b. \; a))} \textcolor{blue}{(\lambda \; f. \; f \; A \; B)} \\ =_\beta \textcolor{magenta}{(\lambda \; f. \; f \; A \; B)} \; \textcolor{blue}{(\lambda \; a. \lambda \; b. \; a)} \\ =_\beta \textcolor{magenta}{(\lambda \; a. \lambda \; b. \; a)} \; \textcolor{blue}{A} \; B \\ =_\beta \textcolor{magenta}{(\lambda \; b. \; A)} \; \textcolor{blue}{B} \\ =_\beta A
+\end{align*}
+
+Аналогично, $\Pi_2 <A, B> =_\beta B$
+
+Таким образом, мы умеем запаковывать элементы в пары и доставать элементы из пар. Теперь, добавим к просто типизированному $\lambda$-исчислению правила вывода, позволяющие типизировать такие конструкции.
+
+Добавим три новых правила вывода:
+
+\begin{enumerate}
+	\item Правило типизации пары
+	\[
+	\infer{\Gamma \vdash <A, B>: \varphi \text{\&} \psi}{\Gamma\vdash A: \varphi && \Gamma\vdash B: \psi}
+	\]
+	\item Правило типизации первого проектора:
+	\[
+	\infer{\Gamma \vdash \Pi_1 <M, N> : \varphi}{\Gamma \vdash <A, B>: \varphi \text{\&} \psi}
+	\]
+	
+	\item Правило типизации второго проектора:
+	\[
+	\infer{\Gamma \vdash \Pi_2 <M, N> : \psi}{\Gamma \vdash <A, B>: \varphi \text{\&} \psi}
+	\]
+\end{enumerate}
+
+\subparagraph{Алгебраические типы}
+
+Добавим тип, который является аналогом \mintinline{C++}{union} в C++, или алгебраического типа в любом функциональном языке. Это тип, который может содержать одну из двух альтернатив.
+
+Например, тип \mintinline{scala}{OptionInt = None | Some of Int} может содержать либо \mintinline{scala}{None}, либо \mintinline{scala}{Some of Int}, но не обе альтернативы разом, причём в каждый момент времени известно, какую альтернативу он содержит.
+
+Заметим, что определение алгебраического типа похоже на определение дизъюнкции в ИИВ (в ИИВ если выполнено $\vdash a \vee b$, известно, что из $\vdash a$ и $\vdash b$ выполнено).
+
+
