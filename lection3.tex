@@ -192,9 +192,9 @@ $$\Gamma, \varphi \vdash \varphi$$
 	\begin{enumerate}
 		\item Правило типизации абстракции
 		\[
-		\infer{\Gamma \vdash (\lambda \; x. \; P) : \varphi \rightarrow \psi}{\Gamma, x : \varphi \vdash P : \psi}
+		\infer[\text{если } x \text{ не входит в } \Gamma]{\Gamma \vdash (\lambda \; x. \; P) : \varphi \rightarrow \psi}{\Gamma, x : \varphi \vdash P : \psi}
 		\]
-		\item Правило типизации импликации:
+		\item Правило типизации аппликации:
 		\[
 		\infer{\Gamma \vdash PQ : \psi}{\Gamma \vdash P : \varphi \to \psi && \Gamma \vdash Q : \varphi}
 		\]
