@@ -204,11 +204,11 @@ $\newline$
 \begin{definition}
 	Язык просто типизированного по Чёрчу $\lambda$-исчисления удовлетворяет следующей грамматике
 	
-	$\Lambda ::= x \; | \; \Lambda \; \Lambda \; | \; \lambda\; x^\tau. \; \Lambda \; | \; (\Lambda)$
+	$\Lambda_{\text{ч}} ::= x \; | \; \Lambda_{\text{ч}} \; \Lambda_{\text{ч}} \; | \; \lambda\; x^\tau. \; \Lambda_{\text{ч}} \; | \; (\Lambda_{\text{ч}})$
 \end{definition}
 
 \begin{note}
-	Иногда абстракция записывается не как $\lambda\; x^\tau. \; \Lambda$, а как $\lambda\; x : \tau. \; \Lambda$
+	Иногда абстракция записывается не как $\lambda\; x^\tau. \; \Lambda_{\text{ч}}$, а как $\lambda\; x : \tau. \; \Lambda_{\text{ч}}$
 \end{note}
 
 \begin{definition}
@@ -233,3 +233,14 @@ $\newline$
 	
 	Если $\lambda$-выражение типизируется с использованием этихъ двух правил и одной схемы аксиом, то будем говорить, что оно типизируется по Чёрчу.
 \end{definition}
+
+В исчислении по Чёрчу остаются верными все предыдущие теоремы (в том числе теорема Чёрча-Россера), но правило строгой типизации абстракций позволяет доказать ещё одну лемму:
+
+\begin{theorem}[Уникальность типов в исчислении по Чёрчу] \ 
+	\begin{enumerate}
+		\item Если $\Gamma \vdash_{\text{ч}} M : \theta$ и $\Gamma \vdash_{\text{ч}} M : \tau$, то $\theta = \tau$
+		\item Если $\Gamma \vdash_{\text{ч}} M : \theta$ и $\Gamma \vdash_{\text{ч}} N : \tau$,и $M =_\beta N$ то $\theta = \tau$
+	\end{enumerate}
+\end{theorem}
+
+\subsection{Связь типизации по Чёрчу и по Карри}
