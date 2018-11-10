@@ -22,6 +22,24 @@
 \infer{\Gamma \vdash A : \tau}{\Gamma \vdash A: \bot}
 \]
 
-То есть выражение, типизированное как $\tau$, может быть типизированно так же любым другим типом.
+То есть выражение, типизированное как $\bot$, может быть типизированно так же любым другим типом.
 
 В программировании аналогом этого типа может являться тип \mintinline{scala}{Nothing}, который является подтипом любого другого типа.
+
+Тип \mintinline{scala}{Nothing} является необитаемым, им типизируется выражение, никогда не возвращающее свой результат (например, \mintinline{scala}{throw new Error() : Nothing}). 
+
+Тот факт, что выражение, типизированное как \mintinline{scala}{Nothing}, может быть типизировано любым другим типом, позволяет писать следующие функции:
+
+\begin{minted}{scala}
+	def assertStringNotEmpty(s: String): String = {
+		if (s.length != 0) {
+			s
+		} else {
+			throw new Error("Empty string")
+		}
+	}
+\end{minted}
+
+так как \mintinline{scala}{throw new Error("Empty string"): Nothing}, то 
+
+\mintinline{scala}{throw new Error("Empty string"): String}, поэтому функция может иметь тип \mintinline{scala}{String}.
