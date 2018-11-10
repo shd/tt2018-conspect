@@ -247,7 +247,7 @@ $\newline$
 
 \begin{definition}[Стирание] Функцией стирания называется следующая функция: 
 	
-$|\cdot| : \Lambda_{\text{ч}}$ в $\Lambda_{\text{к}}$:
+$|\cdot| : \Lambda_{\text{ч}} \to \Lambda_{\text{к}}$:
 	\[
 	|{A}| =
 	\begin{cases}
@@ -257,3 +257,18 @@ $|\cdot| : \Lambda_{\text{ч}}$ в $\Lambda_{\text{к}}$:
 	\end{cases}
 	\]
 \end{definition}
+
+\begin{lemma}
+	Пусть $M, N \in \Lambda_{\text{ч}}, M \to_\beta N$, тогда $|M| \to_\beta |N|$
+\end{lemma}
+
+\begin{lemma}
+	Если $\Gamma \vdash_{\text{ч}} M : \tau$, тогда $\Gamma' \vdash_{\text{к}} |M| : \tau$, где $\Gamma'$ получается из $\Gamma$ применением функции стирания к каждому терму из $\Gamma$
+\end{lemma}
+
+\begin{theorem}[Теорема о поднятии] \ 
+	\begin{enumerate}
+		\item Если $\Gamma \vdash_{\text{ч}} M : \theta$ и $\Gamma \vdash_{\text{ч}} M : \tau$, то $\theta = \tau$
+		\item Если $\Gamma \vdash_{\text{ч}} M : \theta$ и $\Gamma \vdash_{\text{ч}} N : \tau$,и $M =_\beta N$ то $\theta = \tau$
+	\end{enumerate}
+\end{theorem}
