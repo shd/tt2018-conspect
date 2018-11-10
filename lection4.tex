@@ -268,7 +268,7 @@ $|\cdot| : \Lambda_{\text{ч}} \to \Lambda_{\text{к}}$:
 
 \begin{theorem}[Теорема о поднятии] \ 
 	\begin{enumerate}
-		\item Если $\Gamma \vdash_{\text{ч}} M : \theta$ и $\Gamma \vdash_{\text{ч}} M : \tau$, то $\theta = \tau$
-		\item Если $\Gamma \vdash_{\text{ч}} M : \theta$ и $\Gamma \vdash_{\text{ч}} N : \tau$,и $M =_\beta N$ то $\theta = \tau$
+		\item Пусть $M, N \in \Lambda_{\text{к}}, P \in \Lambda_{\text{ч}}, |P| = M, M \to_\beta N$. Тогда найдётся такое $Q \in \Lambda_{\text{ч}}$, что $|Q| = N$, и $P \to_\beta Q$
+		\item Пусть $M \in \Lambda_{\text{к}}, \Gamma \vdash_{\text{к}} M : \tau$. Тогда существует $P \in \Lambda_{\text{ч}}$, что $|P| = M$, и $\Gamma \vdash_{\text{ч}} P : \tau$
 	\end{enumerate}
 \end{theorem}
