@@ -56,18 +56,18 @@ def throwError(a: A) = throw new Error()
 
 Функция $makePair$ будет выглядеть следующим образом:
 
-$$makePair = \lambda \; first. \; \lambda \; second. \; \lambda \; f. \; f \; first \; second$$
+$$makePair \equiv \lambda \; first. \; \lambda \; second. \; \lambda \; f. \; f \; first \; second$$
 
 Тогда 
 
-$$<first, second> = makePair \; first \; second$$
+$$<first, second> \equiv makePair \; first \; second$$
 
 Надо также написать функции, которые будут доставать из пары упакованные в неё значения. Назовём иъ $\Pi_1$ и $\Pi_2$. 
 
 Пусть 
-$$\Pi_1 = \lambda \; Pair. \; Pair \; (\lambda \; a. \lambda \; b. \; a)$$
+$$\Pi_1 \equiv \lambda \; Pair. \; Pair \; (\lambda \; a. \lambda \; b. \; a)$$
 
-$$\Pi_2 = \lambda \; Pair. \; Pair \; (\lambda \; a. \lambda \; b. \; b)$$
+$$\Pi_2 \equiv \lambda \; Pair. \; Pair \; (\lambda \; a. \lambda \; b. \; b)$$
 
 Заметим, что 
 
@@ -127,17 +127,17 @@ let isEmptyList list = match list with
 
 Функция $in_1$ будет выглядеть следующим образом: 
 
-$$in_1 = \lambda \; x. \; \lambda \; f. \; \lambda \; g. \; f \; x$$
+$$in_1 \equiv \lambda \; x. \; \lambda \; f. \; \lambda \; g. \; f \; x$$
 
 А $in_1$ -  следующим:
 
-$$in_2 = \lambda \; x. \; \lambda \; f. \; \lambda \; g. \; g \; x$$
+$$in_2 \equiv \lambda \; x. \; \lambda \; f. \; \lambda \; g. \; g \; x$$
 
 То есть $in_1$ принимает две функции, и применяет первую к $x$, а $in_2$ применяет вторую.
 
 Тогда $case$ будет выглядеть следующим образом:
 
-$$case = \lambda \; algebraic. \; \lambda \; f. \; \lambda \; g. \; algebraic \; f \; g$$
+$$case \equiv \lambda \; algebraic. \; \lambda \; f. \; \lambda \; g. \; algebraic \; f \; g$$
 
 Заметим, что 
 

@@ -41,9 +41,9 @@
 
 С помощью $Y$-комбинатора можо определять рекурсивные функции, например, функцию, вычисляющую факториал Чёрчевского нумерала. Для этого определим вспомогательную функцию
 
-$fact' = \lambda f. \lambda n. isZero\; n \; \overline{1} (mul \; n \; f((-1) n))$
+$fact' \equiv \lambda f. \lambda n. isZero\; n \; \overline{1} (mul \; n \; f((-1) n))$
 
-Тогда $fact = Y fact'$
+Тогда $fact \equiv Y fact'$
 
 Заметим, что $fact \; \overline{n} =_{\beta} fact' \; (Y \; fact') \; \overline{n} =_{\beta}fact' \; fact \; \overline{n} $, то есть в тело функции $fact'$ вместо функции $f$ будет подставлена $fact$ (заметим, что это значит, что именно функция $fact$ будет применена к $\overline{n - 1}$, то есть это соответсувует нашим представлениям о рекурсии.)
 
@@ -90,9 +90,9 @@ $$\infer{\vdash B}{\vdash A \rightarrow B, \; \vdash A}$$
 
 Не вводя дополнительные правила вывода и схемы аксиом, покажем, что данная логика является противоречивой. Для чего введём следующие условные обозначения:
 
-$F_{\alpha} = \lambda x. (x \; x) \rightarrow \alpha$
+$F_{\alpha} \equiv \lambda x. (x \; x) \rightarrow \alpha$
 
-$\Phi_{\alpha} = F_{\alpha}  \; F_{\alpha}  = (\lambda x. (x \; x) \rightarrow \alpha) \; (\lambda x. (x \; x) \rightarrow \alpha)$
+$\Phi_{\alpha} \equiv F_{\alpha}  \; F_{\alpha}  \equiv (\lambda x. (x \; x) \rightarrow \alpha) \; (\lambda x. (x \; x) \rightarrow \alpha)$
 
 Редуцируя $\Phi_{\alpha}$, получаем 
 
@@ -100,7 +100,7 @@ $\Phi_{\alpha} = F_{\alpha}  \; F_{\alpha}  = (\lambda x. (x \; x) \rightarrow \
 \Phi_{\alpha} \\ =_{\beta} \textcolor{magenta}{(\lambda x. (x \; x) \rightarrow \alpha)} \; \textcolor{blue}{(\lambda x. (x \; x) \rightarrow \alpha)} \\=_{\beta} (\lambda x. (x \; x) \rightarrow \alpha) \; (\lambda x. (x \; x) \rightarrow \alpha) \rightarrow \alpha \\=_{\beta} \Phi_{\alpha} \rightarrow \alpha
 \end{align*}
 
-Таким образом, для доказательства $\alpha$ нужно всего лишь доказать $\Phi_{\alpha}$ и применить правило MP.
+Теперь докажем противоречивость введённой логики. Для этого докажем, что в ней выводимо любое утверждение.
 
 \begin{tabular}{ll}
 	1) $\vdash\Phi_\alpha\rightarrow\Phi_\alpha\rightarrow\alpha$ & Так как $\Phi_{\alpha} =_{\beta} \Phi_{\alpha} \rightarrow \alpha$\\
