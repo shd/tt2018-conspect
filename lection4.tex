@@ -43,3 +43,12 @@
 так как \mintinline{scala}{throw new Error("Empty string"): Nothing}, то 
 
 \mintinline{scala}{throw new Error("Empty string"): String}, поэтому функция может иметь тип \mintinline{scala}{String}.
+
+Теперь, имея тип $\bot$, можно ввести связку "Отрицание". Обозначим $\neg A = A \rightarrow \bot$, то есть в программировании это будет соответствовать функции
+
+\begin{minted}{scala}
+def throwError(a: A) = throw new Error()
+\end{minted}
+
+\subparagraph{Упорядоченные пары}
+
