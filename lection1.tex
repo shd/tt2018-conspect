@@ -35,20 +35,20 @@
 \end{definition}
 
 \begin{definition}[$\beta$-редукция]
-	$A\rightarrow_{\beta}B$, если имеет мето одно из следующих условий:
+	$A\to_{\beta}B$, если имеет мето одно из следующих условий:
 	\begin{enumerate}
-		\item $A\equiv{}P_{1}Q_{1}$, $B\equiv{}P_{2}Q_{2}$ и либо $P_{1}=_{\alpha}P_{2}$, $Q_{1}\rightarrow_{\beta}Q_{2}$, либо
-		$P_{1}\rightarrow_{\beta}P_{2}$, $Q_{1}=_{\alpha}Q_{2}$
+		\item $A\equiv{}P_{1}Q_{1}$, $B\equiv{}P_{2}Q_{2}$ и либо $P_{1}=_{\alpha}P_{2}$, $Q_{1}\to_{\beta}Q_{2}$, либо
+		$P_{1}\to_{\beta}P_{2}$, $Q_{1}=_{\alpha}Q_{2}$
 		\item $A\equiv\left(\lambda{}x.P\right) Q$, $B\equiv P[x\coloneqq{}Q]$ "--- Q свободна для подстановки вместо x в P 
 	\end{enumerate}
 	\begin{example} 
-		$X\rightarrow_{\beta}X$, $\left(\lambda{}x.x\right) y\rightarrow_{\beta} y$
+		$X\to_{\beta}X$, $\left(\lambda{}x.x\right) y\to_{\beta} y$
 	\end{example}
 	\begin{example}
-		 $a \left(\lambda{}x.x\right) y\rightarrow_{\beta} a y$
+		 $a \left(\lambda{}x.x\right) y\to_{\beta} a y$
 	\end{example}
 	\begin{example}
-		$A\equiv\lambda{}x.P$, $B\equiv\lambda{}x.Q$, $P\rightarrow_{\beta}Q$
+		$A\equiv\lambda{}x.P$, $B\equiv\lambda{}x.Q$, $P\to_{\beta}Q$
 	\end{example}
 \end{definition}
 
