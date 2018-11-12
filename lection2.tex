@@ -1,0 +1,67 @@
+\section{Лекция 2}
+
+\subsection{Формализация $\lambda$-термов, классы $\alpha$-эквивалентности термов}
+
+\begin{definition}[$\lambda$-терм]
+	Рассмотрим классы эквивалентности $[A]={\alpha}$ \\
+	Будем говорить, что $[A]\to_{\beta}[B]$, если $\exists A^{'}\in [A], B^{'} \in [B]$, что $A^{'}\to_{\beta}B^{'}$.
+\end{definition}
+
+\begin{lemma}
+	$=_{\alpha}$ "--- отношение эквивалентности.
+\end{lemma}
+
+Пусть в A есть $\betaс$-редекc $\lambda{}x.Q$, но $P[x\coloneqq{}Q]$ не может быть,
+тогда найдем $y\notin V[P]$, $y\notin V[Q]$. Сделаем замену $P[x\coloneqq{}y]$.
+Тогда замена $P[x\coloneqq{}y][y\coloneqq{}Q]$ допустима.
+
+\begin{lemma}
+	$P[x\coloneqq{}y]=_{\alpha}P[x\coloneqq{}y][y\coloneqq{}Q]$, если замена допустима.
+\end{lemma}
+
+\subsection{Нормальная форма, $\lambda$-выражения без нормальной формы, комбинаторы $K$, $I$, $\Omega$}
+
+\begin{definition}
+	Нормальня форма "--- это $\lambda$-выражение без $\beta$-редексов.
+\end{definition}
+
+\begin{lemma}
+	$\lambda$-выражение $A$ в нормальноф форме, т.и.т.т, когда $\nexists{}B$, что $A\to_{\beta}B$.
+\end{lemma}
+
+\begin{definition}
+	$A$ "--- Н.Ф $B$, если $\exists A_{1}...A_{n}$, что $B=_{\alpha}A_{1}\to_{\beta}A_{2}\to_{\beta}...\to_{\beta}A_{n}=_{\alpha}A$.
+\end{definition}
+
+\begin{definition}
+	Комбинатор "--- $\lambda$-выражение без свободных переменных.
+\end{definition}
+
+\begin{definition} 
+	\hfill
+	\begin{itemize}
+		\item $I=\lambda{}x.x$ (Identitant)
+		\item $K=\lambda{}a.\lambda{}b.a$ (Konstanz)
+		\item $\Omega = (\lambda{}x.xx)(\lambda{}x.xx)$
+	\end{itemize}
+\end{definition}
+
+\begin{lemma}
+	$\Omega$ "--- не имеет нормальной формы.
+\end{lemma}
+
+\begin{proof}
+	$\Omega\to_{\beta}\Omega$
+\end{proof}
+
+\subsection{$\beta$-редуцируемость}
+
+\begin{definition}
+	Будем говорить, что $A\twoheadrightarrow_{\beta}B$, если $\exists$ такие $X_{1}..X{n}$, что $A=_{\alpha}X_{1}\to_{\beta}X_{2}\to_{\beta}...\to_{\beta}X_{n-1}\to_{\beta}X_{n}=_{\alpha}B$.
+\end{definition}
+
+$\twoheadrightarrow_{\beta}$ "--- рефлексивное и транзитивное замыкание $\to_{\beta}$. $\twoheadrightarrow_{\beta}$ не обязательно приводит к нормальной форме
+\begin{example}
+	$\Omega\twoheadrightarrow_{\beta}\Omega$
+\end{example}
+
