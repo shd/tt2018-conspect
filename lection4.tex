@@ -32,11 +32,11 @@
 
 \begin{minted}{scala}
 def assertStringNotEmpty(s: String): String = {
-	if (s.length != 0) {
-		s
-	} else {
-		throw new Error("Empty string")
-	}
+  if (s.length != 0) {
+    s
+  } else {
+    throw new Error("Empty string")
+  }
 }
 \end{minted}
 
@@ -47,7 +47,7 @@ def assertStringNotEmpty(s: String): String = {
 Теперь, имея тип $\bot$, можно ввести связку "Отрицание". Обозначим $\neg A = A \rightarrow \bot$, то есть в программировании это будет соответствовать функции
 
 \begin{minted}{scala}
-def throwError(a: A) = throw new Error()
+def throwError(a: A): Nothing = throw new Error()
 \end{minted}
 
 \subparagraph{Упорядоченные пары}

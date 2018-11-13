@@ -76,7 +76,7 @@ $fact' \equiv \lambda f. \lambda n. isZero\; n \; \overline{1} (mul \; n \; f((-
 
 Попробуем построить логику на основе $\lambda$-исчисления. Введём логический символ $\rightarrow$. 
 
-Будем тредовать от этого исчисления наличия следующих схем аксиом:
+Будем требовать от этого исчисления наличия следующих схем аксиом:
 
 \begin{enumerate}
 	\item $\vdash A \rightarrow A$
@@ -207,9 +207,9 @@ $$\Gamma, \varphi \vdash \varphi$$
 	Докажем $\vdash \lambda \; x. \; \lambda \; y. \; x : \alpha \rightarrow \beta \rightarrow \alpha$
 	
 	\[
-	\infer[(\text{Правило типизации импликации})]
+	\infer[(\text{Правило типизации абстракции})]
 	{ \vdash \lambda \; x. \; \lambda \; y. \; x : \alpha \rightarrow \beta \rightarrow \alpha }
-	{ \infer[(\text{Правило типизации импликации})]
+	{ \infer[(\text{Правило типизации абстракции})]
 		{x: \alpha \vdash \lambda \; y. \; x : \beta \rightarrow \alpha}
 		{x: \alpha, y : \beta \vdash x : \alpha}
 	}
