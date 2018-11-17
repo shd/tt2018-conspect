@@ -11,7 +11,7 @@
 	$=_{\alpha}$ "--- отношение эквивалентности.
 \end{lemma}
 
-Пусть в A есть $\betaс$-редекc $\lambda{}x.Q$, но $P[x\coloneqq{}Q]$ не может быть,
+Пусть в A есть $\beta$-редекc $\lambda{}x.Q$, но $P[x\coloneqq{}Q]$ не может быть,
 тогда найдем $y\notin V[P]$, $y\notin V[Q]$. Сделаем замену $P[x\coloneqq{}y]$.
 Тогда замена $P[x\coloneqq{}y][y\coloneqq{}Q]$ допустима.
 
@@ -65,3 +65,62 @@ $\twoheadrightarrow_{\beta}$ "--- рефлексивное и транзитив
 	$\Omega\twoheadrightarrow_{\beta}\Omega$
 \end{example}
 
+\subsection{Ромбовидное свойство}
+
+\begin{definition}[Ромбовидное свойство]
+	Отношение $R$ обладает ромбовидным свойством, если $\forall a,b,c$, таких, что $aRb$, $aRc$, $b\neq{}c$, $\exists{}d$, что $bRd$ и $cRd$. Далее будем обозначать ромбовидное свойство как $<>$.
+\end{definition}
+
+\begin{example}
+	$(\leq)$ на множестве натуральных чисел обладает $<>$
+	$(>)$ не обладает $<>$ на множестве натуральных чисел 
+\end{example}
+
+\subsection{Теорема Чёрча-Россер, следствие о единственности нормальной формы}
+
+\begin{theorem}[Черча-Россер]
+	$(\twoheadrightarrow_{\beta})$ обладает ромбовидным свойством.
+\end{theorem}
+
+\newtheorem{cons}{Следствие}[section]
+\begin{cons}
+	Если у $A$ есть Н.Ф, то она единтсвенная с точностью до $(=_{\alpha})$ (переименования переменных).
+\end{cons}
+
+\begin{proof}
+	Пусть $A\twoheadrightarrow_{\beta}B$ и $A\twoheadrightarrow_{\beta}C$. $B$, $C$ "--- нормальные формы и $B\neq_{\alpha}C$. 
+	Тогда по теореме Черча-Россера $\exists{}D$: $B\twoheadrightarrow_{\beta}D$ и $C\twoheadrightarrow_{\beta}D$. Тогда $B=_{\alpha}D$ и $C=_{\alpha}$ $\Rightarrow$ $B=_{\alpha}C$. Противоречие.
+\end{proof}
+
+\begin{lemma}
+	Если $B$ "--- Н.Ф, то $\nexists{}Q$: $B\to_{\beta}Q$. Значит если $B\twoheadrightarrow_{\beta}Q$, то количество шагов редукции равно 0.
+\end{lemma}
+
+\begin{lemma}
+	Если $R$ "--- обладает $<>$, то и $R^{*}$ (транзитивное, рефлексивное замыкание $R$) обладает $R^{*}$.
+\end{lemma}
+
+\begin{proof}
+	content...
+\end{proof}
+
+\begin{lemma}[Грустная лемма]
+	$(\to_{\beta})$ не обладает $<>$
+\end{lemma}
+
+\begin{definition}[Параллельная $\beta$-редукция]
+	$A\rightrightarrows_{\beta}B$, если
+	\begin{enumerate}
+		\item $A=_{\alpha}B$
+		\item $A\equiv{}P_{1}Q_{1}$, $B\equiv{}P_{2}Q_{2}$ и $P_{1}\rightrightarrows_{\beta}P_{2}$, $Q_{1}\rightrightarrows_{\beta}Q_{2}$
+		\item $A\equiv{}\lambda{}x.P_{1}$, $B\equiv{}\lambda{}x.P_{2}$ и 
+		$P_{1}\rightrightarrows_{\beta}P_{2}$
+		\item $A=_{\alpha}(\lambda{}x.P)Q$, $B=_{\alpha}P[x\coloneqq{}Q]$
+	\end{enumerate}
+\end{definition}
+
+\begin{lemma}
+	$(\rightrightarrows_{\beta})$ обладает $<>$
+\end{lemma}
+
+$P_{1}\rightrightarrows_{\beta}P_{2}$ и $Q_{1}\rightrightarrows_{\beta}Q_{2}$, то $P_{1}[x\coloneqq{}Q_{1}]\rightrightarrows_{\beta}P_{2}[x\coloneqq{}Q2]$
