@@ -6,4 +6,4 @@
 *.exe
 *.log
 *.gz
-
+*.synctex.gz
