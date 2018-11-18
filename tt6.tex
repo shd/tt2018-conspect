@@ -12,9 +12,48 @@
 		\date{}
 	\end{titlepage}
 		\maketitle
-\textbf{Ссылки}
-\begin{enumerate}
-	\item
-\end{enumerate}
+		\par \textbf{Алгоритм вывода типов}\par
+			Пусть есть: $?|-A:?$, хотим найти пару $\big \langle \text{контекст}, \text{тип} \big \rangle$\par
+	Алгоритм:
+	\begin{enumerate}
+		\item Рекурсия по структуре формулы\par Построить по формуле $A$ пару $\big \langle E, \tau\big \rangle$, где\par $E-$набор уравнений, $\tau-$тип $A$
+		\item Решение уравнения, получения подстановки $S$ и из решения $E$ и $S(\tau)$ получения ответа	
+	\end{enumerate}
+		Т.е. необохимо свести вывод типа к алгоритму унификации.\par
+		\textbf{Пункт 1}\par Рассмотрим 3 случая
+						
+			\begin{enumerate}
+				\item $A\equiv x\implies\:\big \langle \{\}, \alpha_A\big\rangle$, где $\{\}-$пустой конекст, $\alpha_A-$новая переменная нигде не встречавшаяся до этого в формуле
+				\item $A\equiv P\:Q\implies\big \langle E_P\cup E_Q\cup \{\tau_P=\tau_Q\rightarrow\alpha_A\}, \alpha_A\big \rangle$, где $\alpha_A-$новая переменная
+				\item $A\equiv\lambda x.P\implies\big\langle E_P,\alpha_x\rightarrow\tau_P\big\rangle$
+			\end{enumerate}
+		\textbf{Пункт 2} Алгоритм унификации\par
+			Рассмотрим $E-$набор уравнений, запишем все уравнения в алгебраическом виде т.е. $\alpha\rightarrow\beta\Leftrightarrow\rightarrow\alpha\beta$, затем применяем алгоритм унификации.\par
+	\textbf{Лемма:} Рассмотрим терм $M$ и пару $\big\langle E_M, \tau_M\big\rangle$, Если $\Gamma|-M:\rho$, то существует 
+	\begin{enumerate}
+		\item $S-$решение $E_M$ тогда $\Gamma=\{S(\alpha_x)\:|\:x\in FV(M)\}$, $FV-$множество свободных переменных в терме $M$, $\alpha_x-$ переменная полученная при разборе терма $M$\par
+		$\rho=S(\tau_M)$
+		\item Если $S-$ решение $E_M$, то $\Gamma|-M:\rho$,Доказательство$-$индукция по структуре терма $M$
+	\end{enumerate}				
+		 $\big \langle\Gamma,\rho\big\rangle-$основная пара для терма $M$, если 
+		 \begin{enumerate}
+			\item $\Gamma|-M:\tau$
+			\item Если $\Gamma'|-M:\tau'$, то сущесвтует $S:\:S(\Gamma)\subset\Gamma'$
+		 \end{enumerate}
+		 \textbf{Пример алгоритма:}
+		 	$\lambda\:f\lambda\:x.f(f(x))$\par
+		 	\begin{enumerate}
+				\item $f(x)$
+				\item $f(f(x))$
+				\item $\lambda\:x.(f(f(x)))$		 	
+		 	\end{enumerate}
+			\begin{enumerate}
+				\item $\big\langle E_1=\{\alpha_f=\alpha_x\rightarrow\alpha_1\}, \alpha_1\big\rangle$			
+			\end{enumerate}
+
+%\textbf{Ссылки}
+%\begin{enumerate}
+%	\item
+%\end{enumerate}
 
 \end{document}
