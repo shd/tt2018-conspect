@@ -1,30 +1,4 @@
-\documentclass[12pt, a4paper]{article}
-\usepackage[T1,T2A]{fontenc}
-\usepackage[utf8]{inputenc}
-\usepackage[english,russian]{babel}
-\usepackage{amsmath}
-\usepackage{amsfonts}
-\usepackage{amssymb}
-\usepackage{makeidx}
-\usepackage{tikz}
-\usepackage{amsthm}
-\usepackage{enumerate}
-\usepackage[left=2cm,right=2cm,top=2cm,bottom=2cm,bindingoffset=0cm]{geometry}
-\usepackage{proof}
-\usetikzlibrary{graphs}
-\usetikzlibrary{graphs.standard}
-\usetikzlibrary{automata,positioning}
-\begin{document}
-\theoremstyle{definition}
-\newtheorem{definition}{Определение}[section]
-\newtheorem{note}{Замечание}[section]
-\newtheorem*{example}{Пример}
-\newtheorem{theorem}{Теорема}[section]
-\newtheorem{axiom}{Аксиома}[section]
-\newtheorem{lemma}[theorem]{Лемма}
-\newtheorem{statement}{Утверждение}[section]
-\newtheorem{oun_paragraph}{Пункт}[section]
-\def\from#1{\par \parbox{0.7\textwidth}{\par \hfill\raggedleft \it #1}} 
+
 
 	\section{Лекция 5 \\ Изоморфизм Карри-Ховарда (завершение), Унификация}
 		\subsection{Изоморфизм Карри-Ховарда}
@@ -229,5 +203,3 @@
 	\begin{definition} $S \circ T-$композиция подстановок, если $S \circ T=S(T(a))$\end{definition}
 	\begin{definition} $S-$наиболее общий унификатор ксли любое решение сисетмы $R$ может быть получено уточнением: $\exists T:R=T\circ S$\end{definition}
 	\begin{statement} Алгоритм дает наиболее общий унификатор системы, если у нее есть решения. Если решений нет алгоритм окончится неудачей.\end{statement}
-	
-\end{document}

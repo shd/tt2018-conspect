@@ -1,39 +1,4 @@
-\documentclass[12pt, a4paper]{article}
-\usepackage[T1,T2A]{fontenc}
-\usepackage[utf8]{inputenc}
-\usepackage[english,russian]{babel}
-\usepackage{amsmath}
-\usepackage{amsfonts}
-\usepackage{amssymb}
-\usepackage{makeidx}
-\usepackage{tikz}
-\usepackage{amsthm}
-\usepackage{enumerate}
-\usepackage[left=2cm,right=2cm,top=2cm,bottom=2cm,bindingoffset=0cm]{geometry}
-\usepackage{proof}
-\usetikzlibrary{graphs}
-\usetikzlibrary{graphs.standard}
-\usetikzlibrary{automata,positioning}
-\begin{document}
-\theoremstyle{definition}
-\newtheorem{definition}{Определение}[section]
-\newtheorem{note}{Замечание}[section]
-\newtheorem*{example}{Пример}
-\newtheorem{theorem}{Теорема}[section]
-\newtheorem{axiom}{Аксиома}[section]
-\newtheorem{lemma}[theorem]{Лемма}
-\newtheorem{statement}{Утверждение}[section]
-\newtheorem{oun_paragraph}{Пункт}[section]
-\def\from#1{\par \parbox{0.7\textwidth}{\par \hfill\raggedleft \it #1}} 
 
-	\begin{titlepage}
-		\title{Лекция 6 \\ Реконструкция типов в просто типизированном лямбда-исчислении, комбинаторы}
-		\date{}
-	\end{titlepage}
-		\maketitle
-		
-		
-		
 		
 		\section{Лекция 6 \\ Реконструкция типов в просто типизированном лямбда-исчислении, комбинаторы}
 		\subsection{Алгоритм вывода типов}
@@ -158,5 +123,3 @@
 		\item $C=\lambda\:x\lambda\:y\lambda\:z.((x\:z)y)$
 		\item $W=\lambda\:x\lambda\:y.((x\:y)y)$
 	 \end{enumerate}
-
-\end{document}
