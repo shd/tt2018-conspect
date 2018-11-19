@@ -102,8 +102,36 @@
 						\alpha_1=\alpha_x&\\
 						\alpha_2=\alpha_x&\\
 				\end{cases}\]
+		\item $\Gamma=\{\}$, так как в заданной формуле нет свободных переменных
+		\item тип  терма $\lambda\:f\lambda\:x.f(f(x))$ является результат подстановки\par $S(\rightarrow\:\alpha_f\:(\alpha_x\rightarrow\alpha_2))$, получаем $\tau=(\alpha_x\rightarrow\alpha_x)\rightarrow(\alpha_x\rightarrow\alpha_x)$
 	\end{enumerate}
-	
+	\textbf{Определение:} Если существует последовательность редукций, приводящая терм $M$ в нормальную форму, то $M-$слабо нормализуем. (Т.е. при редуцировании терма $M$ мы можем не прийти в н.ф.)\par 
+	\textbf{Определение:} Если не существует бесконечной последовательности редукций терма $M$, то терм $M-$ сильно нормализуем.\par 
+	 \textbf{Утверждение:} 
+	 \begin{enumerate}
+	 	\item $KI\Omega-$ слабо нормализуема
+	 	\item $\Omega-$ не нормализуема
+	 	\item $II-$ сильно нормализуема
+	 \end{enumerate}
+	 \textbf{Лемма:} Сильная нормализация влечет слабую.\par
+	 \textbf{Утверждение:} Любое $\lambda$ выражение можно записать с помощью комбинаторов $S$ и $K$, где\par 
+	 $S=\lambda\:x\lambda\:y\lambda\:z.(x\:z)(y\:z)$\par 
+	 $K=\lambda\:x\lambda\:y.x$\par 
+	\textbf{Соотношение комбинаторов с $\lambda$ исчислением:}
+	\begin{enumerate}
+		\item $T(x)=x$
+		\item $T(P\:Q)=T(P)T(Q)$
+		\item $T(\lambda\:x.P)=K(T(P)),\enspace x\not\in FV(P)$
+		\item $T(\lambda\:x.x)=I$
+		\item $T(\lambda\:x\lambda\:y.P)=T(\lambda\:x.T(\lambda\:y.P))$
+		\item $T(\lambda\:x.P\:Q)=S\:T(\lambda\:x.P)T(\lambda\:x.Q)$
+	\end{enumerate}		
+	 \textbf{Альтернативный базис:}
+	 \begin{enumerate}
+		\item $B=\lambda\:x\lambda\:y\lambda\:z.x(y\:z)$
+		\item $C=\lambda\:x\lambda\:y\lambda\:z.((x\:z)y)$
+		\item $W=\lambda\:x\lambda\:y.((x\:y)y)$
+	 \end{enumerate}
 %\textbf{Ссылки}
 %\begin{enumerate}
 %	\item
