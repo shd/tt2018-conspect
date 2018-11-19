@@ -6,6 +6,10 @@
 \usepackage{amsfonts}
 \usepackage{amssymb}
 \usepackage{makeidx}
+\usepackage{tikz}
+\usetikzlibrary{graphs}
+\usetikzlibrary{graphs.standard}
+\usetikzlibrary{automata,positioning}
 \begin{document}
 	\begin{titlepage}
 		\title{Лекция 6 \\ Реконструкция типов в просто типизированном лямбда-исчислении, комбинаторы}
@@ -40,18 +44,66 @@
 			\item $\Gamma|-M:\tau$
 			\item Если $\Gamma'|-M:\tau'$, то сущесвтует $S:\:S(\Gamma)\subset\Gamma'$
 		 \end{enumerate}
-		 \textbf{Пример алгоритма:}
-		 	$\lambda\:f\lambda\:x.f(f(x))$\par
-		 	Рассмотрим подформулы
-		 	\begin{enumerate}
-				\item $f(x)$
-				\item $f(f(x))$
-				\item $\lambda\:x.(f(f(x)))$		 	
-		 	\end{enumerate}
+		 \textbf{Пример алгоритма:}\par 
+		 	Рассмотрим терм: $\lambda\:f\lambda\:x.f(f(x))$, построим и пронумеруем его дерево разбора:\par
+\begin{tikzpicture}
+	\node [fill=none, draw=none] (A) at (9,0) {$\lambda\:f\lambda\:x.f(f(x))\enspace{\color{blue} (7)}$};
+	\node [fill=none, draw=none] (B) at (7.5,-1) {$\lambda\:x.f(f(x))\enspace{\color{blue} (6)}$};
+	\node [fill=none, draw=none] (C) at (11.5,-1) {$\lambda\:f$};
+	\node [fill=none, draw=none] (D) at (5.5,-2) {$f(f(x))\enspace{\color{blue} (5)}$};
+	\node [fill=none, draw=none] (E) at (9.5,-2) {$\lambda\:x$};
+	\node [fill=none, draw=none] (F) at (3.5,-3) {$f(x)\enspace{\color{blue} (4)}$};
+	\node [fill=none, draw=none] (G) at (7.5,-3) {$f\enspace{\color{blue} (3)}$};
+	\node [fill=none, draw=none] (H) at (1.5,-4) {$f\enspace{\color{blue} (2)}$};
+	\node [fill=none, draw=none] (I) at (4.5,-4) {$x\enspace{\color{blue} (1)}$};
+	\path [->] (A) edge node[left] {} (B);
+	\path [->] (A) edge node[left] {} (C);	
+	\path [->] (B) edge node[left] {} (D);
+	\path [->] (B) edge node[left] {} (E);
+	\path [->] (D) edge node[left] {} (F);
+	\path [->] (D) edge node[left] {} (G);
+	\path [->] (F) edge node[left] {} (H);	
+	\path [->] (F) edge node[left] {} (I);
+\end{tikzpicture}\par
+\begin{enumerate}
+	\item $E_1=\big \langle \{\}, \alpha_x \big \rangle$
+	\item $E_2=\big \langle \{\}, \alpha_f \big \rangle$
+	\item $E_3=\big \langle \{\}, \alpha_f \big \rangle$
+	\item $E_4=\big \langle \{\alpha_f=\alpha_x\rightarrow\alpha_1\}, \alpha_1 \big \rangle$
+	\item $E_5=\big \langle \{\alpha_f=\alpha_x\rightarrow\alpha_1$\par$\alpha_f=\alpha_1\rightarrow\alpha_2\}, \alpha_2 \big \rangle$
+	\item $E_6=\big \langle \{\alpha_f=\alpha_x\rightarrow\alpha_1$\par$\alpha_f=\alpha_1\rightarrow\alpha_2\}, \alpha_x\rightarrow\alpha_2 \big \rangle$
+	\item $E_7=\big \langle \{\alpha_f=\alpha_x\rightarrow\alpha_1$\par$\alpha_f=\alpha_1\rightarrow\alpha_2\}, \alpha_f\rightarrow(\alpha_x\rightarrow\alpha_2) \big \rangle$
+\end{enumerate}
+	$E=\alpha_f=\alpha_x\rightarrow\alpha_1$\par$\alpha_f=\alpha_1\rightarrow\alpha_2$, решим полученную систему:\par 
+	\begin{enumerate}
+		\item приведем систему к алгебрачиескому виду и решим её:\par 
 			\begin{enumerate}
-				\item $\big\langle E_1=\{\alpha_f=\alpha_x\rightarrow\alpha_1\}, \alpha_1\big\rangle$			
-			\end{enumerate}
-
+			\item \[\begin{cases}
+				\alpha_f=\rightarrow(\alpha_x\:\alpha_1)&\\
+				\alpha_f=\rightarrow(\alpha_1\:\alpha_2)&\\
+			\end{cases}\]
+			\item \[
+				\begin{cases}
+				\rightarrow(\alpha_1\:\alpha_2)=\rightarrow(\alpha_x\:\alpha_1)
+				\end{cases}\]
+			\item \[
+				\begin{cases}
+				\alpha_1=\alpha_x&\\
+				\alpha_2=\alpha_1
+				\end{cases}\]
+			\item \[
+				\begin{cases}
+				\alpha_1=\alpha_x&\\
+				\alpha_2=\alpha_x
+				\end{cases}\]
+\end{enumerate}					
+		\item  Получим \[S=\begin{cases}
+						\alpha_f=\rightarrow(\alpha_x\:\alpha_1)&\\
+						\alpha_1=\alpha_x&\\
+						\alpha_2=\alpha_x&\\
+				\end{cases}\]
+	\end{enumerate}
+	
 %\textbf{Ссылки}
 %\begin{enumerate}
 %	\item
