@@ -127,6 +127,7 @@
 		\item $\Gamma=\{\}$, так как в заданной формуле нет свободных переменных
 		\item тип  терма $\lambda\:f\lambda\:x.f(f(x))$ является результат подстановки\par $S(\rightarrow\:\alpha_f\:(\alpha_x\rightarrow\alpha_2))$, получаем $\tau=(\alpha_x\rightarrow\alpha_x)\rightarrow(\alpha_x\rightarrow\alpha_x)$
 	\end{enumerate}
+	\subsection{Сильная и слабая нормализации}
 	\begin{definition}Если существует последовательность редукций, приводящая терм $M$ в нормальную форму, то $M-$слабо нормализуем. (Т.е. при редуцировании терма $M$ мы можем не прийти в н.ф.)\end{definition} 
 	\begin{definition}Если не существует бесконечной последовательности редукций терма $M$, то терм $M-$ сильно нормализуем.\end{definition} 
 	 \begin{statement}
@@ -138,6 +139,7 @@
 	 \end{enumerate}
 	 \begin{lemma}Сильная нормализация влечет слабую.
 	 \end{lemma}
+	 \subsection{Выразимость комбинаторов}
 	 \begin{statement}Любое $\lambda$ выражение можно записать с помощью комбинаторов $S$ и $K$, где\end{statement}
 	 $S=\lambda\:x\lambda\:y\lambda\:z.(x\:z)(y\:z)$\par 
 	 $K=\lambda\:x\lambda\:y.x$\par 

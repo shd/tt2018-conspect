@@ -6,28 +6,45 @@
 \usepackage{amsfonts}
 \usepackage{amssymb}
 \usepackage{makeidx}
-\section{qwe}
-	\begin{titlepage}
-		\title{Лекция 5 \\ Изоморфизм Карри-Ховарда (завершение), Унификация}
-		\date{}
-	\end{titlepage}
-		\maketitle
-	\par \textbf{Определение}
-	\\	
-	Изоморфизм Карри-Ховарда
+\usepackage{tikz}
+\usepackage{amsthm}
+\usepackage{enumerate}
+\usepackage[left=2cm,right=2cm,top=2cm,bottom=2cm,bindingoffset=0cm]{geometry}
+\usepackage{proof}
+\usetikzlibrary{graphs}
+\usetikzlibrary{graphs.standard}
+\usetikzlibrary{automata,positioning}
+\begin{document}
+\theoremstyle{definition}
+\newtheorem{definition}{Определение}[section]
+\newtheorem{note}{Замечание}[section]
+\newtheorem*{example}{Пример}
+\newtheorem{theorem}{Теорема}[section]
+\newtheorem{axiom}{Аксиома}[section]
+\newtheorem{lemma}[theorem]{Лемма}
+\newtheorem{statement}{Утверждение}[section]
+\newtheorem{oun_paragraph}{Пункт}[section]
+\def\from#1{\par \parbox{0.7\textwidth}{\par \hfill\raggedleft \it #1}} 
+
+	\section{Лекция 5 \\ Изоморфизм Карри-Ховарда (завершение), Унификация}
+		\subsection{Изоморфизм Карри-Ховарда}
+	\begin{definition}Изоморфизм Карри-Ховарда\end{definition}
+
 	\begin{enumerate}
 		\item $\Gamma$ $\vdash$ M:$\sigma$ влечет |$\Gamma$|$\vdash$ $\sigma$
 		\item $\Gamma$ $\vdash$ $\sigma$, то существует M и существует $\Delta$, такое что |$\Delta$|=$\Gamma$, что $\Delta$ $\vdash$M:$\sigma$, где $\Delta$=\{$x_{\sigma}$:$\sigma$|$\sigma$ $\in$ $\Gamma$  \}
 	\end{enumerate}
-	Рассмотрим пример:
-	\{f:$\alpha\rightarrow\beta$, x:$\beta$\}$\vdash$fx:$\beta$ \\Применив изоморфизм Карри-Ховарда получим: \{$\alpha\rightarrow\beta$, $\beta$\}$\vdash\beta$\\
-\par П.1 доказывается индукцией по длине выражения т.е. есть 3 правила вывода. убирая P и Q.
-\par П.2 доказывается аналогичным способом но действия обратные.\\
+	\begin{example}\end{example}
+	\{f:$\alpha\rightarrow\beta$, x:$\beta$\}$\vdash$fx:$\beta$ \\Применив изоморфизм Карри-Ховарда получим: \{$\alpha\rightarrow\beta$, $\beta$\}$\vdash\beta$
+	\begin{proof}
+	\end{proof}
+	\par П.1 доказывается индукцией по длине выражения т.е. есть 3 правила вывода. убирая P и Q.
+\par П.2 доказывается аналогичным способом но действия обратные.\\	
 Т.е. отношения между типами в системе типов могут рассматриваться как образ отношений между высказываниями в логической системе, и наоборот.
 \\
 \\
-\par \textbf{Определение}
-\par расширенный полином определяется формулой:
+\begin{definition}Расширенный полином определяется формулой:
+\end{definition}
 	\[
     E(p,q)= 
 		\begin{cases}
@@ -41,22 +58,24 @@
 	по сути расширенный полином это множество функций над натуральными числами(черчевскими нумералами).\par
 	Пусть $\upsilon$ = $(\alpha\to\alpha)\to(\alpha\to\alpha)$, где $\alpha-$произвольный тип и пусть $F\in\Lambda\text{, что }F:\upsilon\to\upsilon\to\upsilon$, то существует расширенный полином $E$, такой что $\forall a,b\in \mathbb{N}$ $F(\overline{a},\overline{b})=_\beta \overline{E(a,b)}$, где $\overline{a}-$черчевский нумерал
 	
-	\par \textbf{Теорема}\par 
-		У каждого терма в просто типизиреумом $\lambda$ исчислении существует расширенный полином.\par	
-	\textbf{Основные задачи типизации $\lambda$ исчисления}\par
+	\begin{theorem}
+	У каждого терма в просто типизиреумом $\lambda$ исчислении существует расширенный полином.
+	\end{theorem}
+		
+	\begin{statement}Основные задачи типизации $\lambda$ исчисления\end{statement}
 		\begin{enumerate}
 			\item \emph{Проверка типа$-$}выполняется ли $\Gamma\vdash M:\sigma$ для контекста $\Gamma\text{ терма }M\text{ и типа }\sigma$ (для проверки типа обычно откидывают $\sigma$ и рассматривают п.2).
 			\item \emph{Реконструкция типа$-$}можно ли подставить вместо $?$ и $?_1$ в $?_1\vdash M:?$ подставить конкретный тип $\sigma$ в $?$ и контекст $\Gamma$ в $?_1$.
 			\item \emph{Обитаемость типа$-$}пытается подобрать, такой \textbf{замкнутый} терм $M$ и контекст $\Gamma$, что бы было выполнено $\Gamma\vdash M:\sigma$.
 		\end{enumerate}			
-	\par Определение \textbf{Алгебраический терм}$-$выражение типа $\Theta=a|(f_k \Theta_1\dotsb\Theta_n)$, \par где $a-$переменная, $(f_k \Theta_1\dotsb\Theta_n)-$применение функции\par
-	Примеры:
+	\begin{definition}Алгебраический терм\end{definition}Выражение типа $\Theta=a|(f_k \Theta_1\dotsb\Theta_n)$, \par где $a-$переменная, $(f_k \Theta_1\dotsb\Theta_n)-$применение функции\par
+	\begin{example}\end{example}
 	\begin{enumerate}
 	\item $(f a b ( g a))$ 
 	\item Известно, что $\to-$функция, тогда выражение $((a\to b)\to c)$ $\Longleftrightarrow$ $(\to (\to a b) c)$
 \end{enumerate}		
-	\par \textbf{Уравнение в алгебраических термах} $\Theta_1=\Theta_2$\par
-	\par \textbf{Система уравнений в алгебраических термах}\par
+	\subsection{Уравнение в алгебраических термах $\Theta_1=\Theta_2$\\Система уравнений в алгебраических термах}
+	\begin{definition}Система уравнений в алгебраических термах\end{definition}
 	$		
 		\begin{cases}			
 			\Theta_1=\sigma_1&\\
@@ -64,15 +83,15 @@
 			\Theta_n=\sigma_n&\\
 		\end{cases}
 	$\par где $\Theta_i \text{ и } \sigma_i-\text{термы}$\par
-	\par Определение $\{a_i\}=A-$множество перменных, $\{\Theta_i\}=T-$множество термов.\par
-	\par Определение \textbf{Подстановка}$-$отображение вида: $S_0:A\to T$, которое является решением в алгебраических термах.\par Т.е. $S_0-$конечное множество переменных $a_1\dotsb a_n$ на которых $S_0(a_i)=\Theta_i\text{ либо }S_0(a_i)=a_i$.\par
+	\begin{definition}$\{a_i\}=A-$множество перменных, $\{\Theta_i\}=T-$множество термов.\end{definition}
+	\begin{definition}Подстановка$-$отображение вида: $S_0:A\to T$, которое является решением в алгебраических термах.\end{definition} Т.е. $S_0-$конечное множество переменных $a_1\dotsb a_n$ на которых $S_0(a_i)=\Theta_i\text{ либо }S_0(a_i)=a_i$.\par
 	Доопределим $S$ на все $T$ т.е. $S:T\to T$, где \begin{enumerate}
 		\item $S(a)=S_0(a)$
 		\item $S(f(\Theta_1 \dotsb \Theta_k))=f(S(\Theta_1) \dotsb S(\Theta_k))$
 	\end{enumerate}
 	По сути $S$ тоже самое что и много $if'$ов либо $map$ строк\par 
-	Определение \textbf{Решить уравнение в алгебраических термах}$-$найти такое $S$, что $S(\Theta_1)=S(\Theta_2)$\par 
-	Например:\par 
+	\begin{definition}Решить уравнение в алгебраических термах$-$найти такое $S$, что $S(\Theta_1)=S(\Theta_2)$\end{definition} 
+	\begin{example}\end{example}
 		Заранее обозначим: $a,b-\text{переменные},$ $f,g,h-\text{функции}$
 		\begin{enumerate}
 			\item $f(a(gb))=f(he)d$ имеет решение $S(a)=he\text{ и }S(d)=gb$
@@ -84,12 +103,14 @@
 			\item $fa=gb-$решений не имеет
 		\end{enumerate}
 		Таким образом, что бы существовало решение необходимо равенство строк полученной подстановки\par
-		\textbf{Алгоритм Унификации}\par
+		\subsection{Алгоритм Унификации}
 		\begin{enumerate}
 			\item Система уравнений $E_1$ эквивалентна $E_2$, если они имеют одинаковые решения(унификаторы).
 			\item Любая система $E$ эквивалентна некторому уравнению $\Sigma_1=\Sigma_2$.
 					
-	\textbf{Доказательство:}\par
+	\begin{proof}
+	
+	\end{proof}
 		Возьмем функциональный символ $f$, не использующийся в $E$, \par
 		$		
 		E=\begin{cases}			
@@ -108,21 +129,19 @@
 			\item \textit{Устранение переменной} \par
 			Пусть есть уравнеие $x=\Theta$, заменим во всех остальных уравнениях переменную $x$ на терм $\Theta$		
 		\end{enumerate}
-		\textbf{Утверждение} $-$ эти операции не изменяют множества решений.
+		\begin{statement} Эти операции не изменяют множества решений.\end{statement}
 	\end{enumerate}	
-		\textbf{Определение:} \textit{Система уравнений в разрешеной форме}\par
-		Если
+		\begin{definition}Система уравнений в разрешеной форме если \end{definition}
 			\begin{enumerate}
 				\item Все уравнения имеют вид $a_i=\Theta_i$
 				\item Каждый из $a_i$ входит в систему уравнений только раз
 			\end{enumerate}
-		\textbf{Определение:} \textit{Система несовместима}\par
-	Если 
+		\begin{definition}Система несовместима если\end{definition} 
 		\begin{enumerate}
 			\item существует уравнение вида $f\:\Theta_1\hdots\Theta_n=g\:\sigma_1\hdots\sigma_n$, где $f\neq g$
 			\item существует уравнение вида $a=f\: \Theta_1\hdots\Theta_n\:$, причем $a$ выходит в какой-то из $\Theta_i$
 		\end{enumerate}			
-		\textbf{Алгоритм унификации}\par
+		\subsection{ Алгоритм унификации}
 		\begin{enumerate}
 		\item Пройдемся по системе, выберем такое уравнение, что оно удовлетворяет одному из условий:\begin{enumerate}
 			\item Если $\Theta_i=a_i$, то перепишем, как $a_i=\Theta_i$, $\Theta_i-$не переменная
@@ -134,9 +153,9 @@
 		\item повторим пункт 1 		
 		\end{enumerate}
 		
-		\textbf{Утверждение:} алгоритм не изменяет множетва решений\par 
-		\textbf{Утверждение:} несовместимая решения не имеет решений\par
-		\textbf{Утверждение:} система в разрешеной форме имеет решение:\par		
+		\begin{statement} Алгоритм не изменяет множетва решений\end{statement}
+		\begin{statement} Несовместимая решения не имеет решений\end{statement}
+		\begin{statement} Система в разрешеной форме имеет решение:\end{statement}	
 		
 	\begin{align*}
 		\begin{cases}			
@@ -149,11 +168,11 @@
 			S_0(a_n)=\Theta_n&\\
 		\end{cases}\\
 	\end{align*}
-	\textbf{Утверждение:} алгоритм всегда закначивается\par
-	\textbf{Доказательство:} по индукции, выберем три числа $ \big \langle x\:y\:z\big \rangle$, где\par $x-$количество переменных, которые встречаются строго больше одного раза в левой части некоторого уравнения (т.е. $b$ не повлияет на $x$, а $a$ повлияет в уравнении $f(a(g\:a)\:b)=\Theta$),\par $y-$ количество функциональных символов в системе,\par $z-$количество уравнеий типа $a=a$ и $\Theta=b$ \par
+	\begin{statement}Алгоритм всегда закначивается\end{statement}
+	\begin{proof}\end{proof} По индукции, выберем три числа $ \big \langle x\:y\:z\big \rangle$, где\par $x-$количество переменных, которые встречаются строго больше одного раза в левой части некоторого уравнения (т.е. $b$ не повлияет на $x$, а $a$ повлияет в уравнении $f(a(g\:a)\:b)=\Theta$),\par $y-$ количество функциональных символов в системе,\par $z-$количество уравнеий типа $a=a$ и $\Theta=b$ \par
 		\textit{Заметим}, что $(a)$ и $(b)$ всегда уменьшают $z$ и иногда уменьшают $x$,\par $(c)$ всегда уменьшает $y$ иногда $x$ и, возможно, увеличивает $z$,\par операция $(d)$ всегда уменьшает $x$, и иногда увеличивает $y$.\par
 		Очевидно, что с каждой операцией $a-d$ данная тройка уменьшается и так как $x,y,z\geq 0$, то данный алгоритм завершится за конечное время.
-		\textbf{Пример}\par
+		\begin{example}\end{example}
 			\begin{flalign*}
 				\text{Исходная система}\\
 				E=&&\\
@@ -207,15 +226,8 @@
 			\}
 			\end{align*}			
 			
-	\textbf{Определение:} $S \circ T-$композиция подстановок, если $S \circ T=S(T(a))$\par
-	\textbf{Определение:} $S-$наиболее общий унификатор ксли любое решение сисетмы $R$ может быть получено уточнением: \par		$\exists T:R=T\circ S$\par
-	\textbf{Утверждение:} Алгоритм дает наиболее общий унификатор системы, если у нее есть решения. Если решений нет алгоритм окончится неудачей.\par
+	\begin{definition} $S \circ T-$композиция подстановок, если $S \circ T=S(T(a))$\end{definition}
+	\begin{definition} $S-$наиболее общий унификатор ксли любое решение сисетмы $R$ может быть получено уточнением: $\exists T:R=T\circ S$\end{definition}
+	\begin{statement} Алгоритм дает наиболее общий унификатор системы, если у нее есть решения. Если решений нет алгоритм окончится неудачей.\end{statement}
 	
-\par \textbf{Ссылки}
-\begin{enumerate}
-\item https://www.quora.com/What-is-an-intuitive-explanation-of-the-Curry-Howard-correspondence
-\item https://habr.com/post/269907/
-\item https://arxiv.org/pdf/cs/0701022.pdf
-\item http://moscova.inria.fr/~levy/courses/X/IF/03/pi/levy2/martelli-montanari.pdf
-\end{enumerate}
-
+\end{document}
