@@ -7,12 +7,17 @@
 \usepackage{bnf}
 \usepackage{amssymb}
 \usepackage{enumerate}
+\usepackage{mathtext}
 \usepackage{mathtools}
 \usepackage[left=2cm,right=2cm,top=2cm,bottom=2cm,bindingoffset=0cm]{geometry}
 \usepackage{proof}
 
+
+
 \title{Введение в Теорию Типов\\\it{Конспект лекций}}
 \author{Штукенберг Д.~Г.\\Университет ИТМО}
+\DeclareMathOperator{\FV}{FV}
+
 
 \begin{document}
 
@@ -22,6 +27,10 @@
 \newtheorem{theorem}{Теорема}[section]
 \newtheorem{axiom}{Аксиома}[section]
 \newtheorem{lemma}[theorem]{Лемма}
+
+
+
+\newcommand{\set}[1]{\left\{#1\right\}}
 
 \def\from#1{\par \parbox{0.7\textwidth}{\par \hfill\raggedleft \it #1}} 
 

@@ -5,12 +5,14 @@
 \begin{definition}[$\lambda$-выражение]
 	$\lambda$-выражение "--- выражение, удовлетворяющее грамматике:
 	\vspace{1mm}
-	\begin{bnf}\begin{alignat*}{3}
+	\begin{bnf}
+	\begin{alignat*}{3}
 		\Phi &::=& x \\
 		| & \left(\Phi\right) \\
 		| & \lambda{}x.\Phi \qquad && () \\
 		| & \Phi \ \Phi         && () \\
-	\end{alignat*}\end{bnf}
+	\end{alignat*}
+	\end{bnf}
 	\begin{enumerate}
 		\item Аппликация левоассациативна.
 		\item Абстракции жадные, едят все что могут.
@@ -20,6 +22,30 @@
 		\end{example}
 	\end{enumerate}
 \end{definition}
+
+Есть понятия связанного и свободного вхождения переменной (аналогично исчислению предикатов).
+$\lambda{}x.A$ связывает все свободные вхождения $x$ в $A$.
+\begin{definition} 
+	Функция $\FV(A)$ "--- множество свободных переменных, входящих в $A$:
+	\[
+	\FV(A) =
+	\begin{cases}
+	\set{x}                  & \text{если } A \equiv x \\
+	\FV(P) \cup \FV(Q)       & \text{если } A \equiv PQ \\
+	\FV(P) \setminus \set{x} & \text{если } A \equiv \lambda x . P
+	\end{cases}
+	\]
+\end{definition}
+
+Договоримся, что:
+\begin{itemize}
+	\item Переменные "--- $x$, $a$, $b$, $c$.
+	\item Термы (части $\lambda$-выражения) "--- $X$, $A$, $B$, $C$.
+	\item Фиксированные переменные обозначаются буквами из начала алфавита, метапеременные "--- из конца.
+\end{itemize}
+
+На самом деле, смысл в этом есть, $\lambda$-выражение можно понимать как функцию.
+Абстракция "--- это функция с аргументом, аппликация "--- это передача аргумента.
 
 \begin{definition}[$\alpha$-эквивалентность]
 	$A=_{\alpha}B$, если имеет место одно из следующих условий:
