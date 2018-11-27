@@ -56,6 +56,17 @@ $\lambda{}x.A$ связывает все свободные вхождения $
 	\end{enumerate} 
 \end{definition}
 
+\begin{example}
+	$\lambda{}x.\lambda{}y.xy=_{\alpha}\lambda{}y.\lambda{}x.yx$.
+	\begin{proof} Согласно второму правилу следующие утверждения верны:
+		\begin{alignat*}{2}
+		\lambda{}y.ty=_{\alpha}\lambda{}x.tx &\implies \lambda{}x.\lambda{}y.xy=_{\alpha}\lambda{}y.\lambda{}x.yx \\
+		tz=_{\alpha}tz &\implies \lambda{}y.ty=_{\alpha}\lambda{}x.tx
+		\end{alignat*}%
+		$tz=_{\alpha}tz$ верно по третьему условию.
+	\end{proof}
+\end{example}
+
 \begin{definition}[$\beta$-редекс]
 	$\beta$-редекс "--- выражение вида: $\left(\lambda{}x.A\right)B$
 \end{definition}
@@ -84,15 +95,35 @@ Boolean значения легко представить в терминах $
 	\item $True$   = $\lambda{}a\lambda{}b.a$ 
 	\item $False$  = $\lambda{}a\lambda{}b.b$
 \end{itemize}
+
+\newcommand{\If}{\lambda{}c.\lambda{}t.\lambda{}e.(c t) e}
+\newcommand{\T}{\lambda{}a\lambda{}b.a}
+\newcommand{\F}{\lambda{}a\lambda{}b.b}
+
+
+
 Также мы можем выражать и более сложные функции \\
-\newcommand{\If}{$\lambda{}c.\lambda{}t.\lambda{}e.(c t) e$}
-\newcommand{\T}{$\lambda{}a\lambda{}b.a$}
-\newcommand{\F}{$\lambda{}a\lambda{}b.b$}
-	If = \If
 
 \begin{example}
-
+	$If \ T \ a \ b \to_{\beta} \ a$
+	\begin{proof}
+		\begin{alignat*}{2}
+		 ((\If) \ \T)\ a \ b \to_{\beta} (\lambda{}t.\lambda{}.e(\T) \ t \ e) \ a \ b \to_{\beta} \ \\ (\lambda{}t.\lambda{}.e(\lambda{}b.t) \ e) \ a \ b \to_{\beta} \ (\lambda{}t.\lambda{}e.t) \ a \ b \to_{\beta} \ (\lambda{}e.a) \ b \to_{\beta} \ a
+		\end{alignat*}
+	\end{proof}
 \end{example}
+
+Как мы видим If true действительно возвращает результат первой ветки.
+
+
+Другие логические операции:
+\[
+	Not = \lambda{}a.a \ F \ T \qquad
+	And = \lambda{}a.\lambda{}b.a \ b \ F \qquad
+	Or = \lambda{}a.\lambda{}b.a \ T \ b \qquad
+\]
+
+
 
 \subsection{Черчевские нумералы}
 
@@ -101,7 +132,7 @@ Boolean значения легко представить в терминах $
 		\overline{n} = \lambda{}f.\lambda{}x.f^{n} x \text{, \quad где\quad}
 		f^{n} x = 
 		\begin{cases}
-			f\left(f^(n-1) x\right) & \text{при } n > 0 \\
+			f\left(f^{n-1} x\right) & \text{при } n > 0 \\
 			x 						& \text{при } n = 0
 		\end{cases}
 	\]
