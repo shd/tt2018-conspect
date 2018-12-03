@@ -1,10 +1,15 @@
-\section{Лекция 6 \\ Реконструкция типов в просто типизированном лямбда-исчислении, комбинаторы}
+				
+		
+		
+		
+		\section{Лекция 6 \\ Реконструкция типов в просто типизированном лямбда-исчислении, комбинаторы}
 		\subsection{Алгоритм вывода типов}
-			Пусть есть: $?|-A:?$, хотим найти пару $\big \langle \text{контекст}, \text{тип} \big \rangle$\par
+					
+			Пусть есть: $?\:|-\:A\: :\: ?$, хотим найти пару $\big \langle \text{контекст}, \text{тип} \big \rangle$\par
 	\textbf{Алгоритм:}
 	\begin{enumerate}
 		\item Рекурсия по структуре формулы\par Построить по формуле $A$ пару $\big \langle E, \tau\big \rangle$, где\par $E-$набор уравнений, $\tau-$тип $A$
-		\item Решение уравнения, получения подстановки $S$ и из решения $E$ и $S(\tau)$ получение ответа	
+		\item Решение уравнения, получения подстановки $S$ и из решения $E$ и $S\:(\tau)$ получение ответа	
 	\end{enumerate}
 		Т.е. необохимо свести вывод типа к алгоритму унификации.\par
 		\begin{oun_paragraph}Рассмотрим 3 случая\end{oun_paragraph}
@@ -12,33 +17,40 @@
 			\begin{enumerate}
 				\item $A\equiv x\implies\:\big \langle \{\}, \alpha_A\big\rangle$, где $\{\}-$пустой конекст, $\alpha_A-$новая переменная нигде не встречавшаяся до этого в формуле
 				\item $A\equiv P\:Q\implies\big \langle E_P\cup E_Q\cup \{\tau_P=\:\rightarrow\:(\tau_Q\:\alpha_A)\}, \alpha_A\big \rangle$, где $\alpha_A-$новая переменная
-				\item $A\equiv\lambda x.P\implies\big\langle E_P,\alpha_x\rightarrow\tau_P\big\rangle$
+				\item $A\equiv\lambda x.P\implies\big\langle E_P,\alpha_x\:\rightarrow\:\tau_P\big\rangle$
 			\end{enumerate}
 		\begin{oun_paragraph}Алгоритм унификации\end{oun_paragraph} 
-			Рассмотрим $E-$набор уравнений, запишем все уравнения в алгебраическом виде т.е. $\alpha\rightarrow\beta\Leftrightarrow\rightarrow\alpha\beta$, затем применяем алгоритм унификации.
+			Рассмотрим $E-$набор уравнений, запишем все уравнения в алгебраическом виде т.е. \par $\alpha\:\rightarrow\:\beta\:\Leftrightarrow\:\rightarrow\:\alpha\:\beta$, затем применяем алгоритм унификации.
 	\begin{lemma}
-	Рассмотрим терм $M$ и пару $\big\langle E_M, \tau_M\big\rangle$, Если $\Gamma|-M:\rho$, то существует:
+	Рассмотрим терм $M$ и пару $\big\langle E_M, \tau_M\big\rangle$, Если $\Gamma\:|-M:\rho$, то существует:
 	\end{lemma}	
 		\begin{enumerate}
-		\item $S-$решение $E_M$ тогда $\Gamma=\{S(\alpha_x)\:|\:x\in FV(M)\}$, $FV-$множество свободных переменных в терме $M$, $\alpha_x-$ переменная полученная при разборе терма $M$\par
-		$\rho=S(\tau_M)$
-		\item Если $S-$ решение $E_M$, то $\Gamma|-M:\rho$,
-		\begin{proof}индукция по структуре терма $M$\end{proof}
+		\item $S-$решение $E_M$ тогда $\Gamma=\{x : S(\alpha_x)\:|\:x\in FV(M)\}$, $FV-$множество свободных переменных в терме $M$, $\alpha_x-$ переменная полученная при разборе терма $M$\par
+		$\rho\:=\:S(\tau_M)$
+		\item Если $S-$ решение $E_M$, то $\Gamma\:|-M:\rho$,
+		\begin{proof}индукция по структуре терма $M$
+
+			\begin{enumerate}
+				\item Если $M\equiv x$, то так как решение существует, то существует и $S(\alpha_x)$, что: \par$\Gamma,\:x:S(\alpha_x)\:|-\:x:S(\alpha_x)$
+				\item Если $M\equiv \lambda x.\:P$, то по индукции уже известен тип $P$, контекст $\Gamma$ и тип $x$, тогда: $${\Gamma,\:x:\:S(\alpha_x)\:|-\:P:\:S(\alpha_P) \over \Gamma\:|-\:\lambda x.\:P:S(\alpha_x)\:\rightarrow\:S(\alpha_P)}$$
+				\item Если $M\equiv P\:Q$, то по индукции: $${ \Gamma\:|-\:P:\:S(\alpha_P)\equiv\tau_1\:\rightarrow\:\tau_2 \hspace{4em} \Gamma\:|-\:Q:S(\alpha_Q)\equiv\tau_1\over \Gamma\:|-\:P\:Q:\tau_2}$$
+			\end{enumerate}					
+		\end{proof}
 	\end{enumerate}				
-		 $\big \langle\Gamma,\rho\big\rangle-$основная пара для терма $M$, если 
+		 $\big \langle\Gamma,\rho\big\rangle\:-\:$основная пара для терма $M$, если 
 		 \begin{enumerate}
-			\item $\Gamma|-M:\tau$
-			\item Если $\Gamma'|-M:\tau'$, то сущесвтует $S:\:S(\Gamma)\subset\Gamma'$
+			\item $\Gamma\:|-M:\tau$
+			\item Если $\Gamma'\:|-M:\tau'$, то сущесвтует $S:\:S(\Gamma)\:\subset\:\Gamma'$
 		 \end{enumerate}
 		 \begin{example}
 		\end{example}
-		 	Рассмотрим терм: $\lambda\:f\lambda\:x.f(f(x))$, построим и пронумеруем его дерево разбора:\par
+		 	Рассмотрим терм: $\lambda f\:\lambda x.\:f(f(x))$, построим и пронумеруем его дерево разбора:\par
 \begin{tikzpicture}
-	\node [fill=none, draw=none] (A) at (9,0) {$\lambda\:f\lambda\:x.f(f(x))\enspace{\color{blue} (7)}$};
-	\node [fill=none, draw=none] (B) at (7.5,-1) {$\lambda\:x.f(f(x))\enspace{\color{blue} (6)}$};
-	\node [fill=none, draw=none] (C) at (11.5,-1) {$\lambda\:f$};
+	\node [fill=none, draw=none] (A) at (9,0) {$\lambda f\:\lambda x.\:f(f(x))\enspace{\color{blue} (7)}$};
+	\node [fill=none, draw=none] (B) at (7.5,-1) {$\lambda x.\:f(f(x))\enspace{\color{blue} (6)}$};
+	\node [fill=none, draw=none] (C) at (11.5,-1) {$\lambda f$};
 	\node [fill=none, draw=none] (D) at (5.5,-2) {$f(f(x))\enspace{\color{blue} (5)}$};
-	\node [fill=none, draw=none] (E) at (9.5,-2) {$\lambda\:x$};
+	\node [fill=none, draw=none] (E) at (9.5,-2) {$\lambda x$};
 	\node [fill=none, draw=none] (F) at (3.5,-3) {$f(x)\enspace{\color{blue} (4)}$};
 	\node [fill=none, draw=none] (G) at (7.5,-3) {$f\enspace{\color{blue} (3)}$};
 	\node [fill=none, draw=none] (H) at (1.5,-4) {$f\enspace{\color{blue} (2)}$};
@@ -105,16 +117,16 @@
 	 \begin{enumerate}
 	 	\item $KI\Omega-$ слабо нормализуема
 	 		\begin{example}\end{example}
-	 		Перепишем $KI\Omega$ как ${\color{red}(}(\lambda\:x\:\lambda\:y.\:x)(\lambda\:x.\:x){\color{red})}{\color{blue}(}((\lambda\:x.\:x\:x)(\lambda\:x.\:x\:x)){\color{blue})}$, очевидно, что этот терм можно средуцировать двумя разными способами:
+	 		Перепишем $KI\Omega$ как ${\color{red}(}(\lambda x\:\lambda y.\:x)(\lambda x.\:x){\color{red})}{\color{blue}(}((\lambda x.\:x\:x)(\lambda x.\:x\:x)){\color{blue})}$, очевидно, что этот терм можно средуцировать двумя разными способами:
 	 		\begin{enumerate}
 	 			\item Сначала редуцируем красную скобку 
 	 				\begin{enumerate}
-	 					\item ${\color{red}(}(\lambda\:x\:\lambda\:y.\:x)(\lambda\:x.\:x){\color{red})}{\color{blue}(}((\lambda\:x.\:x\:x)(\lambda\:x.\:x\:x)){\color{blue})}$
-	 					\item ${\color{red}(}(\lambda\:y.(\lambda\:x.\:x)){\color{red})}{\color{blue}(}((\lambda\:x.\:x\:x)(\lambda\:x.\:x\:x)){\color{blue})}$
-	 					\item $(\lambda\:x.\:x)$
+	 					\item ${\color{red}(}(\lambda x\:\lambda y.\:x)(\lambda x.\:x){\color{red})}{\color{blue}(}((\lambda x.\:x\:x)(\lambda x.\:x\:x)){\color{blue})}$
+	 					\item ${\color{red}(}(\lambda y.\:(\lambda x.\:x)){\color{red})}{\color{blue}(}((\lambda x.\:x\:x)(\lambda x.\:x\:x)){\color{blue})}$
+	 					\item $(\lambda x.\:x)$
 	 				\end{enumerate}
 	 				Видно, что в этом случае количество шагов конечно.
-	 			\item Редуцируем синюю скобку. Очевидно, что комбинатор $\Omega$ не имеет нормальной формы $\rightarrow$ в этом случае терм $KI\Omega$ никогда не закончится.
+	 			\item Редуцируем синюю скобку. Очевидно, что комбинатор $\Omega$ не имеет нормальной формы, тогда понятно, что в этом случае терм $KI\Omega$ никогда не средуцируется в нормальную форму.
 	 		\end{enumerate}
 	 	\item $\Omega-$ не нормализуема
 	 	\item $II-$ сильно нормализуема
@@ -123,22 +135,22 @@
 	 \end{lemma}
 	 \subsection{Выразимость комбинаторов}
 	 \begin{statement}Любое $\lambda$ выражение можно записать с помощью комбинаторов $S$ и $K$, где\end{statement}
-	 $S=\lambda\:x\lambda\:y\lambda\:z.(x\:z)(y\:z)\: : \:(a\:\rightarrow\:b\:\rightarrow\:c)\:\rightarrow\:(a\:\rightarrow\:b)\:\rightarrow\:a\:\rightarrow\:c$\par 
-	 $K=\lambda\:x\lambda\:y.x\: : a\:\rightarrow\:b\:\rightarrow\:a$\par 
+	 $S\:=\:\lambda x\:\lambda y\:\lambda z.\:(x\:z)\:(y\:z)\: : \:(a\:\rightarrow\:b\:\rightarrow\:c)\:\rightarrow\:(a\:\rightarrow\:b)\:\rightarrow\:a\:\rightarrow\:c$\par 
+	 $K=\lambda x\:\lambda y.\:x\: : a\:\rightarrow\:b\:\rightarrow\:a$\par 
 	 \begin{statement}Комбинаторы $S$ и $K$ являются аксиомами в ИИВ\end{statement}
 	\begin{statement}Соотношение комбинаторов с $\lambda$ исчислением:\end{statement}
 	\begin{enumerate}
 		\item $T(x)=x$
-		\item $T(P\:Q)=T(P)T(Q)$
+		\item $T(P\:Q)=T(P)\:T(Q)$
 		\item $T(\lambda\:x.P)=K(T(P)),\enspace x\not\in FV(P)$
 		\item $T(\lambda\:x.x)=I$
-		\item $T(\lambda\:x\lambda\:y.P)=T(\lambda\:x.T(\lambda\:y.P))$
-		\item $T(\lambda\:x.P\:Q)=S\:T(\lambda\:x.P)T(\lambda\:x.Q)$
+		\item $T(\lambda\:x\lambda\:y.P)=T(\lambda\:x.\:T(\lambda\:y.P))$
+		\item $T(\lambda\:x.P\:Q)=S\:\:T(\lambda\:x.P)\:T(\lambda\:x.Q)$
 	\end{enumerate}		
 	\begin{statement}Связь комбинаторов с ИИВ\end{statement}	
 	\begin{statement}Альтернативный базис:\end{statement}
 	 \begin{enumerate}
-		\item $B=\lambda\:x\lambda\:y\lambda\:z.x(y\:z)\: : \:(a\:\rightarrow\:b)\:\rightarrow\:(c\:\rightarrow\:a)\:\rightarrow\:c\:\rightarrow\:b$
-		\item $C=\lambda\:x\lambda\:y\lambda\:z.((x\:z)y)\: : \:(a\:\rightarrow\:b\:\rightarrow\:c)\:\rightarrow\:b\:\rightarrow\:a\:\rightarrow\:c$
-		\item $W=\lambda\:x\lambda\:y.((x\:y)y)\: : \: (a\:\rightarrow\:a\:\rightarrow\:b)\:\rightarrow\:a\:\rightarrow\:b$
+		\item $B=\lambda x\:\lambda y\:\lambda z.\:x\:(y\:z)\: : \:(a\:\rightarrow\:b)\:\rightarrow\:(c\:\rightarrow\:a)\:\rightarrow\:c\:\rightarrow\:b$
+		\item $C=\lambda x\:\lambda y\:\lambda z.\:((x\:z)\:y)\: : \:(a\:\rightarrow\:b\:\rightarrow\:c)\:\rightarrow\:b\:\rightarrow\:a\:\rightarrow\:c$
+		\item $W=\lambda x\:\lambda y.\:((x\:y)\:y)\: : \: (a\:\rightarrow\:a\:\rightarrow\:b)\:\rightarrow\:a\:\rightarrow\:b$
 	 \end{enumerate}
