@@ -26,9 +26,10 @@
 
 \begin{document}
 
+
 \section{Лекция 9 (30.10.2018)}
 
-\subsection{Ранг типа, Типовая система}
+\subsection{}
 
 \noindent\textbf{Def.} Ранг типа
 
@@ -66,8 +67,8 @@ $\sigma_1 \sqsubseteq \sigma_2$ --- типовая схема
 $\sigma_2$ --- частный случай (специализация) $\sigma_1$, если 
 
 \begin{enumerate}
-    \item $\sigma_1 = \forall \alpha_1. \forall \alpha_2. \dots \forall \alpha_n. \tau_1$
-    \item $\sigma_2 = \forall \beta_1. \forall \beta_2. \dots \forall \beta_n. \tau_1[\alpha_i := S(\alpha_i)]$
+    \item $\sigma_1 =  \forall \alpha_1. \forall \alpha_2. \dots \forall \alpha_n. \tau_1$
+    \item $\sigma_2 =  \forall \beta_1. \forall \beta_2. \dots \forall \beta_n. \tau_1[\alpha_i := S(\alpha_i)]$
     \item $\forall i. \beta_i \in FV(\tau_1)$
 \end{enumerate}
 
@@ -83,17 +84,56 @@ $\sigma_2$ --- частный случай (специализация) $\sigma_
 \end{paracol}
 
 
+
+
+
+\subsection{Хиндли-Милнер}
+
+\begin{enumerate}
+    \item Все типы только с поверхностными кванторами ($R(1)$)
+    \item $\overline{HM} ::= p\ |\ \overline{HM}\ \overline{HM}\ |\ \lambda p. \overline{HM}\ |\ let =  \overline{HM}\ in\ \overline{HM}$
+\end{enumerate}
+
+Докажем: $\vcenter{\infer{\Gamma \vdash \exists p.\phi}{\Gamma \vdash \phi[p := \Theta]}}$
+\begin{itemize}
+    \item $\exists p.\phi = \forall b.(\forall p. (\phi \rightarrow b)) \rightarrow b$
+    \item $\phi \rightarrow \bot \equiv \forall b. (\phi \rightarrow b)$
+    
+    \item $\vcenter{\infer[]{\Gamma \vdash \forall b.(\forall p.(\phi \rightarrow b)) \rightarrow b}{\infer{\Gamma \vdash (\forall p. (\phi \rightarrow b)) \rightarrow b}{\infer{\Gamma, \forall p. (\phi \rightarrow b) \vdash b}{\infer{\Gamma, \forall p. (\phi \rightarrow b) \vdash \phi [p := \Theta] \rightarrow b}{\Gamma, \forall p. (\phi \rightarrow b) \vdash \forall p.(\phi \rightarrow b)}}}}}$
+    % \item $\Gamma, \forall p. (\phi \rightarrow b) \vdash \forall p.(\phi \rightarrow b)$
+    % \item $\Gamma, \forall p. (\phi \rightarrow b) \vdash \phi [p := \Theta] \rightarrow b$
+    % \item $\Gamma, \forall p. (\phi \rightarrow b) \vdash b$
+    % \item $\Gamma \vdash (\forall p. (\phi \rightarrow b)) \rightarrow b$
+    % \item $\Gamma \vdash \forall b.(\forall p.(\phi \rightarrow b)) \rightarrow b$
+\end{itemize}
+
 Соглашение:
 \begin{itemize}
     \item $\sigma$ --- типовая схема
     \item $\tau$ --- простой тип
 \end{itemize}
 
-\subsection{Алгоритм W}
+
+\begin{enumerate}
+    \item $\vcenter{\infer{\Gamma, x : \sigma \vdash x : \sigma}{}}$
+    \item $\vcenter{\infer{\Gamma \vdash e_0\ e_1 : \tau'}{\Gamma \vdash e_1 : \tau \rightarrow \tau' \qquad \Gamma \vdash e_1 : \tau}}$
+    \item $\vcenter{\infer{\Gamma \vdash \lambda x.e : \tau \rightarrow \tau'}{\Gamma, x : \tau \vdash e : \tau'}}$
+    \item $\vcenter{\infer[,\ let\ x = a\ in\ b \equiv (\lambda x.b)\ a]{\Gamma \vdash let\ x = e_0\ in\ e_1 : \tau}{\Gamma \vdash e_0 : \sigma \qquad \Gamma, x : \sigma \vdash e_1 : \tau}}$ 
+    \item $\vcenter{\infer{\Gamma \vdash e : \sigma}{\Gamma \vdash e : \sigma' \qquad  \sigma' \sqsubseteq \sigma}}$
+    \item $\vcenter{\infer[\alpha \not \in FV(\Gamma)]{\Gamma \vdash e : \forall \alpha.\sigma}{\Gamma \vdash e : \sigma}}$
+\end{enumerate}
+
+
+\subsection{Алгоритм вывода типов в системе Хиндли-Милнера W}
 На вход подаются $\Gamma,\ M$, на выходе наиболее общая пара $(S, \tau)$
 \begin{enumerate}
-    \item $M = x,\ x \not \in \Gamma$
-    \item $(\emptyset, \Gamma(x))$, если $x \in \Gamma$
+    \item $M = x : \tau,\ x \in \Gamma$ (иначе ошибка)
+    \begin{itemize}
+        \item Выбросить все кванторы из $\tau$
+        \item Переименовать все свободные переменные в свежие \\
+        Например: $\forall \alpha_1.\phi \Rightarrow \phi[\alpha_1 := \beta_1]$, где $\beta_1$ --- свежая переменная
+    \end{itemize}
+    $(\emptyset, \Gamma(x))$
     \item $M = \lambda n.e$
     \begin{itemize}
         \item $\tau$ --- новая типовая переменная
@@ -115,13 +155,89 @@ $\sigma_2$ --- частный случай (специализация) $\sigma_
         \item $(S_2, \tau_2) = W(S_1(\Gamma''), Q)$
         \item $(S_1 \circ S_2), \tau_2)$
     \end{itemize}
-    \item $M = x : \tau$ 
-    \begin{itemize}
-        \item Выбросить все кванторы из $\tau$
-        \item Переименовать все свободные переменные в свежие \\
-        Например: $\forall \alpha_1.\phi \Rightarrow \phi[\alpha_1 := \beta_1]$, где $\beta_1$ --- свежая переменная
-    \end{itemize}
+    
 \end{enumerate}
+
+Надеемся, что логика второго порядка противоречива. \\
+Введем явный $Y$-комбинатор
+
+$Y f =_\beta f (Y\ f)$
+
+$Y : \forall \alpha . (\alpha \rightarrow \alpha) \rightarrow alpha$ --- аксиома
+
+\begin{minted}{fsharp}
+type intList = Nil | Cons of int * intList;;
+
+let rec length l = match l with 
+  | Nil -> 0
+  | Cons (x, s) -> 1 + length s;;
+
+let my_list = Cons(1, Cons (2, Cons (3, Nil)));;
+
+print_int (length my_list);;  (* output: 3 *)
+\end{minted}
+
+$Nil = inLeft O = \lambda a. \lambda b. a\ O$ 
+
+$Cons = inRight p = \lambda a. \lambda b. b\ p$
+
+$\lambda a. \lambda b. a\ O : \forall \gamma .(\alpha \rightarrow \gamma) \rightarrow (\beta \rightarrow \gamma) \rightarrow \gamma$
+
+$\lambda a. \lambda b. b\ O: \forall \gamma .(\alpha \rightarrow \gamma) \rightarrow (\beta \rightarrow \gamma) \rightarrow \gamma$
+
+$\delta = \forall \gamma .(\alpha \rightarrow \gamma) \rightarrow (\beta \rightarrow \gamma) \rightarrow \gamma$
+
+$\lambda a. \lambda b. b\ (\lambda a. \lambda b. a\ O) : \forall \alpha. (\alpha \rightarrow \gamma) \rightarrow (\delta \rightarrow \gamma) \rightarrow \gamma$
+
+Научимся задавать рекурсивные типы.
+
+\begin{enumerate}
+    \item Эквирекурсивный 
+    \begin{minted}{fsharp}
+        list = Nil | Cons a * list
+    \end{minted}
+    $\alpha = f(\alpha)$ --- уравнение с неподвижной точкой. Пусть $\nu \alpha. f(\alpha) = f(\nu \alpha.f(\alpha))$. Пояснение: $Y$ --- для выражений, а для типов --- $\nu$.
+    \begin{minted}{java}
+        class Enum <extends Enum<E>>
+    \end{minted}
+    \item Изорекурсивный
+    \begin{minted}{C}
+    struct list {
+        list x;
+    }
+    x.x.x.x
+    \end{minted}
+    $*: list* \rightarrow list$ --- разыменовывание 
+    
+    $Roll: Nil | Cons (a * list) \rightarrow list$
+    
+    $Unroll: list \rightarrow Nil | Cons (a * list)$
+
+    Общий тип (введение в типовую систему): 
+    \begin{itemize}
+        \item $roll: f(\alpha) \rightarrow \alpha$
+        \item $unroll: \alpha \rightarrow f(\alpha)$
+    \end{itemize}
+    
+    Пример из Си:
+    \begin{itemize}
+        \item $*: T* \rightarrow T$
+        \item $\&: T \rightarrow T*$
+        \item $T = \alpha$
+        \item $T* = f(\alpha)$
+    \end{itemize}
+    
+    Зависимые типы и логика 1-ого порядка
+    
+    $sprintf : string \rightarrow smth \rightarrow string$
+    
+    $sprintf "\%d" : int \rightarrow string$
+    
+    $sprintf "\%f" : float \rightarrow string$
+    
+    тип sprintf определяется первым аргументом.
+\end{enumerate}
+
 
 \section{Лекция 10 (06.11.2019)}
 
@@ -200,7 +316,6 @@ $\sigma_2$ --- частный случай (специализация) $\sigma_
 
 % \item $\lambda \rightarrow$
 
-
 \end{itemize}
 
 Notes:
@@ -210,6 +325,3 @@ Notes:
 \end{itemize}
 
 \end{document}
-
-
-    
