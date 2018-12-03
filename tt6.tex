@@ -1,11 +1,7 @@
-				
-		
-		
-		
-		\section{Лекция 6 \\ Реконструкция типов в просто типизированном лямбда-исчислении, комбинаторы}
+\section{Лекция 6 \\ Реконструкция типов в просто типизированном лямбда-исчислении, комбинаторы}
 		\subsection{Алгоритм вывода типов}
 					
-			Пусть есть: $?\:|-\:A\: :\: ?$, хотим найти пару $\big \langle \text{контекст}, \text{тип} \big \rangle$\par
+			Пусть есть: $?\:\vdash \:A\: :\: ?$, хотим найти пару $\big \langle \text{контекст}, \text{тип} \big \rangle$\par
 	\textbf{Алгоритм:}
 	\begin{enumerate}
 		\item Рекурсия по структуре формулы\par Построить по формуле $A$ пару $\big \langle E, \tau\big \rangle$, где\par $E-$набор уравнений, $\tau-$тип $A$
@@ -22,25 +18,25 @@
 		\begin{oun_paragraph}Алгоритм унификации\end{oun_paragraph} 
 			Рассмотрим $E-$набор уравнений, запишем все уравнения в алгебраическом виде т.е. \par $\alpha\:\rightarrow\:\beta\:\Leftrightarrow\:\rightarrow\:\alpha\:\beta$, затем применяем алгоритм унификации.
 	\begin{lemma}
-	Рассмотрим терм $M$ и пару $\big\langle E_M, \tau_M\big\rangle$, Если $\Gamma\:|-M:\rho$, то существует:
+	Рассмотрим терм $M$ и пару $\big\langle E_M, \tau_M\big\rangle$, Если $\Gamma\:\vdash M:\rho$, то существует:
 	\end{lemma}	
 		\begin{enumerate}
 		\item $S-$решение $E_M$ тогда $\Gamma=\{x : S(\alpha_x)\:|\:x\in FV(M)\}$, $FV-$множество свободных переменных в терме $M$, $\alpha_x-$ переменная полученная при разборе терма $M$\par
 		$\rho\:=\:S(\tau_M)$
-		\item Если $S-$ решение $E_M$, то $\Gamma\:|-M:\rho$,
+		\item Если $S-$ решение $E_M$, то $\Gamma\:\vdash M:\rho$,
 		\begin{proof}индукция по структуре терма $M$
 
 			\begin{enumerate}
-				\item Если $M\equiv x$, то так как решение существует, то существует и $S(\alpha_x)$, что: \par$\Gamma,\:x:S(\alpha_x)\:|-\:x:S(\alpha_x)$
-				\item Если $M\equiv \lambda x.\:P$, то по индукции уже известен тип $P$, контекст $\Gamma$ и тип $x$, тогда: $${\Gamma,\:x:\:S(\alpha_x)\:|-\:P:\:S(\alpha_P) \over \Gamma\:|-\:\lambda x.\:P:S(\alpha_x)\:\rightarrow\:S(\alpha_P)}$$
-				\item Если $M\equiv P\:Q$, то по индукции: $${ \Gamma\:|-\:P:\:S(\alpha_P)\equiv\tau_1\:\rightarrow\:\tau_2 \hspace{4em} \Gamma\:|-\:Q:S(\alpha_Q)\equiv\tau_1\over \Gamma\:|-\:P\:Q:\tau_2}$$
+				\item Если $M\equiv x$, то так как решение существует, то существует и $S(\alpha_x)$, что: \par$\Gamma,\:x:S(\alpha_x)\:\vdash \:x:S(\alpha_x)$
+				\item Если $M\equiv \lambda x.\:P$, то по индукции уже известен тип $P$, контекст $\Gamma$ и тип $x$, тогда: $${\Gamma,\:x:\:S(\alpha_x)\:\vdash \:P:\:S(\alpha_P) \over \Gamma\:\vdash \:\lambda x.\:P:S(\alpha_x)\:\rightarrow\:S(\alpha_P)}$$
+				\item Если $M\equiv P\:Q$, то по индукции: $${ \Gamma\:\vdash \:P:\:S(\alpha_P)\equiv\tau_1\:\rightarrow\:\tau_2 \hspace{4em} \Gamma\:\vdash \:Q:S(\alpha_Q)\equiv\tau_1\over \Gamma\:\vdash \:P\:Q:\tau_2}$$
 			\end{enumerate}					
 		\end{proof}
 	\end{enumerate}				
 		 $\big \langle\Gamma,\rho\big\rangle\:-\:$основная пара для терма $M$, если 
 		 \begin{enumerate}
-			\item $\Gamma\:|-M:\tau$
-			\item Если $\Gamma'\:|-M:\tau'$, то сущесвтует $S:\:S(\Gamma)\:\subset\:\Gamma'$
+			\item $\Gamma\:\vdash M:\tau$
+			\item Если $\Gamma'\:\vdash M:\tau'$, то сущесвтует $S:\:S(\Gamma)\:\subset\:\Gamma'$
 		 \end{enumerate}
 		 \begin{example}
 		\end{example}
