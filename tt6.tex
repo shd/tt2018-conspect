@@ -1,18 +1,17 @@
-
-		
-		\section{Лекция 6 \\ Реконструкция типов в просто типизированном лямбда-исчислении, комбинаторы}
+\section{Лекция 6 \\ Реконструкция типов в просто типизированном лямбда-исчислении, комбинаторы}
 		\subsection{Алгоритм вывода типов}
 			Пусть есть: $?|-A:?$, хотим найти пару $\big \langle \text{контекст}, \text{тип} \big \rangle$\par
 	\textbf{Алгоритм:}
 	\begin{enumerate}
 		\item Рекурсия по структуре формулы\par Построить по формуле $A$ пару $\big \langle E, \tau\big \rangle$, где\par $E-$набор уравнений, $\tau-$тип $A$
-		\item Решение уравнения, получения подстановки $S$ и из решения $E$ и $S(\tau)$ получения ответа	
+		\item Решение уравнения, получения подстановки $S$ и из решения $E$ и $S(\tau)$ получение ответа	
 	\end{enumerate}
 		Т.е. необохимо свести вывод типа к алгоритму унификации.\par
 		\begin{oun_paragraph}Рассмотрим 3 случая\end{oun_paragraph}
+			\textbf{Обозначение } $\rightarrow-$ алгебраический тип 
 			\begin{enumerate}
 				\item $A\equiv x\implies\:\big \langle \{\}, \alpha_A\big\rangle$, где $\{\}-$пустой конекст, $\alpha_A-$новая переменная нигде не встречавшаяся до этого в формуле
-				\item $A\equiv P\:Q\implies\big \langle E_P\cup E_Q\cup \{\tau_P=\tau_Q\rightarrow\alpha_A\}, \alpha_A\big \rangle$, где $\alpha_A-$новая переменная
+				\item $A\equiv P\:Q\implies\big \langle E_P\cup E_Q\cup \{\tau_P=\:\rightarrow\:(\tau_Q\:\alpha_A)\}, \alpha_A\big \rangle$, где $\alpha_A-$новая переменная
 				\item $A\equiv\lambda x.P\implies\big\langle E_P,\alpha_x\rightarrow\tau_P\big\rangle$
 			\end{enumerate}
 		\begin{oun_paragraph}Алгоритм унификации\end{oun_paragraph} 
@@ -23,7 +22,8 @@
 		\begin{enumerate}
 		\item $S-$решение $E_M$ тогда $\Gamma=\{S(\alpha_x)\:|\:x\in FV(M)\}$, $FV-$множество свободных переменных в терме $M$, $\alpha_x-$ переменная полученная при разборе терма $M$\par
 		$\rho=S(\tau_M)$
-		\item Если $S-$ решение $E_M$, то $\Gamma|-M:\rho$,Доказательство$-$индукция по структуре терма $M$
+		\item Если $S-$ решение $E_M$, то $\Gamma|-M:\rho$,
+		\begin{proof}индукция по структуре терма $M$\end{proof}
 	\end{enumerate}				
 		 $\big \langle\Gamma,\rho\big\rangle-$основная пара для терма $M$, если 
 		 \begin{enumerate}
@@ -52,18 +52,23 @@
 	\path [->] (F) edge node[left] {} (H);	
 	\path [->] (F) edge node[left] {} (I);
 \end{tikzpicture}\par
+
+
 \begin{enumerate}
-	\item $E_1=\big \langle \{\}, \alpha_x \big \rangle$
-	\item $E_2=\big \langle \{\}, \alpha_f \big \rangle$
-	\item $E_3=\big \langle \{\}, \alpha_f \big \rangle$
-	\item $E_4=\big \langle \{\alpha_f=\alpha_x\rightarrow\alpha_1\}, \alpha_1 \big \rangle$
-	\item $E_5=\big \langle \{\alpha_f=\alpha_x\rightarrow\alpha_1$\par$\alpha_f=\alpha_1\rightarrow\alpha_2\}, \alpha_2 \big \rangle$
-	\item $E_6=\big \langle \{\alpha_f=\alpha_x\rightarrow\alpha_1$\par$\alpha_f=\alpha_1\rightarrow\alpha_2\}, \alpha_x\rightarrow\alpha_2 \big \rangle$
-	\item $E_7=\big \langle \{\alpha_f=\alpha_x\rightarrow\alpha_1$\par$\alpha_f=\alpha_1\rightarrow\alpha_2\}, \alpha_f\rightarrow(\alpha_x\rightarrow\alpha_2) \big \rangle$
+	\item $E_1=\big \langle \{\},\:\alpha_x \big \rangle$
+	\item $E_2=\big \langle \{\},\:\alpha_f \big \rangle$
+	\item $E_3=\big \langle \{\},\:\alpha_f \big \rangle$
+	\item $E_4=\big \langle \{\alpha_f=\:\rightarrow(\alpha_x\:\alpha_1)\}, \alpha_1 \big \rangle$
+	\item $E_5=\big \langle \begin{Bmatrix}
+	\alpha_f=\:\rightarrow(\alpha_x\:\alpha_1)\\
+	\alpha_f=\:\rightarrow(\alpha_1\:\alpha_2)
+\end{Bmatrix},\:\alpha_2 \big \rangle$
+	\item $E_6=\big \langle \begin{Bmatrix}\alpha_f=\:\rightarrow(\alpha_x\:\alpha_1)\\ \alpha_f=\:\rightarrow(\alpha_1\:\alpha_2)\end{Bmatrix},\:\alpha_x\rightarrow\alpha_2 \big \rangle$
+	\item $E_7=\big \langle \begin{Bmatrix}\alpha_f=\:\rightarrow(\alpha_x\alpha_1)\\ \alpha_f=\:\rightarrow(\alpha_1\alpha_2)\end{Bmatrix},\:\alpha_f\rightarrow(\alpha_x\rightarrow\alpha_2) \big \rangle$
 \end{enumerate}
-	$E=\alpha_f=\alpha_x\rightarrow\alpha_1$\par$\alpha_f=\alpha_1\rightarrow\alpha_2$, решим полученную систему:\par 
+	$E=\begin{Bmatrix}\alpha_f=\:\rightarrow\:(\alpha_x\:\alpha_1)\\ \alpha_f=\:\rightarrow\:(\alpha_1\:\alpha_2)\end{Bmatrix}$, решим полученную систему:\par 
 	\begin{enumerate}
-		\item приведем систему к алгебрачиескому виду и решим её:\par 
+		\item Решим сисетму:\par 
 			\begin{enumerate}
 			\item \[\begin{cases}
 				\alpha_f=\rightarrow(\alpha_x\:\alpha_1)&\\
@@ -99,6 +104,18 @@
 	 \end{statement}
 	 \begin{enumerate}
 	 	\item $KI\Omega-$ слабо нормализуема
+	 		\begin{example}\end{example}
+	 		Перепишем $KI\Omega$ как ${\color{red}(}(\lambda\:x\:\lambda\:y.\:x)(\lambda\:x.\:x){\color{red})}{\color{blue}(}((\lambda\:x.\:x\:x)(\lambda\:x.\:x\:x)){\color{blue})}$, очевидно, что этот терм можно средуцировать двумя разными способами:
+	 		\begin{enumerate}
+	 			\item Сначала редуцируем красную скобку 
+	 				\begin{enumerate}
+	 					\item ${\color{red}(}(\lambda\:x\:\lambda\:y.\:x)(\lambda\:x.\:x){\color{red})}{\color{blue}(}((\lambda\:x.\:x\:x)(\lambda\:x.\:x\:x)){\color{blue})}$
+	 					\item ${\color{red}(}(\lambda\:y.(\lambda\:x.\:x)){\color{red})}{\color{blue}(}((\lambda\:x.\:x\:x)(\lambda\:x.\:x\:x)){\color{blue})}$
+	 					\item $(\lambda\:x.\:x)$
+	 				\end{enumerate}
+	 				Видно, что в этом случае количество шагов конечно.
+	 			\item Редуцируем синюю скобку. Очевидно, что комбинатор $\Omega$ не имеет нормальной формы $\rightarrow$ в этом случае терм $KI\Omega$ никогда не закончится.
+	 		\end{enumerate}
 	 	\item $\Omega-$ не нормализуема
 	 	\item $II-$ сильно нормализуема
 	 \end{enumerate}
@@ -106,8 +123,9 @@
 	 \end{lemma}
 	 \subsection{Выразимость комбинаторов}
 	 \begin{statement}Любое $\lambda$ выражение можно записать с помощью комбинаторов $S$ и $K$, где\end{statement}
-	 $S=\lambda\:x\lambda\:y\lambda\:z.(x\:z)(y\:z)$\par 
-	 $K=\lambda\:x\lambda\:y.x$\par 
+	 $S=\lambda\:x\lambda\:y\lambda\:z.(x\:z)(y\:z)\: : \:(a\:\rightarrow\:b\:\rightarrow\:c)\:\rightarrow\:(a\:\rightarrow\:b)\:\rightarrow\:a\:\rightarrow\:c$\par 
+	 $K=\lambda\:x\lambda\:y.x\: : a\:\rightarrow\:b\:\rightarrow\:a$\par 
+	 \begin{statement}Комбинаторы $S$ и $K$ являются аксиомами в ИИВ\end{statement}
 	\begin{statement}Соотношение комбинаторов с $\lambda$ исчислением:\end{statement}
 	\begin{enumerate}
 		\item $T(x)=x$
@@ -117,9 +135,10 @@
 		\item $T(\lambda\:x\lambda\:y.P)=T(\lambda\:x.T(\lambda\:y.P))$
 		\item $T(\lambda\:x.P\:Q)=S\:T(\lambda\:x.P)T(\lambda\:x.Q)$
 	\end{enumerate}		
-	 \begin{statement}Альтернативный базис:\end{statement}
+	\begin{statement}Связь комбинаторов с ИИВ\end{statement}	
+	\begin{statement}Альтернативный базис:\end{statement}
 	 \begin{enumerate}
-		\item $B=\lambda\:x\lambda\:y\lambda\:z.x(y\:z)$
-		\item $C=\lambda\:x\lambda\:y\lambda\:z.((x\:z)y)$
-		\item $W=\lambda\:x\lambda\:y.((x\:y)y)$
+		\item $B=\lambda\:x\lambda\:y\lambda\:z.x(y\:z)\: : \:(a\:\rightarrow\:b)\:\rightarrow\:(c\:\rightarrow\:a)\:\rightarrow\:c\:\rightarrow\:b$
+		\item $C=\lambda\:x\lambda\:y\lambda\:z.((x\:z)y)\: : \:(a\:\rightarrow\:b\:\rightarrow\:c)\:\rightarrow\:b\:\rightarrow\:a\:\rightarrow\:c$
+		\item $W=\lambda\:x\lambda\:y.((x\:y)y)\: : \: (a\:\rightarrow\:a\:\rightarrow\:b)\:\rightarrow\:a\:\rightarrow\:b$
 	 \end{enumerate}
