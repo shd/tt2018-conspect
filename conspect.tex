@@ -1,5 +1,4 @@
 \documentclass[12pt,a4paper,oneside]{article}
-\usepackage[utf8]{inputenc}
 \usepackage[english,russian]{babel}
 \usepackage[utf8]{inputenc}
 \usepackage{amsmath}
@@ -9,6 +8,7 @@
 \usepackage{enumerate}
 \usepackage{mathtext}
 \usepackage{mathtools}
+\usepackage{mathabx}
 \usepackage[left=2cm,right=2cm,top=2cm,bottom=2cm,bindingoffset=0cm]{geometry}
 \usepackage{proof}
 
@@ -17,7 +17,6 @@
 \title{Введение в Теорию Типов\\\it{Конспект лекций}}
 \author{Штукенберг Д.~Г.\\Университет ИТМО}
 \DeclareMathOperator{\FV}{FV}
-
 
 \begin{document}
 
@@ -30,9 +29,9 @@
 \newtheorem{lemma}[theorem]{Лемма}
 
 
-
+\newcommand{\func}[1]{\operatorname{#1}}
+\newcommand{\reduction}[1]{{\color{OrangeRed}#1}}
 \newcommand{\set}[1]{\left\{#1\right\}}
-\newcommand{\func}[1]{\operatorname{\EulerRM{#1}}}
 
 \def\from#1{\par \parbox{0.7\textwidth}{\par \hfill\raggedleft \it #1}} 
 

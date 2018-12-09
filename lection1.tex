@@ -4,13 +4,12 @@
 
 \begin{definition}[$\lambda$-выражение]
 	$\lambda$-выражение "--- выражение, удовлетворяющее грамматике:
-	\vspace{1mm}
 	\begin{bnf}
 	\begin{alignat*}{3}
-		\Phi &::=& x \\
-		| & \left(\Phi\right) \\
-		| & \lambda{}x.\Phi \qquad && () \\
-		| & \Phi \ \Phi         && () \\
+		\Phi ::= & x \quad \\
+		       | & \left(\Phi\right) \\
+		       | & \lambda{}x.\Phi \qquad && (abstraction) \\
+		       | & \Phi \ \Phi         && (application) \\
 	\end{alignat*}
 	\end{bnf}
 	\begin{enumerate}
@@ -99,10 +98,16 @@ Boolean значения легко представить в терминах $
 \newcommand{\If}{\lambda{}c.\lambda{}t.\lambda{}e.(c t) e}
 \newcommand{\T}{\lambda{}a\lambda{}b.a}
 \newcommand{\F}{\lambda{}a\lambda{}b.b}
-
+\newcommand{\Fl}{\func{F}}
+\newcommand{\Tl}{\func{T}}
 
 
 Также мы можем выражать и более сложные функции \\
+
+
+\begin{definition}
+	If = $\If$
+\end{definition}
 
 \begin{example}
 	$If \ T \ a \ b \to_{\beta} \ a$
@@ -138,6 +143,38 @@ Boolean значения легко представить в терминах $
 	\]
 \end{definition}
 
+\begin{example}
+	\[
+	\overline{3} = \lambda f . \lambda x . f \left(f \left(f x\right)\right)
+	\]
+\end{example}
+
+Несложно определить прибавление единицы к такому нумералу:
+\[
+	(+1) = \lambda{}n.\lambda{}f.\lambda{}x.f(nfx) \\
+\]
 
 
 
+Арифметические операции:
+\begin{enumerate}
+	\item $\func{IsZero} = \lambda{}n.n\mathinner{(\lambda{}x.\Fl)} \Tl$ 
+	\item $\func{Add} =\lambda{}a.\lambda{}b.\lambda{}f.\lambda{}x.a \mathinner{f} (b \mathinner{f} x)$ 
+	\item $\func{Pow} = \lambda{}a.\lambda{}b.b \mathinner{(\func{Mul}  \  a)} \mathinner{\overline{1}}$
+	\item $\func{IsEven} = \lambda{}n.n \ \func{Not} \ \Tl$
+	\item $\func{Mul} = \lambda{}a.\lambda{}b.a \mathinner{(\func{Add}\ b)} \mathinner{\overline{0}}$
+\end{enumerate}
+
+Для того, чтобы определить $(-1)$, сначала определим "<пару">:
+\[
+\left<a,b\right> = \lambda f.f \mathinner{a} b \qquad
+\func{First} = \lambda p . p \Tl \qquad
+\func{Second} = \lambda p . p \Fl
+\]%
+
+Затем $n$ раз применим функцию $f\left(\left<a,b\right>\right) = \left<b,b+1\right>$ и возьмём первый элемент пары:
+\[
+(-1) = \lambda n . \func{First}
+(n \mathinner{(\lambda p . \left<\left(\func{Second} p\right), \mathinner{(+1)} (\func{Second} p)\right>)}
+\langle\overline{0},\overline{0}\rangle)
+\]
