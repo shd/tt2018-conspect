@@ -91,8 +91,8 @@ $\lambda{}x.A$ связывает все свободные вхождения $
 \subsection{Представление некоторых функций в лямбда исчислении}
 Boolean значения легко представить в терминах $\lambda$-исчисления, к примеру
 \begin{itemize}
-	\item $True$   = $\lambda{}a\lambda{}b.a$ 
-	\item $False$  = $\lambda{}a\lambda{}b.b$
+	\item $\func{True}   = \lambda{}a\lambda{}b.a$ 
+	\item $\func{False}  = \lambda{}a\lambda{}b.b$
 \end{itemize}
 
 \newcommand{\If}{\lambda{}c.\lambda{}t.\lambda{}e.(c t) e}
@@ -106,11 +106,11 @@ Boolean значения легко представить в терминах $
 
 
 \begin{definition}
-	If = $\If$
+	$\func{If} = \If$
 \end{definition}
 
 \begin{example}
-	$If \ T \ a \ b \to_{\beta} \ a$
+	$\func{If} \ \Tl \ a \ b \to_{\beta} \ a$
 	\begin{proof}
 		\begin{alignat*}{2}
 		 ((\If) \ \T)\ a \ b \to_{\beta} (\lambda{}t.\lambda{}.e(\T) \ t \ e) \ a \ b \to_{\beta} \ \\ (\lambda{}t.\lambda{}.e(\lambda{}b.t) \ e) \ a \ b \to_{\beta} \ (\lambda{}t.\lambda{}e.t) \ a \ b \to_{\beta} \ (\lambda{}e.a) \ b \to_{\beta} \ a
@@ -123,9 +123,9 @@ Boolean значения легко представить в терминах $
 
 Другие логические операции:
 \[
-	Not = \lambda{}a.a \ F \ T \qquad
-	And = \lambda{}a.\lambda{}b.a \ b \ F \qquad
-	Or = \lambda{}a.\lambda{}b.a \ T \ b \qquad
+	\func{Not} = \lambda{}a.a \ \Fl \ \Tl \qquad
+	\func{Add} = \lambda{}a.\lambda{}b.a \ b \ \Fl \qquad
+	\func{Or}  = \lambda{}a.\lambda{}b.a \ \Tl \ b \qquad
 \]
 
 
