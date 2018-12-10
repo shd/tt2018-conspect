@@ -124,3 +124,28 @@ $\twoheadrightarrow_{\beta}$ "--- рефлексивное и транзитив
 \end{lemma}
 
 $P_{1}\rightrightarrows_{\beta}P_{2}$ и $Q_{1}\rightrightarrows_{\beta}Q_{2}$, то $P_{1}[x\coloneqq{}Q_{1}]\rightrightarrows_{\beta}P_{2}[x\coloneqq{}Q2]$
+
+\subsection{Нормальный и аппликативный порядок вычислений}
+
+\begin{example}
+	Выражение $KI\Omega$ можно редуцировать двумя способами:
+	\begin{enumerate}
+		\item $\comb K \comb I \Omega =_{\alpha} ((\lambda{}a.\lambda{}b.a) I) \Omega \to_{\beta} (\lambda{}b.\comb I)\Omega  \to_{\beta} \comb I$
+		\item  $\comb K \comb I \Omega =_{\alpha} ((\lambda{}a.\lambda{}b.a) I)((\lambda{}x.x \ x) (\lambda{}x.x \ x)) \twoheadrightarrow_{\beta} ((\lambda{}a.\lambda{}b.a) I)((\lambda{}x.x \ x) (\lambda{}x.x \ x)) \to_{\beta} \comb K \comb I \Omega $
+	\end{enumerate}
+	
+\end{example}
+
+Как мы видим, в первом случае мы достигли нормальной формы, в то время как во втором мы получаем бесонечную редукцию. Разница двух этих способов в порядке редукции. Первый называется нормальный порядок, а второй аппликативный. 
+
+\begin{definition}[нормальный порядок редукции]
+	Редукция самого левого $\beta$-редекса.
+\end{definition}
+
+\begin{definition}[аппликативный порядок редукции]
+	Редукция самого левого $\beta$-редекса из самых вложенных.
+\end{definition}
+
+\begin{statement}
+	Если нормальная форма существует, она может быть достигнута нормальным порядком редукции.
+\end{statement}
