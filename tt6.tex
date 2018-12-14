@@ -42,15 +42,15 @@
 		\end{example}
 		 	Рассмотрим терм: $\lambda f\:\lambda x.\:f(f(x))$, построим и пронумеруем его дерево разбора:\par
 \begin{tikzpicture}
-	\node [fill=none, draw=none] (A) at (9,0) {$\lambda f\:\lambda x.\:f(f(x))\enspace{\color{blue} (7)}$};
+	\node [fill=none, draw=none] (A) at (4,0) {$\lambda f\:\lambda x.\:f(f(x))\enspace{\color{blue} (7)}$};
 	\node [fill=none, draw=none] (B) at (7.5,-1) {$\lambda x.\:f(f(x))\enspace{\color{blue} (6)}$};
-	\node [fill=none, draw=none] (C) at (11.5,-1) {$\lambda f$};
-	\node [fill=none, draw=none] (D) at (5.5,-2) {$f(f(x))\enspace{\color{blue} (5)}$};
-	\node [fill=none, draw=none] (E) at (9.5,-2) {$\lambda x$};
-	\node [fill=none, draw=none] (F) at (3.5,-3) {$f(x)\enspace{\color{blue} (4)}$};
-	\node [fill=none, draw=none] (G) at (7.5,-3) {$f\enspace{\color{blue} (3)}$};
-	\node [fill=none, draw=none] (H) at (1.5,-4) {$f\enspace{\color{blue} (2)}$};
-	\node [fill=none, draw=none] (I) at (4.5,-4) {$x\enspace{\color{blue} (1)}$};
+	\node [fill=none, draw=none] (C) at (2,-1) {$\lambda f$};
+	\node [fill=none, draw=none] (D) at (10.5,-2) {$f(f(x))\enspace{\color{blue} (5)}$};
+	\node [fill=none, draw=none] (E) at (5.5,-2) {$\lambda x$};
+	\node [fill=none, draw=none] (F) at (13.5,-3) {$f(x)\enspace{\color{blue} (4)}$};
+	\node [fill=none, draw=none] (G) at (8.5,-3) {$f\enspace{\color{blue} (3)}$};
+	\node [fill=none, draw=none] (H) at (11.5,-4) {$f\enspace{\color{blue} (2)}$};
+	\node [fill=none, draw=none] (I) at (16.5,-4) {$x\enspace{\color{blue} (1)}$};
 	\path [->] (A) edge node[left] {} (B);
 	\path [->] (A) edge node[left] {} (C);	
 	\path [->] (B) edge node[left] {} (D);
@@ -60,7 +60,6 @@
 	\path [->] (F) edge node[left] {} (H);	
 	\path [->] (F) edge node[left] {} (I);
 \end{tikzpicture}\par
-
 
 \begin{enumerate}
 	\item $E_1=\big \langle \{\},\:\alpha_x \big \rangle$
