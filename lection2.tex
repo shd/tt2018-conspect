@@ -78,7 +78,7 @@ $\twoheadrightarrow_{\beta}$ "--- рефлексивное и транзитив
 
 \subsection{Теорема Чёрча-Россер, следствие о единственности нормальной формы}
 
-\begin{theorem}[Черча-Россер]
+\begin{theorem}[Черча-Россера]
 	$(\twoheadrightarrow_{\beta})$ обладает ромбовидным свойством.
 \end{theorem}
 
@@ -97,16 +97,53 @@ $\twoheadrightarrow_{\beta}$ "--- рефлексивное и транзитив
 \end{lemma}
 
 \begin{lemma}
+	 \label{refl}
 	Если $R$ "--- обладает $<>$, то и $R^{*}$ (транзитивное, рефлексивное замыкание $R$) обладает $R^{*}$.
 \end{lemma}
 
 \begin{proof}
-	content...
+    Пусть $M_1 R^{*} M_n$ и $M_1 R N_1$. Тогда существуют такие $M_2 \ldots M_{n-1}$, что $M_1 R M_2$ \ldots $M_{n-1} R M_n$.
+	Так как $R$ обладает ромбовидным свойством, $M_1 R M_2$ и $M_1 R N_1$, то существует такое $N_2$,
+	что $N_1 R N_2$ и $M_2 R N_2$. Аналогично, существуют такие $N_3 \ldots N_n$, что $N_{i-1} R N_{i}$ и $M_i R N_i$.
+	Мы получили такое $N_n$, что $N_1 R^{*} N_n$ и $M_n R^{*} N_n$.
+	
+	Пусть теперь $M_{1,1}R^{*}M_{1,n}$ и $M_{1,1}R^{*}M_{m,1}$, то есть имеются $M_{1,2}$\ldots$M_{1,n-1}$ и $M_{2,1}$\ldots$M_{m-1,1}$,
+	что $M_{1,i-1} R M_{1,i}$ и $M_{i-1, 1} R M_{i, 1}$.
+	Тогда существует такое $M_{2,n}$, что $M_{2,1} R^{*} M_{2,n}$ и $M_{1,n} R^{*} M_{2,n}$.
+	Аналогично, существуют такие $M_{3,n}\ldots M_{m,n}$, что $M_{i,1} R^{*} M_{i,n}$ и $M_{1,n} R^{*} M_{i,n}$.
+	Тогда $M_{1,n} R^{*} M_{m,n}$ и $M_{m,1} R^{*} M_{m,n}$.
 \end{proof}
 
 \begin{lemma}[Грустная лемма]
 	$(\to_{\beta})$ не обладает $<>$
 \end{lemma}
+
+\begin{proof}
+	Пусть $A=(\lambda{}x.x.x)(\comb I \comb I)$. Покажем что в таком случае не будет выполнять сомбовидное свойство:
+	\
+	\begin{figure}[ht]
+		\centering
+		\begin{tikzpicture}[->, every edge/.style={draw=black,thick}]
+		\node[label={\scriptsize\tikz\node[circle,draw]{$A$};}]     at (0,   0) (A)  {$(\lambda x . x x)(\comb I \comb I)$};
+		\node[label={135:\scriptsize\tikz\node[circle,draw]{$B$};}] at (-2, -1) (B)  {$(\comb I \comb I)(\comb I \comb I)$};
+		\node[label={45:\scriptsize\tikz\node[circle,draw]{$C$};}]  at (2,  -1) (C)  {$(\lambda x . x x)  \comb I$};
+		\node                                                       at (-3, -2) (B1) {$(\comb I \comb I)\comb I$};
+		\node                                                       at (-1, -2) (B2) {$\comb I(\comb I \comb I)$};
+		\node                                                       at (0,  -3) (D)  {$\comb I \comb I$};
+		\path (A)  edge (B)
+		edge (C)
+		(B)  edge (B1)
+		edge (B2)
+		(B1) edge (D)
+		(B2) edge (D)
+		(C)  edge (D);
+		\end{tikzpicture}
+		\caption{Нет такого $D$, что $B \to_{\beta} D$ и $C \to_{\beta} D$.}
+	\end{figure}	
+\end{proof}
+
+
+
 
 \begin{definition}[Параллельная $\beta$-редукция]
 	$A\rightrightarrows_{\beta}B$, если
@@ -124,6 +161,24 @@ $\twoheadrightarrow_{\beta}$ "--- рефлексивное и транзитив
 \end{lemma}
 
 $P_{1}\rightrightarrows_{\beta}P_{2}$ и $Q_{1}\rightrightarrows_{\beta}Q_{2}$, то $P_{1}[x\coloneqq{}Q_{1}]\rightrightarrows_{\beta}P_{2}[x\coloneqq{}Q2]$
+
+\begin{lemma}
+	\
+	\begin{enumerate}
+		\item $(\rightrightarrows_{\beta})^{*} \subseteq (\to_{\beta})^{*}$
+		\item $(\to_{\beta})^{*} \subseteq (\rightrightarrows_{\beta})^{*}$
+	\end{enumerate}
+\end{lemma}
+
+\begin{cons}
+	$(\to_{\beta})^{*}=(\rightrightarrows_{\beta})^{*}$
+\end{cons}
+
+Из приведенных выше лемм и следствия докажем теорему Черча-Россера.
+
+\begin{proof}
+	$(\to_{\beta})^{*}\equiv(\twoheadrightarrow_{\beta})$. Тогда $(\twoheadrightarrow_{\beta})=(\rightrightarrows_{\beta})^{*}$. Значит из того, что $(\rightrightarrows_{\beta})$ обладает $<>$ и леммы $\ref{refl}$ следует, что $(\twoheadrightarrow_{\beta})$ обладает $<>$.
+\end{proof}
 
 \subsection{Нормальный и аппликативный порядок вычислений}
 
