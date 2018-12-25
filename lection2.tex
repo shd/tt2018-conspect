@@ -143,41 +143,61 @@ $\twoheadrightarrow_{\beta}$ "--- рефлексивное и транзитив
 \end{proof}
 
 
-
+\newcommand{\bpar}{\rightrightarrows_{\beta}}
 
 \begin{definition}[Параллельная $\beta$-редукция]
-	$A\rightrightarrows_{\beta}B$, если
+	$A\bpar B$, если
 	\begin{enumerate}
 		\item $A=_{\alpha}B$
-		\item $A\equiv{}P_{1}Q_{1}$, $B\equiv{}P_{2}Q_{2}$ и $P_{1}\rightrightarrows_{\beta}P_{2}$, $Q_{1}\rightrightarrows_{\beta}Q_{2}$
+		\item $A\equiv{}P_{1}Q_{1}$, $B\equiv{}P_{2}Q_{2}$ и $P_{1}\bpar P_{2}$, $Q_{1}\bpar Q_{2}$
 		\item $A\equiv{}\lambda{}x.P_{1}$, $B\equiv{}\lambda{}x.P_{2}$ и 
-		$P_{1}\rightrightarrows_{\beta}P_{2}$
+		$P_{1}\bpar P_{2}$
 		\item $A=_{\alpha}(\lambda{}x.P)Q$, $B=_{\alpha}P[x\coloneqq{}Q]$
 	\end{enumerate}
 \end{definition}
 
 \begin{lemma}
-	$(\rightrightarrows_{\beta})$ обладает $<>$
+	$P_{1}\bpar P_{2}$ и $Q_{1}\bpar Q_{2}$, то $P_{1}[x\coloneqq{}Q_{1}]\bpar P_{2}[x\coloneqq{}Q2]$
 \end{lemma}
 
-$P_{1}\rightrightarrows_{\beta}P_{2}$ и $Q_{1}\rightrightarrows_{\beta}Q_{2}$, то $P_{1}[x\coloneqq{}Q_{1}]\rightrightarrows_{\beta}P_{2}[x\coloneqq{}Q2]$
+\begin{proof}
+	Будем доказывать индукцией по определению $\bpar $. Рассмотрим случаи:
+	\begin{itemize}
+		\item Пусть $P_{1}=_{\alpha}P_{2}$. Тогда лемма легко доказывается индукцией по структуре выражения.
+		\item Пусть $P_{1}\equiv{}A_{1}B_{1}$, $P_{2}\equiv{}A_{2}B_{2}$. По определению $\bpar$ $A_{1} \bpar A_{2}$ и $B_{1} \bpar B_{2}$.
+		Рассмотрим два случая:
+		\begin{enumerate}
+			\item $x \in \FV(A_{1})$. По индукционному предположению $A_{1}[x\coloneqq{}Q_{1}] \bpar A_{2}[x\coloneqq{}Q_{2}]$. Тогда $A_{1}[x\coloneqq{}Q_{1}]B_{1} \bpar A_{2}[x\coloneqq{}Q_{2}]B_{2}$. Тогда $A_{1}B_{1}[x\coloneqq{}Q_{1}] \bpar A_{2}B_{2}[x\coloneqq{}Q_{2}]$
+			\item Аналогично для $B$
+		\end{enumerate}
+		\item Пусть $P_{1}\equiv{}\lambda{}x.A_{1}$, $P_{2}\equiv{}\lambda{}x.A_{2}$. по определению $\bpar$ $A_{1}\bpar A_{2}$. Тогда по индукционному предположению $A_{1}[x'\coloneqq{}Q_{1}] \bpar A_{2}[x'\coloneqq{}Q_{2}]$. Тогда 
+		$\lambda{}x.(A_{1}[x'\coloneqq{}Q_{1}]) \bpar \lambda{}x.(A_{2}[x'\coloneqq{}Q_{2}])$ по определению $\bpar$. Следовательно 	$\lambda{}x.A_{1}[x'\coloneqq{}Q_{1}] \bpar \lambda{}x.A_{2}[x'\coloneqq{}Q_{2}]$ по определению подствановки.
+		\item Пусть $P_{1}\equiv(\lambda{}x.A)B$, $P_{2}\equiv A[x\coloneqq{}B]$. Тогда по индукционному предположению $A[x\coloneq{}Q_{1}] \bpar A[x\coloneqq{}Q_{2}], B[x\coloneq{}Q_{1}] \bpar B[x\coloneqq{}Q_{2}]$. Тогда по определению $\bpar$ имеем $(\lambda{}x.A[x'\coloneqq{}Q_1])B \bpar A[x'\coloneqq{}Q_2][x\coloneqq{}B]$. Тогда имеем, что $A[x'\coloneqq{}Q_1][x\coloneqq{}B] \equiv (A[x\coloneqq{}B])[x\coloneqq{}Q_2] \equiv B[x'\coloneqq{}Q_{2}]$
+	\end{itemize}
+\end{proof}
+
+\begin{lemma}
+	$(\bpar )$ обладает $<>$
+\end{lemma}
+
+
 
 \begin{lemma}
 	\
 	\begin{enumerate}
-		\item $(\rightrightarrows_{\beta})^{*} \subseteq (\to_{\beta})^{*}$
-		\item $(\to_{\beta})^{*} \subseteq (\rightrightarrows_{\beta})^{*}$
+		\item $(\bpar )^{*} \subseteq (\to_{\beta})^{*}$
+		\item $(\to_{\beta})^{*} \subseteq (\bpar )^{*}$
 	\end{enumerate}
 \end{lemma}
 
 \begin{cons}
-	$(\to_{\beta})^{*}=(\rightrightarrows_{\beta})^{*}$
+	$(\to_{\beta})^{*}=(\bpar )^{*}$
 \end{cons}
 
 Из приведенных выше лемм и следствия докажем теорему Черча-Россера.
 
 \begin{proof}
-	$(\to_{\beta})^{*}\equiv(\twoheadrightarrow_{\beta})$. Тогда $(\twoheadrightarrow_{\beta})=(\rightrightarrows_{\beta})^{*}$. Значит из того, что $(\rightrightarrows_{\beta})$ обладает $<>$ и леммы $\ref{refl}$ следует, что $(\twoheadrightarrow_{\beta})$ обладает $<>$.
+	$(\to_{\beta})^{*}\equiv(\twoheadrightarrow_{\beta})$. Тогда $(\twoheadrightarrow_{\beta})=(\bpar )^{*}$. Значит из того, что $(\bpar )$ обладает $<>$ и леммы $\ref{refl}$ следует, что $(\twoheadrightarrow_{\beta})$ обладает $<>$.
 \end{proof}
 
 \subsection{Нормальный и аппликативный порядок вычислений}
