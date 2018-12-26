@@ -190,8 +190,9 @@ $\twoheadrightarrow_{\beta}$ "--- рефлексивное и транзитив
 		\item Если $M \equiv P Q, M_1 \equiv P_1 Q_1$ и по определению $\bpar$ $P \bpar P_1, Q \bpar Q_1$, то рассмотрим два случая:
 		\begin{enumerate}
 			\item $M_2 \equiv P_2 Q_2$. Тогда по предположению индукции $\exists P_3$, что $P_1 \bpar P_3, P_2 \bpar P_3$. Аналогично для $Q$. Тогда возьмем $M_3 \equiv P_3 Q_3$.
-			
+			\item $P\equiv \lambda {}x.P', M_2 \equiv P_2'[x\coloneqq{} Q_2]$, по определению $\bpar$ $P' \bpar P_2', Q \bpar Q_2$. Также $P_1 \equiv \lambda{}x.P_1', P' \equiv P_1'$. Тогда по предположению индукции и леммы $\ref{bparhelp}$ мы можем взять $M_3 \equiv P_3'[x \coloneqq P_3]$.
 		\end{enumerate}
+	\item Если $M =_\alpha (\lambda{}x.P)Q, M_1 =_\alpha M_2 =_\alpha P[x \coloneqq Q]$, то просто возьмем $M_3 =_\alpha P[x \coloneq Q]$.
 	\end{itemize}
 \end{proof}
 
