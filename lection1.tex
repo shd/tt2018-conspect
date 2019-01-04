@@ -6,24 +6,50 @@
 	$\lambda$-выражение "--- выражение, удовлетворяющее грамматике:
 	\begin{bnf}
 	\begin{alignat*}{3}
-		\Phi ::= & x \quad \\
-		       | & \left(\Phi\right) \\
-		       | & \lambda{}x.\Phi \qquad && (abstraction) \\
-		       | & \Phi \ \Phi         && (application) \\
+		\Phi ::= & x
+		       | & \left(\Phi\right) 
+		       | & \lambda{}x.\Phi 
+		       | & \Phi \ \Phi        
 	\end{alignat*}
 	\end{bnf}
-	\begin{enumerate}
-		\item Аппликация левоассациативна.
-		\item Абстракции жадные, едят все что могут.
-		\vspace{1mm}
-		\begin{example}
-			$(\lambda{}x.(\lambda{}f.((f x) (f x) \lambda{}y.(y f))))$
-		\end{example}
-	\end{enumerate}
 \end{definition}
 
+Иногда для упращения записи мы будем опускать скобки. В этом случае, перед разбором выражения, следует расставить все опущенные скобки. При их рассатвлении будем придерживаться правил:
+\begin{enumerate}
+	\item Аппликация левоассациативна: $A \ B \ C \implies (A \ B) \ C$.
+	\item Абстракции жадные "--- поглащают скобками все что могут до конца строки: 
+	$\lambda{}a.\lambda{}b.a \ b \implies \lambda{}a.(\lambda{}b.(a \ b))$.
+	\vspace{1mm}
+	\begin{example}
+		$\lambda{}x.(\lambda{}f.((f x) (f x) \lambda{}y.(y f)))$
+	\end{example}
+\end{enumerate}
+
+Договоримся, что:
+\begin{itemize}
+	\item Переменные "--- $x$, $a$, $b$, $c$.
+	\item Термы (части $\lambda$-выражения) "--- $X$, $A$, $B$, $C$.
+	\item Фиксированные переменные обозначаются буквами из начала алфавита, метапеременные "--- из конца.
+\end{itemize}
+
 Есть понятия связанного и свободного вхождения переменной (аналогично исчислению предикатов).
-$\lambda{}x.A$ связывает все свободные вхождения $x$ в $A$.
+
+\begin{definition}
+	Если вхождение $x$ находится в области действия абстракции по $x$, то такое вхождение называется связанным, иначе вхождение называется свободным.
+\end{definition}
+
+\begin{definition}
+	Терм $Q$ называется свободным для подстановски в $\Phi$ вместо $x$, если после подстановки $Q$ ни одно вхождение не станет связанным.
+\end{definition}
+
+\begin{example}
+	$\lambda{}x.A$ связывает все свободные вхождения $x$ в $A$.
+\end{example}
+
+\begin{definition}
+	Функция $V(A)$ "--- множество переменных, входящих в $A$.
+\end{definition}
+
 \begin{definition} 
 	Функция $\FV(A)$ "--- множество свободных переменных, входящих в $A$:
 	\[
@@ -36,20 +62,13 @@ $\lambda{}x.A$ связывает все свободные вхождения $
 	\]
 \end{definition}
 
-Договоримся, что:
-\begin{itemize}
-	\item Переменные "--- $x$, $a$, $b$, $c$.
-	\item Термы (части $\lambda$-выражения) "--- $X$, $A$, $B$, $C$.
-	\item Фиксированные переменные обозначаются буквами из начала алфавита, метапеременные "--- из конца.
-\end{itemize}
-
 На самом деле, смысл в этом есть, $\lambda$-выражение можно понимать как функцию.
 Абстракция "--- это функция с аргументом, аппликация "--- это передача аргумента.
 
 \begin{definition}[$\alpha$-эквивалентность]
 	$A=_{\alpha}B$, если имеет место одно из следующих условий:
 	\begin{enumerate}
-		\item $A\equiv{}x$, $B\equiv{}y$ (x,y "--- переменные) и $x\equiv{}y$
+		\item $A\equiv{}x$, $B\equiv{}y$ и $x\equiv{}y$
 		\item $A\equiv{}P_{1}Q_{1}$, $B\equiv{}P_{2}Q_{2}$ и $P_{1}=_{\alpha}P_{2}$, $Q_{1}=_{\alpha}Q_{2}$
 		\item $A\equiv \lambda{}x.P_{1}$, $B\equiv \lambda{}y.P_{2}$ и $P_{1} [x\coloneqq{}t] =_{\alpha}P_2 [y\coloneqq{}t]$, где $t$ "--- новая переменная.
 	\end{enumerate} 
@@ -71,14 +90,14 @@ $\lambda{}x.A$ связывает все свободные вхождения $
 \end{definition}
 
 \begin{definition}[$\beta$-редукция]
-	$A\to_{\beta}B$, если имеет мето одно из следующих условий:
+	$A\to_{\beta}B$, если имеет место одно из следующих условий:
 	\begin{enumerate}
 		\item $A\equiv{}P_{1}Q_{1}$, $B\equiv{}P_{2}Q_{2}$ и либо $P_{1}=_{\alpha}P_{2}$, $Q_{1}\to_{\beta}Q_{2}$, либо
 		$P_{1}\to_{\beta}P_{2}$, $Q_{1}=_{\alpha}Q_{2}$
-		\item $A\equiv\left(\lambda{}x.P\right) Q$, $B\equiv P[x\coloneqq{}Q]$ "--- Q свободна для подстановки вместо x в P 
+		\item $A\equiv\left(\lambda{}x.P\right) Q$, $B\equiv P[x\coloneqq{}Q]$ причем Q свободна для подстановки вместо x в P 
 	\end{enumerate}
 	\begin{example} 
-		$X\to_{\beta}X$, $\left(\lambda{}x.x\right) y\to_{\beta} y$
+		$\left(\lambda{}x.x\right) y\to_{\beta} y$
 	\end{example}
 	\begin{example}
 		 $a \left(\lambda{}x.x\right) y\to_{\beta} a y$
@@ -89,10 +108,10 @@ $\lambda{}x.A$ связывает все свободные вхождения $
 \end{definition}
 
 \subsection{Представление некоторых функций в лямбда исчислении}
-Boolean значения легко представить в терминах $\lambda$-исчисления, к примеру
+Логический значения легко представить в терминах $\lambda$-исчисления. В самом деле, положим:
 \begin{itemize}
-	\item $\func{True}   = \lambda{}a\lambda{}b.a$ 
-	\item $\func{False}  = \lambda{}a\lambda{}b.b$
+	\item $\func{True}  \equiv \lambda{}a\lambda{}b.a$ 
+	\item $\func{False} \equiv \lambda{}a\lambda{}b.b$
 \end{itemize}
 
 \newcommand{\If}{\lambda{}c.\lambda{}t.\lambda{}e.(c t) e}
@@ -106,7 +125,7 @@ Boolean значения легко представить в терминах $
 
 
 \begin{definition}
-	$\func{If} = \If$
+	$\func{If} \equiv \If$
 \end{definition}
 
 \begin{example}
@@ -118,7 +137,7 @@ Boolean значения легко представить в терминах $
 	\end{proof}
 \end{example}
 
-Как мы видим If true действительно возвращает результат первой ветки.
+Как мы видим If $\Tl$ действительно возвращает результат первой ветки.
 
 
 Другие логические операции:
@@ -165,7 +184,7 @@ Boolean значения легко представить в терминах $
 	\item $\func{Mul} = \lambda{}a.\lambda{}b.a \mathinner{(\func{Add}\ b)} \mathinner{\overline{0}}$
 \end{enumerate}
 
-Для того, чтобы определить $(-1)$, сначала определим "<пару">:
+Для того, чтобы определить $(-1)$, сначала определим пару:
 \[
 \left<a,b\right> = \lambda f.f \mathinner{a} b \qquad
 \func{First} = \lambda p . p \Tl \qquad

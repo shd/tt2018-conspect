@@ -3,20 +3,20 @@
 \subsection{Формализация $\lambda$-термов, классы $\alpha$-эквивалентности термов}
 
 \begin{definition}[$\lambda$-терм]
-	Рассмотрим классы эквивалентности $[A]=_{\alpha}$ \\
-	Будем говорить, что $[A]\to_{\beta}[B]$, если $\exists A^{'}\in [A], B^{'} \in [B]$, что $A^{'}\to_{\beta}B^{'}$.
+	Рассмотрим классы эквивалентности $[A]_{=_{\alpha}}$ \\
+	Будем говорить, что $[A]\to_{\beta}[B]$, если  существуют $A^{'}\in [A]$ и $B^{'} \in [B]$, что $A^{'}\to_{\beta}B^{'}$.
 \end{definition}
 
 \begin{lemma}
-	$=_{\alpha}$ "--- отношение эквивалентности.
+	$(=_{\alpha})$ "--- отношение эквивалентности.
 \end{lemma}
 
-Пусть в A есть $\beta$-редекc $\lambda{}x.Q$, но $P[x\coloneqq{}Q]$ не может быть,
-тогда найдем $y\notin V[P]$, $y\notin V[Q]$. Сделаем замену $P[x\coloneqq{}y]$.
-Тогда замена $P[x\coloneqq{}y][y\coloneqq{}Q]$ допустима.
+Пусть в A есть $\beta$-редекc $(\lambda{}x.P)Q$, но $Q$ не свободен для подстановски вместо $x$ в $P$,
+тогда найдем $y\notin V[P]$, $y\in V[Q]$. Сделаем замену $P[x\coloneqq{}y]$.
+Тогда замена $P[x\coloneqq{}y][y\coloneqq{}Q]$ допустима. То есть, можно сказать, что мы просто переименовали переменную $x$ в $P$ и получили свободу для подстановки, тем самым получив возможность редукции.
 
 \begin{lemma}
-	$P[x\coloneqq{}y]=_{\alpha}P[x\coloneqq{}y][y\coloneqq{}Q]$, если замена допустима.
+	$P[x\coloneqq{}Q]=_{\alpha}P[x\coloneqq{}y][y\coloneqq{}Q]$, если замена допустима.
 \end{lemma}
 
 \subsection{Нормальная форма, $\lambda$-выражения без нормальной формы, комбинаторы $K$, $I$, $\Omega$}
@@ -26,11 +26,11 @@
 \end{definition}
 
 \begin{lemma}
-	$\lambda$-выражение $A$ в нормальноф форме, т.и.т.т, когда $\nexists{}B$, что $A\to_{\beta}B$.
+	$\lambda$-выражение $A$ в нормальноф форме, если оно не содержит $\beta$-редексов.
 \end{lemma}
 
 \begin{definition}
-	$A$ "--- Н.Ф $B$, если $\exists A_{1}...A_{n}$, что $B=_{\alpha}A_{1}\to_{\beta}A_{2}\to_{\beta}...\to_{\beta}A_{n}=_{\alpha}A$.
+	$A$ "--- нормальная форма $B$, если существует последовательность термов $A_{1}...A_{n}$ такая, что $B=_{\alpha}A_{1}\to_{\beta}A_{2}\to_{\beta}...\to_{\beta}A_{n}=_{\alpha}A$.
 \end{definition}
 
 \begin{definition}
@@ -40,9 +40,9 @@
 \begin{definition} 
 	\hfill
 	\begin{itemize}
-		\item $I=\lambda{}x.x$ (Identitant)
-		\item $K=\lambda{}a.\lambda{}b.a$ (Konstanz)
-		\item $\Omega = (\lambda{}x.xx)(\lambda{}x.xx)$
+		\item $I \equiv \lambda{}x.x$ (Identitant)
+		\item $K \equiv \lambda{}a.\lambda{}b.a$ (Konstanz)
+		\item $\Omega \equiv (\lambda{}x.xx)(\lambda{}x.xx)$
 	\end{itemize}
 \end{definition}
 
@@ -51,7 +51,7 @@
 \end{lemma}
 
 \begin{proof}
-	$\Omega\to_{\beta}\Omega$
+	$\Omega$ Имеет единтсвенный $\beta$-редекс, где $A \equiv xx$, $B \equiv (\lambda{}x.xx)$. Тогда единственный возможный путь редукции "--- подставить $B$ вместо $x$ в $A$. Но тогда мы получим $\Omega$. Следовательно у $\Omega$ нет нормальной формы, так как в полученном выражении у нас всегда будет $\beta$-редекс.
 \end{proof}
 
 \subsection{$\beta$-редуцируемость}
@@ -68,12 +68,12 @@ $\twoheadrightarrow_{\beta}$ "--- рефлексивное и транзитив
 \subsection{Ромбовидное свойство}
 
 \begin{definition}[Ромбовидное свойство]
-	Отношение $R$ обладает ромбовидным свойством, если $\forall a,b,c$, таких, что $aRb$, $aRc$, $b\neq{}c$, $\exists{}d$, что $bRd$ и $cRd$. Далее будем обозначать ромбовидное свойство как $<>$.
+	Отношение $R$ обладает ромбовидным свойством, если $\forall a,b,c$, таких, что $aRb$, $aRc$, $b\neq{}c$, $\exists{}d$, что $bRd$ и $cRd$.
 \end{definition}
 
 \begin{example}
-	$(\leq)$ на множестве натуральных чисел обладает $<>$
-	$(>)$ не обладает $<>$ на множестве натуральных чисел 
+	$(\leq)$ на множестве натуральных чисел обладает ромбовидным свойством,
+	$(>)$ на множестве натуральных чисел не обладает ромбовидным свойством.
 \end{example}
 
 \subsection{Теорема Чёрча-Россер, следствие о единственности нормальной формы}
@@ -84,7 +84,7 @@ $\twoheadrightarrow_{\beta}$ "--- рефлексивное и транзитив
 
 
 \begin{cons}
-	Если у $A$ есть Н.Ф, то она единтсвенная с точностью до $(=_{\alpha})$ (переименования переменных).
+	Если у $A$ есть нормальная форма, то она единтсвенная с точностью до $(=_{\alpha})$ (переименования переменных).
 \end{cons}
 
 \begin{proof}
@@ -93,7 +93,7 @@ $\twoheadrightarrow_{\beta}$ "--- рефлексивное и транзитив
 \end{proof}
 
 \begin{lemma}
-	Если $B$ "--- Н.Ф, то $\nexists{}Q$: $B\to_{\beta}Q$. Значит если $B\twoheadrightarrow_{\beta}Q$, то количество шагов редукции равно 0.
+	Если $B$ "--- нормальная форма, то не существует $Q$ такой, что $B\to_{\beta}Q$. Значит если $B\twoheadrightarrow_{\beta}Q$, то количество шагов редукции равно 0.
 \end{lemma}
 
 \begin{lemma}
@@ -219,7 +219,7 @@ $\twoheadrightarrow_{\beta}$ "--- рефлексивное и транзитив
 \begin{example}
 	Выражение $KI\Omega$ можно редуцировать двумя способами:
 	\begin{enumerate}
-		\item $\comb K \comb I \Omega =_{\alpha} ((\lambda{}a.\lambda{}b.a) I) \Omega \to_{\beta} (\lambda{}b.\comb I)\Omega  \to_{\beta} \comb I$
+		\item $\comb K \comb I \Omega =_{\alpha} ((\lambda{}a.\lambda{}b.a) \comb I) \Omega \to_{\beta} (\lambda{}b.\comb I)\Omega  \to_{\beta} \comb I$
 		\item  $\comb K \comb I \Omega =_{\alpha} ((\lambda{}a.\lambda{}b.a) I)((\lambda{}x.x \ x) (\lambda{}x.x \ x)) \twoheadrightarrow_{\beta} ((\lambda{}a.\lambda{}b.a) I)((\lambda{}x.x \ x) (\lambda{}x.x \ x)) \to_{\beta} \comb K \comb I \Omega $
 	\end{enumerate}
 	
@@ -235,6 +235,6 @@ $\twoheadrightarrow_{\beta}$ "--- рефлексивное и транзитив
 	Редукция самого левого $\beta$-редекса из самых вложенных.
 \end{definition}
 
-\begin{statement}
+\begin{theorem}[Приводится без доказательсвта]
 	Если нормальная форма существует, она может быть достигнута нормальным порядком редукции.
-\end{statement}
+\end{theorem}
