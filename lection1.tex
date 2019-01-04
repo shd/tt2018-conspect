@@ -95,15 +95,13 @@ $\lambda$-выражение можно понимать как функцию.
 		\item $A\equiv{}P_{1}Q_{1}$, $B\equiv{}P_{2}Q_{2}$ и либо $P_{1}=_{\alpha}P_{2}$, $Q_{1}\to_{\beta}Q_{2}$, либо
 		$P_{1}\to_{\beta}P_{2}$, $Q_{1}=_{\alpha}Q_{2}$
 		\item $A\equiv\left(\lambda{}x.P\right) Q$, $B\equiv P[x\coloneqq{}Q]$ причем $Q$ свободна для подстановки вместо $x$ в $P$ 
+		\item $A\equiv\lambda{}x.P$, $B\equiv\lambda{}x.Q$ и $P\to_{\beta}Q$
 	\end{enumerate}
 	\begin{example} 
 		$\left(\lambda{}x.x\right) y\to_{\beta} y$
 	\end{example}
 	\begin{example}
 		 $a \left(\lambda{}x.x\right) y\to_{\beta} a y$
-	\end{example}
-	\begin{example}
-		$A\equiv\lambda{}x.P$, $B\equiv\lambda{}x.Q$, $P\to_{\beta}Q$
 	\end{example}
 \end{definition}
 
