@@ -1,0 +1,301 @@
+\section{Лекция 3}
+
+\subsection{Y-комбинатор}
+
+\begin{definition}
+	Комбинатором называется $\lambda$-выражение, не имеющее свободных переменных
+\end{definition}
+
+\begin{definition}($Y$-комбинатор)
+	\[
+	Y = \lambda f . (\lambda x . f (x x)) (\lambda x . f (x x))
+	\]
+\end{definition}
+
+Очевидно, $Y$-комбинатор является комбинатором.
+
+\begin{theorem}
+	$Y f =_{\beta} f (Y f)$
+	
+	\begin{proof}
+		$\beta$-редуцируем выражение $Y f$
+		
+		\begin{align*}
+			 =_{\beta} \textcolor{magenta}{(\lambda f . (\lambda x . f (x x)) (\lambda x . f (x x)))}\textcolor{blue}{f} \\ =_{\beta} \textcolor{magenta}{(\lambda x . f (x x))} \textcolor{blue}{(\lambda x . f (x x))} \\ =_{\beta} f ((\lambda x . f (x x))(\lambda x . f (x x))) \\ =_{\beta} f(Y f)
+		\end{align*}
+		Так как при второй редукции мы получили, что $Y f =_{\beta} (\lambda x . f (x x))(\lambda x . f (x x))$
+	\end{proof}	
+\end{theorem}
+
+Следствием этого утверждения является теорема о неподвижной точки для бестипового лямбда-ичисления
+
+\begin{theorem}
+	В лямбда-исчислении каждый терм $f$ имеет неподвижную точку, то есть такое $p$, что $f \; p =_{\beta} p$
+	
+	\begin{proof}
+		Возьмём в качестве $p$ терм $Y f$. По предыдущей теореме, $f(Y f) =_{\beta} Y f$, то есть $Y f$ является неподвижной точкой для $f$. Для любого терма $f$ существует терм $Y f$, значит, у любого терма есть неподвижная точка.
+	\end{proof}
+\end{theorem}
+
+\subsection{Рекурсия}
+
+С помощью $Y$-комбинатора можо определять рекурсивные функции, например, функцию, вычисляющую факториал Чёрчевского нумерала. Для этого определим вспомогательную функцию
+
+$fact' \equiv \lambda f. \lambda n. isZero\; n \; \overline{1} (mul \; n \; f((-1) n))$
+
+Тогда $fact \equiv Y fact'$
+
+Заметим, что $fact \; \overline{n} =_{\beta} fact' \; (Y \; fact') \; \overline{n} =_{\beta}fact' \; fact \; \overline{n} $, то есть в тело функции $fact'$ вместо функции $f$ будет подставлена $fact$ (заметим, что это значит, что именно функция $fact$ будет применена к $\overline{n - 1}$, то есть это соответсувует нашим представлениям о рекурсии.)
+
+Для понимания того, как это работает, посчитаем $fact \; \overline{2}$
+
+\begin{align*}
+	fact \; \overline{2} \\ =_{\beta} Y \; fact' \; \overline{2}\\ =_{\beta} fact' (Y \; fact' \; \overline{2}) \\=_{\beta}\textcolor{magenta}{(\lambda f. \lambda n. isZero\; n \; \overline{1} (mul \; n \; f((-1) n)))} \textcolor{blue}{(Y \; fact') \overline{2}} \\
+	=_{\beta}isZero\; \overline{2} \; \overline{1} (mul \; \overline{2} \; ((Y \; fact')((-1) \overline{2}))) \\ =_{\beta} mul \; \overline{2} \; ((Y \; fact')((-1) \overline{2})) \\ =_{\beta} mul \; \overline{2} \; (Y \; fact' \; \overline{1}) \\ =_{\beta} mul \; \overline{2} \; (fact' \;(Y \; fact' \; \overline{1}))
+\end{align*}
+
+Раскрывая $fact' \;(Y \; fact' \; \overline{1})$ так же, как мы раскрывали  $fact' \;(Y \; fact' \; \overline{2})$, получаем
+
+\begin{align*}
+	=_{\beta} mul \; \overline{2} \; (mul \; \overline{1} \; (Y \; fact' \; \overline{0}))
+\end{align*}
+
+Посчитаем $(Y \; fact' \; \overline{0})$.
+
+\begin{align*}
+	(Y \; fact' \; \overline{0}) \\ =_{\beta} fact' \; (Y \; fact') \; \overline{0} \\ =_{\beta} \textcolor{magenta}{(\lambda f. \lambda n. isZero\; n \; \overline{1} (mul \; n \; f((-1) n)))} \; \textcolor{blue}{(Y \; fact') \; \overline{0}} \\ =_{\beta}  isZero\; \overline{0} \; \overline{1} (mul \; \overline{0} \; ((Y \; fact'))((-1) \overline{0})) =_{\beta} \overline{1}
+\end{align*}
+
+Таким образом,
+
+\begin{align*}
+	fact \; \overline{2} \\ =_{\beta} mul \; \overline{2} \; (mul \; \overline{1} \; (Y \; fact' \; \overline{0})) \\=_{\beta} mul \; \overline{2} \; (mul \; \overline{1} \; \overline{1}) =_{\beta} mul \; \overline{2} \; \overline{1} =_{\beta} \overline{2}
+\end{align*}
+
+\subsection{Парадокс Карри}
+
+Попробуем построить логику на основе $\lambda$-исчисления. Введём логический символ $\rightarrow$. 
+
+Будем требовать от этого исчисления наличия следующих схем аксиом:
+
+\begin{enumerate}
+	\item $\vdash A \rightarrow A$
+	\item $\vdash (A \rightarrow (A \rightarrow B)) \rightarrow (A \rightarrow B)$
+	\item $\vdash A =_{\beta} B$, тогда $A \rightarrow B$
+\end{enumerate}
+
+А так же правила вывода MP:
+
+$$\infer{\vdash B}{\vdash A \rightarrow B, \; \vdash A}$$
+
+Не вводя дополнительные правила вывода и схемы аксиом, покажем, что данная логика является противоречивой. Для чего введём следующие условные обозначения:
+
+$F_{\alpha} \equiv \lambda x. (x \; x) \rightarrow \alpha$
+
+$\Phi_{\alpha} \equiv F_{\alpha}  \; F_{\alpha}  \equiv (\lambda x. (x \; x) \rightarrow \alpha) \; (\lambda x. (x \; x) \rightarrow \alpha)$
+
+Редуцируя $\Phi_{\alpha}$, получаем 
+
+\begin{align*}
+\Phi_{\alpha} \\ =_{\beta} \textcolor{magenta}{(\lambda x. (x \; x) \rightarrow \alpha)} \; \textcolor{blue}{(\lambda x. (x \; x) \rightarrow \alpha)} \\=_{\beta} (\lambda x. (x \; x) \rightarrow \alpha) \; (\lambda x. (x \; x) \rightarrow \alpha) \rightarrow \alpha \\=_{\beta} \Phi_{\alpha} \rightarrow \alpha
+\end{align*}
+
+Теперь докажем противоречивость введённой логики. Для этого докажем, что в ней выводимо любое утверждение.
+
+\begin{tabular}{ll}
+	1) $\vdash\Phi_\alpha\rightarrow\Phi_\alpha\rightarrow\alpha$ & Так как $\Phi_{\alpha} =_{\beta} \Phi_{\alpha} \rightarrow \alpha$\\
+	2) $\vdash(\Phi_\alpha\rightarrow\Phi_\alpha\rightarrow\alpha)\rightarrow(\Phi_\alpha\rightarrow\alpha)$ & Так как $\vdash (A \rightarrow (A \rightarrow B)) \rightarrow (A \rightarrow B)$\\
+	3) $\vdash\Phi_\alpha\rightarrow\alpha$ & MP 2, 3\\
+	4) $\vdash (\Phi_\alpha \rightarrow \alpha) \rightarrow \Phi_\alpha$ & Так как $\vdash \Phi_\alpha \rightarrow \alpha =_{\beta} \Phi_\alpha$\\
+	5) $\vdash\Phi_\alpha$ & MP 3, 4\\
+	6) $\vdash\alpha$ & MP 3, 5
+\end{tabular}
+
+Таким образом, введённая логика оказывается противоречивой.
+
+\subsection{Импликационный фрагмент интуиционистского исчисления высказываний}
+
+Рассмотрим подмножество ИИВ, со следующей грамматикой:
+
+$\Phi ::= x \; | \; \Phi \rightarrow \Phi \; | \; (\Phi)$
+
+То есть состоящее только из меременных и импликаций. 
+
+Добавим в него одну схему аксиом
+
+$$\Gamma, \varphi \vdash \varphi$$
+
+И два правила вывода
+
+\begin{enumerate}
+	\item Правило введения импликации:
+	\[
+	\infer{\Gamma \vdash \varphi \to \psi}{\Gamma, \varphi \vdash \psi}
+	\]
+	\item Правило удаления импликации:
+	\[
+	\infer{\Gamma \vdash \psi}{\Gamma \vdash \varphi \to \psi && \Gamma \vdash \varphi}
+	\]
+\end{enumerate}
+
+\begin{example}
+	Докажем $\vdash \varphi \rightarrow \psi \rightarrow \varphi$
+	
+	\[
+	\infer[(\text{Введение импликации})]
+	{ \vdash \varphi \to (\psi \to \varphi) }
+	{ \infer[(\text{Введение импликации})]
+		{ \varphi \vdash \psi \to \varphi }
+		{\varphi, \psi \vdash \varphi}
+	}
+	\]
+\end{example}
+
+\begin{example}
+	Докажем $\alpha \rightarrow \beta \rightarrow \gamma, \; \alpha, \; \beta \vdash \gamma$
+	
+	\[
+	\infer
+	{ \alpha \rightarrow \beta \rightarrow \gamma, \; \alpha, \; \beta \vdash \gamma}{\infer
+		{\alpha \rightarrow \beta \rightarrow \gamma, \; \alpha, \; \beta \vdash \beta \rightarrow \gamma }{\alpha \rightarrow \beta \rightarrow \gamma, \; \alpha, \; \beta \vdash \alpha \rightarrow \beta \rightarrow \gamma && \alpha \rightarrow \beta \rightarrow \gamma, \; \alpha, \; \beta \vdash \alpha} && \alpha \rightarrow \beta \rightarrow \gamma, \alpha, \; \beta \vdash \beta}
+	\]
+	
+\end{example}
+
+\subsection{Просто типизированное по Карри лямбда-исчисление}
+
+\begin{definition}
+	Тип в просто типизированном лямбда-исчислении по Карри это либо маленькая греческая буква ($\alpha, \phi, \theta, \ldots$), либо импликация ($\theta_1 \rightarrow \theta_2$)
+	
+	Таким образом, $\Theta ::= \theta_{i} | \Theta \rightarrow \Theta | (\Theta)$
+	
+	Импликация при этом считается правоассоциативной операцией.
+\end{definition}
+
+\begin{definition}
+	Язык просто типизированного лямбда-исчисления это язык бестипового лямбда-исчисления.
+\end{definition}
+
+\begin{definition}
+	Контекст $\Gamma$ это список выражений вида $A: \theta$, где $A$ - лямбда-терм, а $\theta$ - тип
+\end{definition}
+
+\begin{definition}
+	Просто типизипрованное лямбда-исчисление по Карри.
+	
+	Рассмотрим исчисление с единственной схемой аксиом:
+	
+	$$\Gamma, x : \theta \vdash x : \theta, \text{если } x \text{ не входит в } \Gamma$$
+	
+	И следующими правилами вывода
+	
+	\begin{enumerate}
+		\item Правило типизации абстракции
+		\[
+		\infer[\text{если } x \text{ не входит в } \Gamma]{\Gamma \vdash (\lambda \; x. \; P) : \varphi \rightarrow \psi}{\Gamma, x : \varphi \vdash P : \psi}
+		\]
+		\item Правило типизации аппликации:
+		\[
+		\infer{\Gamma \vdash PQ : \psi}{\Gamma \vdash P : \varphi \to \psi && \Gamma \vdash Q : \varphi}
+		\]
+	\end{enumerate}
+
+	Если $\lambda$-выражение типизируется с использованием этих двух правил и одной схемы аксиом, то будем говорить, что оно типизируется по Карри.
+\end{definition}
+
+\begin{example}
+	Докажем $\vdash \lambda \; x. \; \lambda \; y. \; x : \alpha \rightarrow \beta \rightarrow \alpha$
+	
+	\[
+	\infer[(\text{Правило типизации абстракции})]
+	{ \vdash \lambda \; x. \; \lambda \; y. \; x : \alpha \rightarrow \beta \rightarrow \alpha }
+	{ \infer[(\text{Правило типизации абстракции})]
+		{x: \alpha \vdash \lambda \; y. \; x : \beta \rightarrow \alpha}
+		{x: \alpha, y : \beta \vdash x : \alpha}
+	}
+	\]
+\end{example}
+
+
+\begin{example}
+	Докажем $\vdash \lambda \; x. \; \lambda \; y. \; x \; y : (\alpha \rightarrow \beta) \rightarrow \alpha \rightarrow \beta$
+	
+	\[
+	\infer
+	{\vdash \lambda \; x. \; \lambda \; y. \; x \; y : (\alpha \rightarrow \beta) \rightarrow \alpha \rightarrow \beta}
+	{
+		\infer
+		{x: \alpha \rightarrow \beta \vdash \lambda \; y. \; x \; y : \alpha \rightarrow \beta}
+		{
+			\infer
+			{x: \alpha \rightarrow \beta, y : \alpha \vdash x \; y : \beta}
+			{x: \alpha \rightarrow \beta, y : \alpha \vdash x: \alpha \rightarrow \beta && x: \alpha \rightarrow \beta, y : \alpha \vdash y: \alpha}
+		}
+	}
+	\]
+\end{example}
+
+\subsection{Отсутствие типа у Y-комбинатора}
+
+\begin{theorem}
+	$Y$-комбинатор не типизируется в просто типизированном по Карри лямбда исчислении
+\end{theorem}
+
+\subparagraph{Неформальное доказательство}
+
+$Y \; f =_{\beta} f \; (Y \; f)$, поэтому $Y \; f$ и $f \; (Y \; f)$ должны иметь одинаковые типы.
+
+Пусть $Y \; f : \alpha$
+
+Тогда $Y : \beta \rightarrow \alpha, f : \beta$
+
+Из $f \; (Y \; f) : \alpha$ получаем $f: a \rightarrow \alpha$ (так как $Y f : \alpha$)
+
+Тогда $\beta = \alpha \rightarrow \alpha$, из этого получаем $Y : (\alpha \rightarrow \alpha) \rightarrow \alpha$
+
+Можно доказать, что $\lambda \; x. \; x : \alpha \rightarrow \alpha$. Тогда $Y \; \lambda \; x. \; x : \alpha$, то есть любой тип является обитаемым. Так как это невозможно, $Y$-комбинатор не может иметь типа, так как тогда он сделает нашу логику противоречивой.
+
+\subparagraph{Формальное доказательство}
+
+Докажем от противного. Пусть $Y$-комбинатор типизируем. Тогда в выводе его типа есть вывод типа выражения $x \; x$. Так как $x \; x$ - абстракция, то и типизированна она может быть только по правилу абстракции. Значит, в выводе типа $Y$-комбинатора есть такой вывод:
+
+$$\infer{\Gamma \vdash x x: \psi}{\Gamma \vdash x: \varphi \rightarrow \psi && \Gamma \vdash x: \varphi }$$
+
+Рассмотрим типизацию $\Gamma \vdash x: \varphi \rightarrow \psi$ и $\Gamma \vdash x: \varphi$. $x$ это атомарная переменная, значит, она могла быть типизирована только по единственной схеме аксиом. 
+
+Следовательно, $x$ типизируется следующим образом.
+
+$$\infer{\Gamma', x: \varphi \rightarrow \psi, x: \varphi \vdash x x: \psi}{\Gamma', x: \varphi \rightarrow \psi, x: \varphi \vdash x: \varphi \rightarrow \psi && \Gamma', x: \varphi \rightarrow \psi, x: \varphi \vdash x: \varphi }$$
+
+Следовательно, в контексте $\Gamma$ переменная $x$ встречается два раза, что невозможно по схеме аксиом.
+
+\subsection{Изоморфизм Карри-Ховарда}
+
+Заметим, что аксиомы и правила вывода импликационного фрагмента ИИВ и просто типизированного по Карри лямбда-исчисления точно соответсвуют друг другу. 
+
+$\newline$
+\begin{tabular}{ | p{8cm} | p{8cm} | }
+	\hline
+	Просто типизирпованное $\lambda$-исчисление & Импликативный фрагмент ИИВ \\ \hline
+	$\Gamma, x : \theta \vdash x : \theta$ & $\Gamma, \varphi \vdash \varphi$ \\
+	\\
+	$\infer{\Gamma \vdash (\lambda \; x. \; P) : \varphi \rightarrow \psi}{\Gamma, x : \varphi \vdash P : \psi}$ & $\infer{\Gamma \vdash \varphi \to \psi}{\Gamma, \varphi \vdash \psi}$  \\
+	\\
+	$\infer{\Gamma \vdash PQ : \psi}{\Gamma \vdash P : \varphi \to \psi && \Gamma \vdash Q : \varphi}$ & $\infer{\Gamma \vdash \psi}{\Gamma \vdash \varphi \to \psi && \Gamma \vdash \varphi}$ \\
+	\hline
+\end{tabular}
+
+$\newline$
+Установим соответствие и между прочими сущностями ИИВ и просто типизированного по Карри лямбда-исчисления.
+
+$\newline$
+\begin{tabular}{ | p{8cm} | p{8cm} | }
+	\hline
+	Просто типизирпованное $\lambda$-исчисление & Импликативный фрагмент ИИВ \\ \hline
+	Тип & Высказывание \\
+	Терм & Доказательство высказывания  \\
+	Проверка того, что терм имеет заданный тип & Проверка доказательства на корректность \\
+	Обитаемый тип & Доказуемое высказывание \\
+	Проверка того, что существует терм, имеющий заданный тип & Проверка того, что заданное  высказывание имеет доказательство \\
+	\hline
+\end{tabular}
