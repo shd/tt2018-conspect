@@ -7,7 +7,7 @@
 		\item Если $\Gamma\vdash\sigma$, то существует M и существует $\Delta$, такое что $|\Delta|=\Gamma$, что $\Delta \vdash M: \sigma$, где $\Delta=\{x_{\sigma} : \sigma\:|\:\sigma\in\Gamma  \}$
 	\end{enumerate}
 	\begin{example}
-	$\{f\: :\:\alpha\:\rightarrow\:\beta,\:x\: :\:\beta\}\:\vdash\:f\:x\::\:\beta$ \\Применив , изоморфизм Карри-Ховарда получим: $\{\alpha\:\rightarrow\:\beta,\:\beta\}\:\vdash\:\beta$
+	$\{f\: :\:\alpha\:\rightarrow\:\beta,\:x\: :\:\beta\}\:\vdash\:f\:x\::\:\beta$ \\Применив, изоморфизм Карри-Ховарда получим: $\{\alpha\:\rightarrow\:\beta,\:\beta\}\:\vdash\:\beta$
 	\end{example}
 	\begin{proof}
 		\par П.1 доказывается индукцией по длине выражения 
@@ -31,21 +31,23 @@
     p_3\:(p,\:q),& \text{if } p,\:q\neq0
 		\end{cases}
 	\]
-	\[\text{, где }C-\text{константа, }\\p_1,\:p_2,\:p_3-\text{выражения, составленные из }*,\:+,\:p,\:q\text{ и констант.}\]
+	\[\text{ где }C-\text{константа, }\\p_1,\:p_2,\:p_3-\text{выражения, составленные из }*,\:+,\:p,\:q\text{ и констант.}\]
 \end{definition}\par
 	
 	Пусть $\upsilon$ = $(\alpha\to\alpha)\to(\alpha\to\alpha)$, где $\alpha-$произвольный тип и пусть $F\in\Lambda\text{, что }F:\upsilon\to\upsilon\to\upsilon$, то существует расширенный полином $E$, такой что $\forall a,\:b\in \mathbb{N}$ $F(\overline{a},\:\overline{b})=_\beta\: \overline{E(a,\:b)}$, где $\overline{a}-$черчевский нумерал.
-	
-	\begin{statement} Типы черчевских нумералов
+		\begin{theorem}
+	У каждого терма в просто типизируемом $\lambda$ исчислении существует расширенный полином.
+	\end{theorem}
+		\begin{statement} Типы черчевских нумералов
 	\begin{enumerate}
-		\item $0:\lambda f\:\lambda y. \:x : a\:\rightarrow\:b\:\rightarrow\:a$
-		\item $1:\lambda f\:\lambda y. \:f\:x : (a\:\rightarrow\:b)\:\rightarrow\:a\:\rightarrow\:b$
-		\item $2:\lambda f\:\lambda y. \:f\:(f\:x) : (a\:\rightarrow\:a)\:\rightarrow\:a\:\rightarrow\:a$
-		\item $\forall\:i,\:i\geq 2 \hspace{1em}\lambda f\:\lambda y. \:f(\:\hdots\:(f\:x)): (a\:\rightarrow\:a)\:\rightarrow\:a\:\rightarrow\:a$
+		\item $0:\lambda f\:\lambda x. \:x : a\:\rightarrow\:b\:\rightarrow\:b$
+		\item $1:\lambda f\:\lambda x. \:f\:x : (a\:\rightarrow\:b)\:\rightarrow\:a\:\rightarrow\:b$
+		\item $2:\lambda f\:\lambda x. \:f\:(f\:x) : (a\:\rightarrow\:a)\:\rightarrow\:a\:\rightarrow\:a$
+		\item $\forall\:i,\:i\geq 2 \hspace{1em}\lambda f\:\lambda x. \:f(\:\hdots\:(f\:x)): (a\:\rightarrow\:a)\:\rightarrow\:a\:\rightarrow\:a$
 	\end{enumerate}
 	\end{statement}
 	\begin{proof}
-		Пункты $1-2-$ очевидно. Рассмотрим более подробно пункт 4: 
+		Пункты $1, 2, 3-$ очевидно. Рассмотрим более подробно пункт 4: 
 		\par Разберем нумерал и рассмотрим два последних шага $-$
 		
 	
@@ -64,9 +66,7 @@
 		\end{table}
 		на шаге 3 становится понятно, что $f:a\:\rightarrow\:a$ и $x:a$
 		\end{proof}
-	\begin{theorem}
-	У каждого терма в просто типизируемом $\lambda$ исчислении существует расширенный полином.
-	\end{theorem}
+	
 		
 	\begin{statement}Основные задачи типизации $\lambda$ исчисления\end{statement}
 		\begin{enumerate}
@@ -128,7 +128,11 @@
 			\item \textit{Устранение переменной} \par
 			Пусть есть уравнение $x=\Theta$, заменим во всех остальных уравнениях переменную $x$ на терм $\Theta$.		
 		\end{enumerate}
-		\begin{statement} Эти операции не изменяют множества решений.\end{statement}
+		\begin{statement} Эти операции не изменяют множества решений.
+		\end{statement}
+		\begin{proof} Пункт $a\:-$ доказан выше, докажем теперь пункт $b:$\par Пусть есть решение вида $T = \begin{cases} a = \Theta_a &\\ \vdots \end{cases}$ 
+		и уравнение вида $f\:a\:\hdots\:z\:=\:\Theta_c\:$, тогда, $T(f\:a\:\hdots\:z) = f\:T(a)\:\hdots\:T(z)$, которое в свою очередь является $f\: \Theta_a\:\hdots\:T(z)$
+		\end{proof}
 	\end{enumerate}	
 		\begin{definition}Система уравнений в разрешеной форме если \end{definition}
 			\begin{enumerate}
@@ -146,7 +150,7 @@
 			\item Если $\Theta_i=a_i$, то перепишем, как $a_i=\Theta_i$, $\Theta_i-$не переменная
 			\item $a_i=a_i-$ удалим
 			\item $f\:\Theta_1\hdots\Theta_n=f\:\sigma_1\hdots\sigma_n-$  применим редукцию термов 
-			\item $a_i=\Theta_i-$ Применим подстановку переменной $-$ подставим во все остальне уравнения $\Theta_i$ вместо $a_i$
+			\item $a_i=\Theta_i-$Применим подстановку переменной $-$ подставим во все остальне уравнения $\Theta_i$ вместо $a_i$ (Если $a_i$ встречается в системе где-то еще)
 		\end{enumerate}
 		\item Проверим разрешима ли система, совместима ли система (два пункта несовместимости)
 		\item повторим пункт 1 		
@@ -154,6 +158,7 @@
 		
 		\begin{statement} Алгоритм не изменяет множетва решений\end{statement}
 		\begin{statement} Несовместная система не имеет решений\end{statement}
+		\begin{statement} Если система имеет решение, то его разрешеная форма единствена\end{statement}
 		\begin{statement} Система в разрешеной форме имеет решение:\end{statement}	
 		
 	\begin{align*}
@@ -168,7 +173,7 @@
 		\end{cases}\\
 	\end{align*}
 	\begin{statement}Алгоритм всегда закначивается\end{statement}
-	\begin{proof}По индукции, выберем три числа $ \big \langle x\:y\:z\big \rangle$, где\par $x-$количество переменных, которые встречаются строго больше одного раза в левой части некоторого уравнения ($b$ не повлияет на $x$, а $a$ повлияет в уравнении $f(a(g\:a)\:b)=\Theta$),\par $y-$ количество функциональных символов в системе,\par $z-$количество уравнеий типа $a=a$ и $\Theta=b$.\par Определим отношение $\leq$  между двумя кортежами,	 как $\big \langle x_1\:y_1\:z_1\big \rangle \leq \big \langle x_2\:y_2\:z_2\big \rangle$ если верно одно из следующих условий: \begin{enumerate}
+	\begin{proof}По индукции, выберем три числа $ \big \langle x\:y\:z\big \rangle$, где\par $x-$количество переменных, которые встречаются строго больше одного раза в левой части некоторого уравнения ($b$ не повлияет на $x$, а $a$ повлияет в уравнении $f(a(g\:a)\:b)=\Theta$),\par $y-$ количество функциональных символов в системе,\par $z-$количество уравнеий типа $a=a$ и $\Theta=b$, где $\Theta$ не переменная.\par Определим отношение $\leq$  между двумя кортежами,	 как $\big \langle x_1\:y_1\:z_1\big \rangle \leq \big \langle x_2\:y_2\:z_2\big \rangle$ если верно одно из следующих условий: \begin{enumerate}
 	\item $x_1 < x_2$
 	\item $x_1 = x_2 \:\& \:y_1 < y_2$
 	\item $x_1 = x_2 \:\&  \:y_1 = y_2 \:\& \:z_1 < z_2$
@@ -256,5 +261,12 @@
 		\]				
 			
 	\begin{definition} $S \circ T-$композиция подстановок, если $S \circ T=S\:(T\:(a))$\end{definition}
-	\begin{definition} $S-$наиболее общий унификатор, если любое решение сисетмы $R$ может быть получено уточнением: $\exists\:T:R=T\circ S$\end{definition}
+	\begin{definition} $S-$наиболее общий унификатор, если любое решение ($R$) системы $X$ может быть получено уточнением: $\exists\:T:R=T\circ S$\end{definition}
+	
 	\begin{statement} Алгоритм дает наиболее общий унификатор системы, если у нее есть решения. Если решений нет алгоритм окончится неудачей.\end{statement}
+	\begin{proof}
+	 Рассмотрим решение в разрешеной форме $S$ и какое-то другое решение $R$ \begin{enumerate}
+	 \item Если $S\equiv R$, то тогда $T = S$
+	 \item Иначе $R\:-\:$ не является решением в разрешеной форме и так как множество решений не изменяется и решение в разрешеной форме единственно, то сведя $R$ к $S$ (например алгоритмом унификации) получим какое-то решение $T$, которым будет ответом
+\end{enumerate}
+	\end{proof}

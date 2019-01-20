@@ -1,4 +1,5 @@
-\section{Лекция 6 \\ Реконструкция типов в просто типизированном лямбда-исчислении, комбинаторы}
+
+		\section{Лекция 6 \\ Реконструкция типов в просто типизированном лямбда-исчислении, комбинаторы}
 		\subsection{Алгоритм вывода типов}
 					
 			Пусть есть: $?\:\vdash \:A\: :\: ?$, хотим найти пару $\big \langle \text{контекст}, \text{тип} \big \rangle$\par
@@ -60,6 +61,7 @@
 	\path [->] (F) edge node[left] {} (H);	
 	\path [->] (F) edge node[left] {} (I);
 \end{tikzpicture}\par
+
 
 \begin{enumerate}
 	\item $E_1=\big \langle \{\},\:\alpha_x \big \rangle$
@@ -141,8 +143,7 @@
 		\item $T(\lambda\:x.x)=I$
 		\item $T(\lambda\:x\lambda\:y.P)=T(\lambda\:x.\:T(\lambda\:y.P))$
 		\item $T(\lambda\:x.P\:Q)=S\:\:T(\lambda\:x.P)\:T(\lambda\:x.Q)$
-	\end{enumerate}		
-	\begin{statement}Связь комбинаторов с ИИВ\end{statement}	
+	\end{enumerate}
 	\begin{statement}Альтернативный базис:\end{statement}
 	 \begin{enumerate}
 		\item $B=\lambda x\:\lambda y\:\lambda z.\:x\:(y\:z)\: : \:(a\:\rightarrow\:b)\:\rightarrow\:(c\:\rightarrow\:a)\:\rightarrow\:c\:\rightarrow\:b$
