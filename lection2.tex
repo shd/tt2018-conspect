@@ -169,7 +169,7 @@ $(\twoheadrightarrow_{\beta})$ "--- рефлексивное и транзити
 		\end{enumerate}
 		\item Пусть $P_{1}\equiv{}\lambda{}y.A_{1}$, $P_{2}\equiv{}\lambda{}y.A_{2}$. по определению $(\bpar)$ $A_{1}\bpar A_{2}$. Тогда по индукционному предположению $A_{1}[x\coloneqq{}Q_{1}] \bpar A_{2}[x\coloneqq{}Q_{2}]$. Тогда 
 		$\lambda{}y.(A_{1}[x\coloneqq{}Q_{1}]) \bpar \lambda{}y.(A_{2}[x\coloneqq{}Q_{2}])$ по определению $(\bpar)$. Следовательно 	$\lambda{}y.A_{1}[x\coloneqq{}Q_{1}] \bpar \lambda{}y.A_{2}[x\coloneqq{}Q_{2}]$ по определению подствановки.
-		\item Пусть $P_{1}=_\alpha(\lambda{}y.A)B$, $P_{2}=_\alpha A[y\coloneqq{}B]$ и подстановка возможна. Из предположения индукции получаем, что $A[x \coloneqq Q_1] \bpar A[x \coloneq Q_2]$, $B[x \coloneqq Q_1] \bpar B[x \coloneqq Q_2]$. Значит $P_1[x \coloneqq Q_1]$ с учетом редукций примет вид $(\lambda{}y.A[x \coloneqq Q_2]) B[x \coloneqq Q_2]$. $P_2[x \coloneqq Q_2]$ же примет вид $A[y \coloneqq B][x \coloneqq Q_2]$. Следовательно мы получим, что $P_1[x \coloneqq Q_1] \bpar P_2[x \coloneqq Q_2]$.
+		\item Пусть $P_{1}=_\alpha(\lambda{}y.A_1)B_1$, $P_{2}=_\alpha A_2[y\coloneqq{}B_2]$ и $ A_1 \bpar A_2 $, $ B_1 \bpar B_2 $. По индукционному предположению получаем, что $A_1[x \coloneqq Q_1] \bpar A_2[x \coloneqq Q_2]$, $B_1[x \coloneqq Q_1] \bpar B_2[x \coloneqq Q_2]$. Следовательно по определению $(\bpar)$ получаем, что $ (\lambda{}y.A_1[x\coloneqq Q_1])B_1[x \coloneqq Q_1] \bpar  A_2[y \coloneqq B_2][x \coloneqq Q_2]$
 	\end{itemize}
 \end{proof}
 
