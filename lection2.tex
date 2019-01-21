@@ -148,7 +148,7 @@ $(\twoheadrightarrow_{\beta})$ "--- рефлексивное и транзити
 		\item $A\equiv{}P_{1}Q_{1}$, $B\equiv{}P_{2}Q_{2}$ и $P_{1}\bpar P_{2}$, $Q_{1}\bpar Q_{2}$
 		\item $A\equiv{}\lambda{}x.P_{1}$, $B\equiv{}\lambda{}x.P_{2}$ и 
 		$P_{1}\bpar P_{2}$
-		\item $A=_{\alpha}(\lambda{}x.P)Q$, $B=_{\alpha}P[x\coloneqq{}Q]$ причем $Q$ свободна для подстановки вместо $x$ в $P$ 
+		\item $A=_{\alpha}(\lambda{}x.P_1)Q_1$, $B=_{\alpha}P_2[x\coloneqq{}Q_2]$ причем $Q_2$ свободна для подстановки вместо $x$ в $P_2$ и $P_1 \bpar P_2$, $Q_1 \bpar Q_2$
 	\end{enumerate}
 \end{definition}
 
@@ -234,3 +234,12 @@ $(\twoheadrightarrow_{\beta})$ "--- рефлексивное и транзити
 \begin{theorem}[Приводится без доказательсвта]
 	Если нормальная форма существует, она может быть достигнута нормальным порядком редукции.
 \end{theorem}
+
+Нормальный порядок хоть и приводит к нормальной форме ,если она существует, но бывает ситуации в которых аппликативный порядок вычисляется быстрее чем нормальный
+
+\begin{example}
+	Рассмотрим лямбда выражение $(\lambda{}x.x \ x \ x \ x) (\comb I \comb I)$. Попробуем редуцировать его нормальным порядком:
+	 \[(\lambda{}x.x \ x \ x \ x) (\comb I \comb I) \to_{\beta} (\comb I \comb I)(\comb I \comb I)(\comb I \comb I)(\comb I \comb I) \to_{\beta} \comb I(\comb I \comb I)(\comb I \comb I)(\comb I \comb I) \to_{\beta} (\comb I \comb I)(\comb I \comb I)(\comb I \comb I) \to_{\beta} ... \to_{\beta} \comb I\] 
+	  Как мы увидим, в данной ситуации аппликативный порядок редукции оказывается значительно эффективней: 
+	  \[ (\lambda{}x.x \ x \ x \ x) (\comb I \comb I) \to_{\beta} (\lambda{}x.x \ x \ x \ x) \comb I \to_{\beta} \comb I \comb I \comb I \comb I\to_{\beta} \comb I \comb I \comb I \to_{\beta} \comb I \comb I \to_{\beta} \comb I \]
+\end{example}
