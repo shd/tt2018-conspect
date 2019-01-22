@@ -178,17 +178,21 @@ $(\twoheadrightarrow_{\beta})$ "--- рефлексивное и транзити
 \end{lemma}
 
 \begin{proof}
-	Будем доказывать индукцией по определению $\bpar$. Покажем, что если $M \bpar M_1$ и $M \bpar M_2$, то $\exists{}M_3$, что $M_1 \bpar M_3$ и $M_2 \bpar M_3$. Рассмотрим случаи:
+	Будем доказывать индукцией по определению $(\bpar)$. Покажем, что если $M \bpar M_1$ и $M \bpar M_2$, то существует ${}M_3$, что $M_1 \bpar M_3$ и $M_2 \bpar M_3$. Рассмотрим случаи:
 	\begin{itemize}
 		\item Если $M\equiv M_1$, то просто возьмем $M_3\equiv M_2$.
 		\item Если $M\equiv \lambda{}x.P, M_1 \equiv \lambda{}x.P_1, M_2 \equiv \lambda{}x.P_2$ и $P \bpar P_1, P \bpar P_2$, то по предположению индукции 
-		$\exists P_3$, что $P_1 \bpar P_3, P_2 \bpar P_3$, тогда возьмем $M_3\equiv \lambda{}x.P_3$.
-		\item Если $M \equiv P Q, M_1 \equiv P_1 Q_1$ и по определению $\bpar$ $P \bpar P_1, Q \bpar Q_1$, то рассмотрим два случая:
+		существует $P_3$, что $P_1 \bpar P_3, P_2 \bpar P_3$, тогда возьмем $M_3\equiv \lambda{}x.P_3$.
+		\item Если $M \equiv P Q, M_1 \equiv P_1 Q_1$ и по определению $(\bpar)$ $P \bpar P_1, Q \bpar Q_1$, то рассмотрим два случая:
 		\begin{enumerate}
-			\item $M_2 \equiv P_2 Q_2$. Тогда по предположению индукции $\exists P_3$, что $P_1 \bpar P_3, P_2 \bpar P_3$. Аналогично для $Q$. Тогда возьмем $M_3 \equiv P_3 Q_3$.
-			\item $P\equiv \lambda {}x.P', M_2 \equiv P_2'[x\coloneqq{} Q_2]$, по определению $\bpar$ $P' \bpar P_2', Q \bpar Q_2$. Также $P_1 \equiv \lambda{}x.P_1', P' \equiv P_1'$. Тогда по предположению индукции и леммы $\ref{bparhelp}$ мы можем взять $M_3 \equiv P_3'[x \coloneqq P_3]$.
+			\item $M_2 \equiv P_2 Q_2$. Тогда по предположению индукции существует $P_3$, что $P_1 \bpar P_3, P_2 \bpar P_3$. Аналогично для $Q$. Тогда возьмем $M_3 \equiv P_3 Q_3$.
+			\item $P\equiv \lambda {}x.P'$ значит $P_1 \equiv \lambda{}x.P_1'$ и $ P' \bpar P_1'$. Пусть тогда $ M_2 \equiv P_2[x\coloneqq{} Q_2]$, по определению $(\bpar)$ $P' \bpar P_2, Q \bpar Q_2$. Тогда по предположению индукции и лемме $\ref{bparhelp}$ существует $M_3 \equiv P_3[x \coloneqq Q_3]$ такой, что $ P_1' \bpar P_3 $, $ Q_1 \bpar Q_3 $ и $ P_2 \bpar P_3 $, $ Q_2 \bpar Q_3 $.
 		\end{enumerate}
-	\item Если $M =_\alpha (\lambda{}x.P)Q, M_1 =_\alpha M_2 =_\alpha P[x \coloneqq Q]$, то просто возьмем $M_3 =_\alpha P[x \coloneq Q]$.
+	\item Если $ M \equiv (\lambda{}x.P)Q $, $ M_1 \equiv P_1[x\coloneqq Q_1] $ и $ P \bpar P_1 $, $ Q \bpar Q_1$, то рассмотрим случаи:
+	\begin{enumerate}
+		\item $ M_2 \equiv (\lambda{}x.P_2)Q_2 $, $P \bpar P_2$, $Q \bpar Q_2$. Тогда по предположению индукции и лемме $ \ref{bparhelp} $ существует такой $ M_3 \equiv P_3[x \coloneqq Q_3] $, что $ P_1 \bpar P_3 $, $ Q_1 \bpar Q_3 $ и $ P_2 \bpar P_3 $, $ Q_2 \bpar Q_3 $.
+		\item $ M_2 \equiv P_2[x \coloneqq Q_2]$, $ P \bpar P_2 $, $ Q \bpar Q_2 $. Тогда по предположению индукции и лемме $ \ref{bparhelp} $ существует такой $ M_3 \equiv P_3[x \coloneqq Q_3] $, что $ P_1 \bpar P_3 $, $ Q_1 \bpar Q_3 $ и $ P_2 \bpar P_3 $, $ Q_2 \bpar Q_3 $.
+	\end{enumerate}
 	\end{itemize}
 \end{proof}
 
@@ -240,6 +244,6 @@ $(\twoheadrightarrow_{\beta})$ "--- рефлексивное и транзити
 \begin{example}
 	Рассмотрим лямбда выражение $(\lambda{}x.x \ x \ x \ x) (\comb I \comb I)$. Попробуем редуцировать его нормальным порядком:
 	 \[(\lambda{}x.x \ x \ x \ x) (\comb I \comb I) \to_{\beta} (\comb I \comb I)(\comb I \comb I)(\comb I \comb I)(\comb I \comb I) \to_{\beta} \comb I(\comb I \comb I)(\comb I \comb I)(\comb I \comb I) \to_{\beta} (\comb I \comb I)(\comb I \comb I)(\comb I \comb I) \to_{\beta} ... \to_{\beta} \comb I\] 
-	  Как мы увидим, в данной ситуации аппликативный порядок редукции оказывается значительно эффективней: 
-	  \[ (\lambda{}x.x \ x \ x \ x) (\comb I \comb I) \to_{\beta} (\lambda{}x.x \ x \ x \ x) \comb I \to_{\beta} \comb I \comb I \comb I \comb I\to_{\beta} \comb I \comb I \comb I \to_{\beta} \comb I \comb I \to_{\beta} \comb I \]
+	Как мы увидим, в данной ситуации аппликативный порядок редукции оказывается значительно эффективней: 
+	\[ (\lambda{}x.x \ x \ x \ x) (\comb I \comb I) \to_{\beta} (\lambda{}x.x \ x \ x \ x) \comb I \to_{\beta} \comb I \comb I \comb I \comb I\to_{\beta} \comb I \comb I \comb I \to_{\beta} \comb I \comb I \to_{\beta} \comb I \]
 \end{example}
