@@ -267,7 +267,11 @@ $\lambda a. \lambda b. b\ (\lambda a. \lambda b. a\ O) : \forall \alpha. (\alpha
         \item $T* = f(\alpha)$
     \end{itemize}
     
-    Зависимые типы и логика 1-ого порядка
+\end{enumerate}
+
+\subsection{Зависимые типы}
+    
+Рассмотрим функцию sprintf из языка C:
     
     $sprintf : string \rightarrow smth \rightarrow string$
     
@@ -275,9 +279,50 @@ $\lambda a. \lambda b. b\ (\lambda a. \lambda b. a\ O) : \forall \alpha. (\alpha
     
     $sprintf "\%f" : float \rightarrow string$
     
-    тип sprintf определяется первым аргументом.
-\end{enumerate}
+Легко видеть, что тип sprintf определяется первым аргументом. То есть тип этой функции зависит от терма - именно такой тип и называется зависимым (\textit{англ: dependent type}). 
 
+Рассмотрим несколько иной пример, а именно список. Предположим, что мы хотим скалярно перемножить два списка: 
+
+\begin{minted}{fsharp}
+let rec dot lst1 lst2 = match (lst1, lst2) with
+  | ([], []) -> 0
+  | (x :: xs, y :: ys) -> x * y + (prod xs ys)
+;;
+
+dot [1; 2] [3; 4] (* results in 11 *)
+
+dot [1; 2] [3; 4; 5] (* получим ошибку *)
+
+\end{minted}
+
+Было бы очень здорово уметь отлавливать эту ошибку не в рантайме, а во время компиляции программы и завсимые типы могут в этом помочь. Например в языке Idris можно использовать Vect: 
+
+\begin{minted}{fsharp}
+dot : {n : Nat} -> Vect n Integer -> Vect n Integer -> Integer
+dot {n = Z} [] [] = 0
+dot {n = (S len)} (x :: xs) (y :: ys) = y * x + dot len xs ys 
+
+let v1 = Data.Vect.fromList [1, 2, 3]
+let v2 = Data.Vect.fromList [4, 5, 6]
+dot v1 v2 -- results in 32
+
+let v1 = Data.Vect.fromList [1, 2, 3, 4]
+dot v1 v2 -- Type mismatch between
+          --      Vect 3 Integer (Type of v2)
+          -- and
+          --      Vect 4 Integer (Expected type)
+\end{minted}
+
+Если подойти к типу функции dot ближе с точки зрения теории типов, то мы бы записали это так (о * речь пойдет в следующей главе [стоит ее воспринимать как тип типа]):
+
+$Nat : *,\ Integer : *,\ Vect : Nat \rightarrow Integer \rightarrow * \vdash dot : \Pi n : Nat. (Vect\ n\ Integer) \rightarrow (Vect\ n\ Integer) \rightarrow Integer$
+
+\subsubsection{$\Pi$-типы и $\Sigma$-типы}
+
+\begin{itemize}
+    \item $\Pi x : \alpha . P(x)$ - это запись можно читать как (в каком-то смысле в интуционистском понимании): "У меня есть метод для конструирования объекта типа $P(x)$, использующий любой предоставленный $x$ типа $\alpha$". Если же смотреть на эту запись с точки зрения классической логики, то ее можно понимать как бесконечную  конъюнкцию $P(x_1)\&P(x_2)\&...$. Данная конъюнкция соответствует декартовопу произведению, отсюда и называние $\Pi$-типа (иногда в англоязычной литературе можно встретить \textit{dependent function type}).
+    \item $\Sigma x : \alpha . P(x)$. Аналогично предыдущему пункту рассмотрим значение с интуционистской точки зрения: "У меня есть объект $x$ тип $\alpha$, но больше ничего про него не знаю кроме того, что он обладает свойством $P(x)$". Это как раз в стиле интуционизма, что нам приходится значть и объект $x$ и его свойство $P(x)$. Это можно представить как пару, а пара - бинарной произведение. С точки же зрения классической логики, мы можем принимать эту формулу как бесконечную дизъюнкицю $P(x_1) \vee P(x_2)\vee ...$, которая соответствует алгебраическим типам данных. (иногда в англоязычной литературе можно встретить \textit{dependent sum}).
+\end{itemize}
 
 \section{Лекция 10 (06.11.2019)}
 
@@ -290,7 +335,7 @@ $\lambda a. \lambda b. b\ (\lambda a. \lambda b. a\ O) : \forall \alpha. (\alpha
     \item $T_{F_w} ::= \alpha\ |\ \lambda \alpha. T_{F_w}\ |\ (T_{F_w})\ |\ T_{F_w} \rightarrow T_{F_w}\ |\ T_{F_w}\ T_{F_w} $
 \end{itemize}
 
-Ничего не мешает рассматривать типовую систему, в которой тип может зависеть от терма. Пусть для всех $a : \alpha$ мы можем определить тип $\beta_\alpha$ и пусть существует $b_\alpha : \beta_\alpha$. Тогда вполне обоснована запись функции $\lambda \alpha : b_\alpha$. Тип данного выражения приянто записывать как $\Pi a :\alpha . \beta_\alpha$ (стоит сделать замечание, что если $\beta_\alpha$ не зависит от $\alpha$ [то есть функция константа], то вместо $\Pi a :\alpha . \beta_\alpha$ пишут $\alpha \rightarrow \beta$). Примером может быть тип вектора, длина которого зависит от натурального числа и типа (пример из языка Idris):
+Ничего не мешает рассматривать типовую систему, в которой тип может зависеть от терма, как это было сделано раньше. Пусть для всех $a : \alpha$ мы можем определить тип $\beta_\alpha$ и пусть существует $b_\alpha : \beta_\alpha$. Тогда вполне обоснована запись функции $\lambda \alpha : b_\alpha$. Тип данного выражения приянто записывать как $\Pi a :\alpha . \beta_\alpha$ (стоит сделать замечание, что если $\beta_\alpha$ не зависит от $\alpha$ [то есть функция константа], то вместо $\Pi a :\alpha . \beta_\alpha$ пишут $\alpha \rightarrow \beta$). Примером может быть тип вектора, длина которого зависит от натурального числа и типа (пример из языка Idris):
 \begin{minted}{Fsharp}
 data Vect : (len : Nat) -> (elem : Type) -> Type where
   Nil  : Vect Z elem
