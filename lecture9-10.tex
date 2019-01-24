@@ -300,7 +300,7 @@ dot [1; 2] [3; 4; 5] (* получим ошибку *)
 \begin{minted}{fsharp}
 dot : {n : Nat} -> Vect n Integer -> Vect n Integer -> Integer
 dot {n = Z} [] [] = 0
-dot {n = (S len)} (x :: xs) (y :: ys) = y * x + dot len xs ys 
+dot {n = (S len)} (x :: xs) (y :: ys) = y * x + dot xs ys 
 
 let v1 = Data.Vect.fromList [1, 2, 3]
 let v2 = Data.Vect.fromList [4, 5, 6]
