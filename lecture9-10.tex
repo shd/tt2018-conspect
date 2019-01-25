@@ -112,7 +112,7 @@ $\sigma_2$ --- частный случай (специализация) $\sigma_
 
 \begin{enumerate}
     \item $\vcenter{\infer{\Gamma, x : \sigma \vdash x : \sigma}{}}$
-    \item $\vcenter{\infer{\Gamma \vdash e_0\ e_1 : \tau'}{\Gamma \vdash e_1 : \tau \rightarrow \tau' \qquad \Gamma \vdash e_1 : \tau}}$
+    \item $\vcenter{\infer{\Gamma \vdash e_0\ e_1 : \tau'}{\Gamma \vdash e_0 : \tau \rightarrow \tau' \qquad \Gamma \vdash e_1 : \tau}}$
     \item $\vcenter{\infer{\Gamma \vdash \lambda x.e : \tau \rightarrow \tau'}{\Gamma, x : \tau \vdash e : \tau'}}$
     \item $\vcenter{\infer[,\ let\ x = a\ in\ b \equiv (\lambda x.b)\ a]{\Gamma \vdash let\ x = e_0\ in\ e_1 : \tau}{\Gamma \vdash e_0 : \sigma \qquad \Gamma, x : \sigma \vdash e_1 : \tau}}$ 
     \item $\vcenter{\infer{\Gamma \vdash e : \sigma}{\Gamma \vdash e : \sigma' \qquad  \sigma' \sqsubseteq \sigma}}$
@@ -231,6 +231,20 @@ $\lambda a. \lambda b. b\ (\lambda a. \lambda b. a\ O) : \forall \alpha. (\alpha
         class Enum <extends Enum<E>>
     \end{minted}
     
+    Также приведем пример вывода типа $\lambda x. x\ x$ (можно вспомнить, что именно этот терм помешал нам типизировать $Y$-комбинатор в простотипизированном $\lambda$-исчислении): 
+    
+    \begin{paracol}{2}
+    \switchcolumn
+            $\vcenter{\infer{\vdash \lambda x. x\ x : \tau \rightarrow \beta}{\infer[]{x : \tau \vdash x\ x : \beta}{x : \tau \vdash x : \tau \rightarrow \beta \qquad x : \tau \vdash x : \tau}}}$
+    \switchcolumn
+        Пусть $\tau = \mu \alpha. \alpha \rightarrow \beta$. Если мы раскроем $\tau$ один раз, то получим $\tau = \tau \rightarrow \beta$. Если раскроем еще раз, то получим $\tau = (\tau \rightarrow \beta) \rightarrow \beta$.
+    \end{paracol}
+    
+    Ранее мы ввели $Y$-комбинатор аксиоматически, а можем ли мы его типизировать используя рекурсивные типы? Ответ: Да, можем. Напомним, что $Y = \lambda f.(\lambda x. f\ (x\ x))\ (\lambda x. f\ (x\ x))$.
+    
+    $\vcenter{\infer[]{\vdash \lambda f.(\lambda x. f\ (x\ x))\ (\lambda x. f\ (x\ x)) : \forall \beta. (\beta \rightarrow \beta) \rightarrow \beta}{\infer[]{\vdash \lambda f.(\lambda x. f\ (x\ x))\ (\lambda x. f\ (x\ x)) : (\beta \rightarrow \beta) \rightarrow \beta}{\infer[]{f : \beta \rightarrow \beta \vdash (\lambda x. f\ (x\ x))\ (\lambda x. f\ (x\ x)) : \beta}{\infer {\lambda f : \beta \rightarrow \beta \vdash \lambda x. f\ (x\ x) : \tau \rightarrow \beta}{\infer[]{f : \beta \rightarrow \beta \vdash \lambda x. f\ (x\ x) : \tau}{\infer[]{f : \beta \rightarrow \beta, x : \tau \vdash f\ (x\ x)}{\lambda f : \beta \rightarrow \beta,\ x : \tau \vdash f : \beta \rightarrow \beta \qquad f : \beta \rightarrow \beta,\ x : \tau \vdash x\ x : \beta}}} \qquad \infer{\lambda f : \beta \rightarrow \beta \vdash \lambda x. f\ (x\ x) : \tau}{\text{аналогично в другой ветке}}}}}}$
+    
+    Загадочка: А можно ли типизировать, скажем $\lambda x : Nat. x (S x)$?
     \item Изорекурсивный
     
     В отличии от эквирекурсивных типов будем считать, что $\mu \alpha. f(\alpha)$ изоморфно $f(\mu \alpha.f(\alpha))$. Такой подход используется в языке программирования C.
@@ -286,7 +300,7 @@ $\lambda a. \lambda b. b\ (\lambda a. \lambda b. a\ O) : \forall \alpha. (\alpha
 \begin{minted}{fsharp}
 let rec dot lst1 lst2 = match (lst1, lst2) with
   | ([], []) -> 0
-  | (x :: xs, y :: ys) -> x * y + (prod xs ys)
+  | (x :: xs, y :: ys) -> x * y + (dot xs ys)
 ;;
 
 dot [1; 2] [3; 4] (* results in 11 *)
@@ -413,7 +427,7 @@ data Vect : (len : Nat) -> (elem : Type) -> Type where
     \item $(*,\ \openbox)$ - позволяет записывать типы, которые зависят от термов
     \item $(\openbox,\ \openbox)$ - позволяет записывать типы, которые зависят от типов
 \end{itemize}
-
+    
 Также на этом кубике можно расположить языки программирования, например:
 \begin{itemize}
     \item Haskell будет распологаться на левой грани куба, недалеко от $\lambda w$
@@ -469,7 +483,7 @@ data Vect : (len : Nat) -> (elem : Type) -> Type where
     \item \begin{center}
         $\vcenter{\infer{\vdash (* \rightarrow *) : \openbox}{\vdash * : \openbox \qquad \infer{a:* \vdash *.\openbox}{\vdash *.\openbox} }}$
     \end{center}
-    \item \begin{center} $\vcenter{\infer{\vdash (\lambda \alpha : * . \alpha \rightarrow \alpha) : * \rightarrow *}{\vdash * : \openbox \qquad \infer{\alpha : * \vdash \alpha \rightarrow \alpha : x}{\alpha : * \vdash \alpha : * \qquad \alpha : *, x : * \vdash \alpha : *} \qquad \infer{\vdash (* \rightarrow *) : \openbox}{\vdash * : \openbox \qquad \infer{a:* \vdash *.\openbox}{\vdash *.\openbox} } }}$
+    \item \begin{center} $\vcenter{\infer{\vdash (\lambda \alpha : * . \alpha \rightarrow \alpha) : * \rightarrow *}{\vdash * : \openbox \qquad \infer{\alpha : * \vdash \alpha \rightarrow \alpha : x}{\alpha : * \vdash \alpha : * \qquad \alpha : *, x : \alpha \vdash \alpha : *} \qquad \infer{a:* \vdash *: \openbox}{\vdash * :\openbox} } }$
     \end{center}
 \end{enumerate}
 \end{center}
