@@ -1,0 +1,198 @@
+\section{Лекция 1}
+
+\subsection{$\lambda$-исчисление}
+
+\begin{definition}[$\lambda$-выражение]
+	$\lambda$-выражение "--- выражение, удовлетворяющее грамматике:
+	\begin{bnf}
+	\begin{alignat*}{3}
+		\Phi ::= & x
+		       | & \left(\Phi\right) 
+		       | & \lambda{}x.\Phi 
+		       | & \Phi \ \Phi        
+	\end{alignat*}
+	\end{bnf}
+\end{definition}
+
+Иногда для упращения записи мы будем опускать скобки. В этом случае, перед разбором выражения, следует расставить все опущенные скобки. При их рассатвлении будем придерживаться правил:
+\begin{enumerate}
+	\item В аппликации расставляем скобки слева направо: $A \ B \ C \implies (A \ B) \ C$.
+	\item Абстракции жадные "--- поглащают скобками все что могут до конца строки: 
+	$\lambda{}a.\lambda{}b.a \ b \implies \lambda{}a.(\lambda{}b.(a \ b))$.
+	\vspace{1mm}
+	\begin{example}
+		$\lambda{}x.(\lambda{}f.((f x) (f x) \lambda{}y.(y f)))$
+	\end{example}
+\end{enumerate}
+
+Договоримся, что:
+\begin{itemize}
+	\item Переменные "--- $x$, $a$, $b$, $c$.
+	\item Термы (части $\lambda$-выражения) "--- $X$, $A$, $B$, $C$.
+	\item Фиксированные переменные обозначаются буквами из начала алфавита, метапеременные "--- из конца.
+\end{itemize}
+
+Есть понятия связанного и свободного вхождения переменной (аналогично исчислению предикатов).
+
+\begin{definition}
+	Если вхождение $x$ находится в области действия абстракции по $x$, то такое вхождение называется связанным, иначе вхождение называется свободным.
+\end{definition}
+
+\begin{definition}
+	Терм $Q$ называется свободным для подстановски в $\Phi$ вместо $x$, если после подстановки $Q$ ни одно вхождение не станет связанным.
+\end{definition}
+
+\begin{example}
+	$\lambda{}x.A$ связывает все свободные вхождения $x$ в $A$.
+\end{example}
+
+\begin{definition}
+	Функция $V(A)$ "--- множество переменных, входящих в $A$.
+\end{definition}
+
+\begin{definition} 
+	Функция $\FV(A)$ "--- множество свободных переменных, входящих в $A$:
+	\[
+	\FV(A) =
+	\begin{cases}
+	\set{x}                  & \text{если } A \equiv x \\
+	\FV(P) \cup \FV(Q)       & \text{если } A \equiv PQ \\
+	\FV(P) \setminus \set{x} & \text{если } A \equiv \lambda x . P
+	\end{cases}
+	\]
+\end{definition}
+
+$\lambda$-выражение можно понимать как функцию.
+Абстракция "--- это функция с аргументом, аппликация "--- это передача аргумента.
+
+\begin{definition}[$\alpha$-эквивалентность]
+	$A=_{\alpha}B$, если имеет место одно из следующих условий:
+	\begin{enumerate}
+		\item $A\equiv{}x$, $B\equiv{}y$ и $x\equiv{}y$.
+		\item $A\equiv{}P_{1}Q_{1}$, $B\equiv{}P_{2}Q_{2}$ и $P_{1}=_{\alpha}P_{2}$, $Q_{1}=_{\alpha}Q_{2}$.
+		\item $A\equiv \lambda{}x.P_{1}$, $B\equiv \lambda{}y.P_{2}$ и $P_{1} [x\coloneqq{}t] =_{\alpha}P_2 [y\coloneqq{}t]$, где $t$ "--- новая переменная.
+	\end{enumerate} 
+\end{definition}
+
+\begin{example}
+	$\lambda{}x.\lambda{}y.xy=_{\alpha}\lambda{}y.\lambda{}x.yx$.
+	\begin{proof} 
+		\
+		\begin{enumerate}
+			\item $t z =_ \alpha t z$ верно по второму условию.
+			\item Тогда получаем, что $\lambda{}y.t y =_\alpha \lambda{}x. t x$ по третьему условию, так как из предыдущего пункта следует $t y[y \coloneqq z] =_\alpha tx[x \coloneqq z]$.
+			\item Из второго пункта пункта получаем что $\lambda{}x.\lambda{}y.xy=_{\alpha}\lambda{}y.\lambda{}x.yx$ по третьему условию, так как $\lambda{}y.xy[x \coloneqq t] =_\alpha \lambda{}x.yx[y \coloneqq t]$.
+		\end{enumerate}
+	\end{proof}
+\end{example}
+
+\begin{definition}[$\beta$-редекс]
+	$\beta$-редекс "--- выражение вида: $\left(\lambda{}x.A\right)B$
+\end{definition}
+
+\begin{definition}[$\beta$-редукция]
+	$A\to_{\beta}B$, если имеет место одно из следующих условий:
+	\begin{enumerate}
+		\item $A\equiv{}P_{1}Q_{1}$, $B\equiv{}P_{2}Q_{2}$ и либо $P_{1}=_{\alpha}P_{2}$, $Q_{1}\to_{\beta}Q_{2}$, либо
+		$P_{1}\to_{\beta}P_{2}$, $Q_{1}=_{\alpha}Q_{2}$
+		\item $A\equiv\left(\lambda{}x.P\right) Q$, $B\equiv P[x\coloneqq{}Q]$ причем $Q$ свободна для подстановки вместо $x$ в $P$ 
+		\item $A\equiv\lambda{}x.P$, $B\equiv\lambda{}x.Q$ и $P\to_{\beta}Q$
+	\end{enumerate}
+	\begin{example} 
+		$\left(\lambda{}x.x\right) y\to_{\beta} y$
+	\end{example}
+	\begin{example}
+		 $a \left(\lambda{}x.x\right) y\to_{\beta} a y$
+	\end{example}
+\end{definition}
+
+\subsection{Представление некоторых функций в лямбда исчислении}
+Логические значения легко представить в терминах $\lambda$-исчисления. В самом деле, положим:
+\begin{itemize}
+	\item $\func{True}  \equiv \lambda{}a\lambda{}b.a$ 
+	\item $\func{False} \equiv \lambda{}a\lambda{}b.b$
+\end{itemize}
+
+\newcommand{\If}{\lambda{}c.\lambda{}t.\lambda{}e.(c t) e}
+\newcommand{\T}{\lambda{}a\lambda{}b.a}
+\newcommand{\F}{\lambda{}a\lambda{}b.b}
+\newcommand{\Fl}{\func{F}}
+\newcommand{\Tl}{\func{T}}
+
+
+Также мы можем выражать и более сложные функции \\
+
+
+\begin{definition}
+	$\func{If} \equiv \If$
+\end{definition}
+
+\begin{example}
+	$\func{If} \ \Tl \ a \ b \to_{\beta} \ a$
+	\begin{proof}
+		\begin{alignat*}{2}
+		 ((\If) \ \T)\ a \ b \to_{\beta} (\lambda{}t.\lambda{}e.(\T) \ t \ e) \ a \ b \to_{\beta} \ \\ (\lambda{}t.\lambda{}e.(\lambda{}b.t) \ e) \ a \ b \to_{\beta} \ (\lambda{}t.\lambda{}e.t) \ a \ b \to_{\beta} \ (\lambda{}e.a) \ b \to_{\beta} \ a
+		\end{alignat*}
+	\end{proof}
+\end{example}
+
+Как мы видим If $\Tl$ действительно возвращает результат первой ветки.
+
+
+Другие логические операции:
+\[
+	\func{Not} = \lambda{}a.a \ \Fl \ \Tl \qquad
+	\func{Add} = \lambda{}a.\lambda{}b.a \ b \ \Fl \qquad
+	\func{Or}  = \lambda{}a.\lambda{}b.a \ \Tl \ b \qquad
+\]
+
+
+
+\subsection{Черчевские нумералы}
+
+\begin{definition}[черчевский нумерал]
+	\[
+		\overline{n} = \lambda{}f.\lambda{}x.f^{n} x \text{, \quad где\quad}
+		f^{n} x = 
+		\begin{cases}
+			f\left(f^{n-1} x\right) & \text{при } n > 0 \\
+			x 						& \text{при } n = 0
+		\end{cases}
+	\]
+\end{definition}
+
+\begin{example}
+	\[
+	\overline{3} = \lambda f . \lambda x . f \left(f \left(f x\right)\right)
+	\]
+\end{example}
+
+Несложно определить прибавление единицы к такому нумералу:
+\[
+	(+1) = \lambda{}n.\lambda{}f.\lambda{}x.f(nfx) \\
+\]
+
+
+
+Арифметические операции:
+\begin{enumerate}
+	\item $\func{IsZero} = \lambda{}n.n\mathinner{(\lambda{}x.\Fl)} \Tl$ 
+	\item $\func{Add} =\lambda{}a.\lambda{}b.\lambda{}f.\lambda{}x.a \mathinner{f} (b \mathinner{f} x)$ 
+	\item $\func{Pow} = \lambda{}a.\lambda{}b.b \mathinner{(\func{Mul}  \  a)} \mathinner{\overline{1}}$
+	\item $\func{IsEven} = \lambda{}n.n \ \func{Not} \ \Tl$
+	\item $\func{Mul} = \lambda{}a.\lambda{}b.a \mathinner{(\func{Add}\ b)} \mathinner{\overline{0}}$
+\end{enumerate}
+
+Для того, чтобы определить $(-1)$, сначала определим пару:
+\[
+\left<a,b\right> = \lambda f.f \mathinner{a} b \qquad
+\func{First} = \lambda p . p \Tl \qquad
+\func{Second} = \lambda p . p \Fl
+\]%
+
+Затем $n$ раз применим функцию $f\left(\left<a,b\right>\right) = \left<b,b+1\right>$ и возьмём первый элемент пары:
+\[
+(-1) = \lambda n . \func{First}
+(n \mathinner{(\lambda p . \left<\left(\func{Second} p\right), \mathinner{(+1)} (\func{Second} p)\right>)}
+\langle\overline{0},\overline{0}\rangle)
+\]
