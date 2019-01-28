@@ -1,0 +1,272 @@
+\section{Лекция 5 \\ Изоморфизм Карри-Ховарда (завершение), Унификация}
+		\subsection{Изоморфизм Карри-Ховарда}
+	\begin{definition}Изоморфизм Карри-Ховарда\end{definition}
+
+	\begin{enumerate}
+		\item $\Gamma\vdash M:\sigma$ влечет $|\Gamma|\vdash \sigma$ т.е. $|\{x_1:\Theta_1\:\hdots \:x_n:\Theta_n\}|=\{\Theta_1\:\hdots\:\Theta_n\}$
+		\item Если $\Gamma\vdash\sigma$, то существует M и существует $\Delta$, такое что $|\Delta|=\Gamma$, что $\Delta \vdash M: \sigma$, где $\Delta=\{x_{\sigma} : \sigma\:|\:\sigma\in\Gamma  \}$
+	\end{enumerate}
+	\begin{example}
+	$\{f\: :\:\alpha\:\rightarrow\:\beta,\:x\: :\:\beta\}\:\vdash\:f\:x\::\:\beta$ \\Применив, изоморфизм Карри-Ховарда получим: $\{\alpha\:\rightarrow\:\beta,\:\beta\}\:\vdash\:\beta$
+	\end{example}
+	\begin{proof}
+		\par П.1 доказывается индукцией по длине выражения 
+			\begin{enumerate}
+				\item $\Gamma,\:x:\Theta\vdash x:\Theta \qquad \Rightarrow_{KH} \qquad |\Gamma|,\:\Theta\vdash\:\Theta$
+				\item $${\Gamma,\:x:\tau_1\vdash P:\tau_2 \over \Gamma \vdash \lambda x.\:P:\tau_1\:\rightarrow\:\tau_2} \qquad \Rightarrow_{KH} \qquad {|\Gamma|, \tau_1\vdash\tau_2\over |\Gamma|\:\vdash\:\tau_1\:\rightarrow\:\tau_2}$$ 
+				\item $${\Gamma\vdash P:\tau_1\:\rightarrow\:\tau_2 \hspace{2em} \Gamma\vdash Q:\tau_1 \over \Gamma \vdash P\:Q:\tau_2} \qquad \Rightarrow_{KH} \qquad {|\Gamma|\vdash \tau_1\:\rightarrow\:\tau_2 \hspace{2em} |\Gamma|\vdash \tau_1 \over |\Gamma| \vdash \tau_2}$$ 	
+			\end{enumerate}
+\par П.2 доказывается аналогичным способом но действия обратные.\\	
+Т.е. отношения между типами в системе типов могут рассматриваться как образ отношений между высказываниями в логической системе, и наоборот.
+\end{proof}
+
+\begin{definition}Расширенный полином:
+
+	\[
+    E(p,\:q)= 
+		\begin{cases}
+    C,& \text{if }p=q=0\\
+    p_1\:(p),& \text{if }q=0\\
+    p_2\:(q),& \text{if }p=0\\
+    p_3\:(p,\:q),& \text{if } p,\:q\neq0
+		\end{cases}
+	\]
+	\[\text{ где }C-\text{константа, }\\p_1,\:p_2,\:p_3-\text{выражения, составленные из }*,\:+,\:p,\:q\text{ и констант.}\]
+\end{definition}\par
+	
+	Пусть $\upsilon$ = $(\alpha\to\alpha)\to(\alpha\to\alpha)$, где $\alpha-$произвольный тип и пусть $F\in\Lambda\text{, что }F:\upsilon\to\upsilon\to\upsilon$, то существует расширенный полином $E$, такой что $\forall a,\:b\in \mathbb{N}$ $F(\overline{a},\:\overline{b})=_\beta\: \overline{E(a,\:b)}$, где $\overline{a}-$черчевский нумерал.
+		\begin{theorem}
+	У каждого терма в просто типизируемом $\lambda$ исчислении существует расширенный полином.
+	\end{theorem}
+		\begin{statement} Типы черчевских нумералов
+	\begin{enumerate}
+		\item $0:\lambda f\:\lambda x. \:x : a\:\rightarrow\:b\:\rightarrow\:b$
+		\item $1:\lambda f\:\lambda x. \:f\:x : (a\:\rightarrow\:b)\:\rightarrow\:a\:\rightarrow\:b$
+		\item $2:\lambda f\:\lambda x. \:f\:(f\:x) : (a\:\rightarrow\:a)\:\rightarrow\:a\:\rightarrow\:a$
+		\item $\forall\:i,\:i\geq 2 \hspace{1em}\lambda f\:\lambda x. \:f(\:\hdots\:(f\:x)): (a\:\rightarrow\:a)\:\rightarrow\:a\:\rightarrow\:a$
+	\end{enumerate}
+	\end{statement}
+	\begin{proof}
+		Пункты $1, 2, 3-$ очевидно. Рассмотрим более подробно пункт 4: 
+		\par Разберем нумерал и рассмотрим два последних шага $-$
+		
+	
+	\begin{table}[H]
+			\begin{tabular}{ccccccc}
+				&&&&\multicolumn{1}{c}{$f:a\:\rightarrow\:b  \vdash  x:a$}& $\{1\}$\\
+				\cline{4-5}		
+				&&&\multicolumn{1}{c}{$f:a\:\rightarrow\:b  \vdash f\:x:b$}&&$\{2\}$\\
+				\cline{3-4}
+				&&\multicolumn{1}{c}{$f:a\:\rightarrow\:b  \vdash f\:(f\:x):\bot$}&&&$\{3\}$\\
+				\cline{2-3}		
+				&\multicolumn{1}{c}{$\hdots$}\\
+				\cline{1-2}
+				\multicolumn{1}{c}{$\lambda f\:\lambda x. \:f(\:\hdots\:(f\:x))$}&&&&&&\\
+			\end{tabular}
+		\end{table}
+		на шаге 3 становится понятно, что $f:a\:\rightarrow\:a$ и $x:a$
+		\end{proof}
+	
+		
+	\begin{statement}Основные задачи типизации $\lambda$ исчисления\end{statement}
+		\begin{enumerate}
+			\item \emph{Проверка типа$-$}выполняется ли $\Gamma\vdash M:\sigma$ для контекста $\Gamma\text{ терма }M\text{ и типа }\sigma$ (для проверки типа обычно откидывают $\sigma$ и рассматривают п.2).
+			\item \emph{Реконструкция типа$-$}можно ли подставить вместо $?$ и $?_1$ в $?_1\vdash M:\:?$ подставить конкретный тип $\sigma$ в $?$ и контекст $\Gamma$ в $?_1$.
+			\item \emph{Обитаемость типа$-$}пытается подобрать, такой терм $M$ и контекст $\Gamma$, что бы было выполнено $\Gamma\vdash M:\sigma$.
+		\end{enumerate}			
+	\begin{definition}Алгебраический терм Выражение типа $$\Theta::=a\:|\:(f_k\:\Theta_1\:\dotsb\:\Theta_n)$$ где $a-$переменная, $(f_k\:\Theta_1\:\dotsb\:\Theta_n)-$применение функции \end{definition}
+	\subsection{Уравнение в алгебраических термах $\Theta_1=\Theta_2$\\Система уравнений в алгебраических термах}
+	\begin{definition}Система уравнений в алгебраических термах\end{definition}
+	$		
+		\begin{cases}			
+			\Theta_1=\sigma_1&\\
+			\vdots&\\
+			\Theta_n=\sigma_n&\\
+		\end{cases}
+	$\par где $\Theta_i \text{ и } \sigma_i-\text{термы}$\par
+	\begin{definition}$\{a_i\}=A-$множество перменных, $\{\Theta_i\}=T-$множество термов.\end{definition}
+	\begin{definition}Подстановка$-$отображение вида: $S_0:A\to T$, которое является решением в алгебраических термах.\par $S_0(a)$ может быть либо $S_0(a)=\Theta_i\text{, либо }S_0(a)=a$.\end{definition} 
+	Доопределим $S$ на все $T$ т.е. $S:T\to T$, где \begin{enumerate}
+		\item $S(a)=S_0(a)$
+		\item $S(f(\Theta_1 \dotsb \Theta_k))=f(S(\Theta_1) \dotsb S(\Theta_k))$
+	\end{enumerate}
+	$S$ то же самое что и много $if'$ов либо $map$ строк.\par 
+	\begin{definition}Решить уравнение в алгебраических термах$-$найти такое $S$, что $S(\Theta_1)=S(\Theta_2)$\end{definition} 
+	\begin{example}\end{example}
+		Заранее обозначим: $a,\:b-\text{переменные}\hspace{1em} f,\:g,\:h-\text{функции}$
+		\begin{enumerate}
+			\item $f\:(a\:(g\:b))=f\:(h\:e)\:d$ имеет решение $S(a)=h\:e\text{ и }S(d)=g\:b$
+				\begin{enumerate}
+					\item $S(f\:a\:(g\:b))=f\:(h\:e)\:(g\:b)$
+					\item $S(f\:(h\:e)\:d)=f\:(h\:e)\:(g\:b)$
+					\item $f\:(h\:e)\:(g\:b)=f\:(h\:e)\:(g\:b)$
+				\end{enumerate}
+			\item $f\:a=g\:b-$решений не имеет
+		\end{enumerate}
+		Таким образом, что бы существовало решение необходимо равенство строк полученной подстановки.\par
+		\subsection{Алгоритм Унификации. Определения}
+		\begin{enumerate}
+			\item Система уравнений $E_1$ эквивалентна $E_2$, если они имеют одинаковые решения(унификаторы).
+			\item Любая система $E$ эквивалентна некторому уравнению $\Sigma_1=\Sigma_2$.
+					
+	\begin{proof}
+		Возьмем функциональный символ $f$, не использующийся в $E$, \par
+		$		
+		E=\begin{cases}			
+			\Theta_1=\sigma_1&\\
+			\vdots&\\
+			\Theta_n=\sigma_n&\\
+		\end{cases}
+		$\par
+		это же уравнение можно записать как$-$ $f\:\Theta_1\hdots\Theta_n=f\:\sigma_1 \hdots\sigma_n$\par 
+		Если существует подстановка $S$ такая, что\par $S(\Theta_i)=S(\sigma_i)\:\forall\:i$, 
+		то $S(f\:\Theta_1\hdots\Theta_n)=f\:S(\sigma_1)\hdots S(\sigma_n)$ \par Обратное аналогично.\end{proof}
+		\item Рассмотрим операции
+		\begin{enumerate}
+			\item \textit{Редукция терма} \par 
+					Заменим уравнение вида$-f_1\;\Theta_1 \hdots\Theta_n=f_1\;\sigma_1\hdots\sigma_n$ на систему уравнений\par$\Theta_1=\sigma_1$\par$\vdots$\par$\Theta_n=\sigma_n$
+			\item \textit{Устранение переменной} \par
+			Пусть есть уравнение $x=\Theta$, заменим во всех остальных уравнениях переменную $x$ на терм $\Theta$.		
+		\end{enumerate}
+		\begin{statement} Эти операции не изменяют множества решений.
+		\end{statement}
+		\begin{proof} Пункт $a\:-$ доказан выше, докажем теперь пункт $b:$\par Пусть есть решение вида $T = \begin{cases} a = \Theta_a &\\ \vdots \end{cases}$ 
+		и уравнение вида $f\:a\:\hdots\:z\:=\:\Theta_c\:$, тогда, $T(f\:a\:\hdots\:z) = f\:T(a)\:\hdots\:T(z)$, которое в свою очередь является $f\: \Theta_a\:\hdots\:T(z)$
+		\end{proof}
+	\end{enumerate}	
+		\begin{definition}Система уравнений в разрешеной форме если \end{definition}
+			\begin{enumerate}
+				\item Все уравнения имеют вид $a_i=\Theta_i$
+				\item Каждый из $a_i$ входит в систему уравнений только раз
+			\end{enumerate}
+		\begin{definition}Система несовместима если\end{definition} 
+		\begin{enumerate}
+			\item существует уравнение вида $f\:\Theta_1\hdots\Theta_n=g\:\sigma_1\hdots\sigma_n$, где $f\neq g$
+			\item существует уравнение вида $a=f\:\Theta_1\hdots\Theta_n\:$, причем $a$ выходит в какой-то из $\Theta_i$
+		\end{enumerate}			
+		\subsection{ Алгоритм унификации}
+		\begin{enumerate}
+		\item Пройдемся по системе, выберем такое уравнение, что оно удовлетворяет одному из условий:\begin{enumerate}
+			\item Если $\Theta_i=a_i$, то перепишем, как $a_i=\Theta_i$, $\Theta_i-$не переменная
+			\item $a_i=a_i-$ удалим
+			\item $f\:\Theta_1\hdots\Theta_n=f\:\sigma_1\hdots\sigma_n-$  применим редукцию термов 
+			\item $a_i=\Theta_i-$Применим подстановку переменной $-$ подставим во все остальне уравнения $\Theta_i$ вместо $a_i$ (Если $a_i$ встречается в системе где-то еще)
+		\end{enumerate}
+		\item Проверим разрешима ли система, совместима ли система (два пункта несовместимости)
+		\item повторим пункт 1 		
+		\end{enumerate}
+		
+		\begin{statement} Алгоритм не изменяет множетва решений\end{statement}
+		\begin{statement} Несовместная система не имеет решений\end{statement}
+		\begin{statement} Если система имеет решение, то его разрешеная форма единствена\end{statement}
+		\begin{statement} Система в разрешеной форме имеет решение:\end{statement}	
+		
+	\begin{align*}
+		\begin{cases}			
+			a_1=\Theta_1&\\
+			\vdots&\\
+			a_n=\Theta_n&\\
+		\end{cases} & \text{имеет решение }-&\begin{cases}			
+			S_0(a_1)=\Theta_1&\\
+			\vdots&\\
+			S_0(a_n)=\Theta_n&\\
+		\end{cases}\\
+	\end{align*}
+	\begin{statement}Алгоритм всегда закначивается\end{statement}
+	\begin{proof}По индукции, выберем три числа $ \big \langle x\:y\:z\big \rangle$, где\par $x-$количество переменных, которые встречаются строго больше одного раза в левой части некоторого уравнения ($b$ не повлияет на $x$, а $a$ повлияет в уравнении $f(a(g\:a)\:b)=\Theta$),\par $y-$ количество функциональных символов в системе,\par $z-$количество уравнеий типа $a=a$ и $\Theta=b$, где $\Theta$ не переменная.\par Определим отношение $\leq$  между двумя кортежами,	 как $\big \langle x_1\:y_1\:z_1\big \rangle \leq \big \langle x_2\:y_2\:z_2\big \rangle$ если верно одно из следующих условий: \begin{enumerate}
+	\item $x_1 < x_2$
+	\item $x_1 = x_2 \:\& \:y_1 < y_2$
+	\item $x_1 = x_2 \:\&  \:y_1 = y_2 \:\& \:z_1 < z_2$
+	\end{enumerate}
+		Заметим, что операции $(a)$ и $(b)$ всегда уменьшают $z$ и иногда уменьшают $x$.\par Операция $(c)$ всегда уменьшает $y$ иногда $x$ и, возможно, увеличивает $z$.\par Операция $(d)$ всегда уменьшает $x$, и иногда увеличивает $y$.\par
+		Очевидно, что с каждой операцией $a-d$ данная тройка уменьшается и так как $x,y,z\geq 0$, то данный алгоритм завершится за конечное время.
+		\end{proof} 
+		\begin{example}\end{example}
+			Исходная система
+		\[
+		E=	
+			\left \{
+			\begin{tabular}{c}
+				$g\:(x_2)=x_1$\\
+				$f\:(x_1,\: h\: (x_1),\: x_2)=f\:(g\:(x_3),\: x_4,\: x_3)$
+			\end{tabular}
+			\right \}
+		\]
+							
+			Применим пункт $(c)$ ко второму уравнению верхней системы получим:
+			\[
+		E=	
+			\left \{
+			\begin{tabular}{c}
+				$g\:(x_2)=x_1$\\
+				$x_1=g\:(x_3)$\\
+				$h\:(x_1)=x_4$\\
+				$x_2=x_3$
+			\end{tabular}
+			\right \}
+		\]		
+			
+			Применим пункт $(d)$ ко второму уравнению верхней системы\\ 
+				(оно изменит 1ое уравнение) получим:
+			\[
+			E=	
+			\left \{
+			\begin{tabular}{c}
+				$g\:(x_2)=g\:(x_3)$\\
+				$x_1=g\:(x_3)$\\
+				$h\:(g\:(x_3))=x_4$\\
+				$x_2=x_3$
+	
+			\end{tabular}
+			\right \}
+		\]		
+					
+			Применим пункт $(c)$ ко первому ур-ию\\
+				и пункт $(a)$ к третьему уравнению верхней системы
+			\[
+			E=	
+			\left \{
+			\begin{tabular}{c}
+				$x_2=x_3$\\
+				$x_1=g\:(x_3)$\\
+				$x_4=h\:(g\:(x_3))$\\
+				$x_2=x_3$
+			\end{tabular}
+			\right \}
+		\]		
+			
+			Применим пункт $(b)$ к последнему уравнению и\\
+			получим систему в разрешеной форме
+				
+\[
+			E=	
+			\left \{
+			\begin{tabular}{c}
+				$x_2=x_3$\\
+				$x_1=g\:(x_3)$\\
+				$x_4=h\:(g\:(x_3))$
+			\end{tabular}
+			\right \}
+		\]					
+			
+			Решение системы: 
+		\[		S=	
+			\left \{
+			\begin{tabular}{c}						 
+				$(x_1=g(x_3))$\\
+				$(x_2=x_3)$\\
+				$(x_4=h\:(g\:(x_3))))$\\
+			\end{tabular}
+			\right \}
+		\]				
+			
+	\begin{definition} $S \circ T-$композиция подстановок, если $S \circ T=S\:(T\:(a))$\end{definition}
+	\begin{definition} $S-$наиболее общий унификатор, если любое решение ($R$) системы $X$ может быть получено уточнением: $\exists\:T:R=T\circ S$\end{definition}
+	
+	\begin{statement} Алгоритм дает наиболее общий унификатор системы, если у нее есть решения. Если решений нет алгоритм окончится неудачей.\end{statement}
+	\begin{proof}
+	 Рассмотрим решение в разрешеной форме $S$ и какое-то другое решение $R$ \begin{enumerate}
+	 \item Если $S\equiv R$, то тогда $T = S$
+	 \item Иначе $R\:-\:$ не является решением в разрешеной форме и так как множество решений не изменяется и решение в разрешеной форме единственно, то сведя $R$ к $S$ (например алгоритмом унификации) получим какое-то решение $T$, которым будет ответом
+\end{enumerate}
+	\end{proof}
