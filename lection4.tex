@@ -1,0 +1,274 @@
+\section{Лекция 4}
+
+\subsection{Расширение просто типизированного $\lambda$-исчисления до изоморфного ИИВ}
+
+Заметим, что между просто типизированным по Карри $\lambda$-исчислением и имликационным фрагментом ИИВ существует изоморфизм, но при этом в просто типизированном $\lambda$-исчислении нет аналогов лжи, а также связок $\vee$ и $\&$.
+
+Для установления полного изоморфизма между ИИВ и просто типизированным $\lambda$-исчислением введём три необходимые для установления этого изоморфизма сущности:
+
+\begin{enumerate}
+	\item Тип "Ложь" ($\bot$)
+	
+	\item Тип упорядоченной пары $A\&B$, соответсвующий	логическому "И"
+	
+	\item Алгебраический тип $A | B$, соттветсвующий логическому "ИЛИ"
+\end{enumerate}
+
+\subparagraph{Тип $\bot$}
+
+Введём тип $\bot$, соттветствующий лжи в ИИВ. Поскольку из лжи может следовать что угодно, добавим в исчисление новое правило вывода
+
+\[
+\infer{\Gamma \vdash A : \tau}{\Gamma \vdash A: \bot}
+\]
+
+То есть выражение, типизированное как $\bot$, может быть типизированно так же любым другим типом.
+
+В программировании аналогом этого типа может являться тип \mintinline{scala}{Nothing}, который является подтипом любого другого типа.
+
+Тип \mintinline{scala}{Nothing} является необитаемым, им типизируется выражение, никогда не возвращающее свой результат (например, \mintinline{scala}{throw new Error() : Nothing}). 
+
+Тот факт, что выражение, типизированное как \mintinline{scala}{Nothing}, может быть типизировано любым другим типом, позволяет писать следующие функции:
+
+\begin{minted}{scala}
+def assertStringNotEmpty(s: String): String = {
+  if (s.length != 0) {
+    s
+  } else {
+    throw new Error("Empty string")
+  }
+}
+\end{minted}
+
+так как \mintinline{scala}{throw new Error("Empty string"): Nothing}, то 
+
+\mintinline{scala}{throw new Error("Empty string"): String}, поэтому функция может иметь тип \mintinline{scala}{String}.
+
+Теперь, имея тип $\bot$, можно ввести связку "Отрицание". Обозначим $\neg A = A \rightarrow \bot$, то есть в программировании это будет соответствовать функции
+
+\begin{minted}{scala}
+def throwError(a: A): Nothing = throw new Error()
+\end{minted}
+
+\subparagraph{Упорядоченные пары}
+
+Введём возможность запаковывать значения в пары.
+
+Функция $makePair$ будет выглядеть следующим образом:
+
+$$makePair \equiv \lambda \; first. \; \lambda \; second. \; \lambda \; f. \; f \; first \; second$$
+
+Тогда 
+
+$$<first, second> \equiv makePair \; first \; second$$
+
+Надо также написать функции, которые будут доставать из пары упакованные в неё значения. Назовём иъ $\Pi_1$ и $\Pi_2$. 
+
+Пусть 
+$$\Pi_1 \equiv \lambda \; Pair. \; Pair \; (\lambda \; a. \lambda \; b. \; a)$$
+
+$$\Pi_2 \equiv \lambda \; Pair. \; Pair \; (\lambda \; a. \lambda \; b. \; b)$$
+
+Заметим, что 
+
+\begin{align*}
+	\Pi_1 <A, B> \\
+	=_{\beta} (\lambda \; Pair. \; Pair \; (\lambda \; a. \lambda \; b. \; a)) (makePair \; A \; B)\\ =_\beta (\lambda \; Pair. \; Pair \; (\lambda \; a. \lambda \; b. \; a)) (\textcolor{magenta}{(\lambda \; first. \; \lambda \; second. \; \lambda \; f. \; f \; first \; second)} \; \textcolor{blue}{A} \; B) \\ =_\beta (\lambda \; Pair. \; Pair \; (\lambda \; a. \lambda \; b. \; a)) (\textcolor{magenta}{(\lambda \; second. \; \lambda \; f. \; f \; A \; second)} \; \textcolor{blue}{B}) \\ =_\beta \textcolor{magenta}{(\lambda \; Pair. \; Pair \; (\lambda \; a. \lambda \; b. \; a))} \textcolor{blue}{(\lambda \; f. \; f \; A \; B)} \\ =_\beta \textcolor{magenta}{(\lambda \; f. \; f \; A \; B)} \; \textcolor{blue}{(\lambda \; a. \lambda \; b. \; a)} \\ =_\beta \textcolor{magenta}{(\lambda \; a. \lambda \; b. \; a)} \; \textcolor{blue}{A} \; B \\ =_\beta \textcolor{magenta}{(\lambda \; b. \; A)} \; \textcolor{blue}{B} \\ =_\beta A
+\end{align*}
+
+Аналогично, $\Pi_2 <A, B> =_\beta B$
+
+Таким образом, мы умеем запаковывать элементы в пары и доставать элементы из пар. Теперь, добавим к просто типизированному $\lambda$-исчислению правила вывода, позволяющие типизировать такие конструкции.
+
+Добавим три новых правила вывода:
+
+\begin{enumerate}
+	\item Правило типизации пары
+	\[
+	\infer{\Gamma \vdash <A, B>: \varphi \text{\&} \psi}{\Gamma\vdash A: \varphi && \Gamma\vdash B: \psi}
+	\]
+	\item Правило типизации первого проектора:
+	\[
+	\infer{\Gamma \vdash \Pi_1 <M, N> : \varphi}{\Gamma \vdash <A, B>: \varphi \text{\&} \psi}
+	\]
+	
+	\item Правило типизации второго проектора:
+	\[
+	\infer{\Gamma \vdash \Pi_2 <M, N> : \psi}{\Gamma \vdash <A, B>: \varphi \text{\&} \psi}
+	\]
+\end{enumerate}
+
+\subparagraph{Алгебраические типы}
+
+Добавим тип, который является аналогом \mintinline{C++}{union} в C++, или алгебраического типа в любом функциональном языке. Это тип, который может содержать одну из двух альтернатив.
+
+Например, тип \mintinline{scala}{OptionInt = None | Some of Int} может содержать либо \mintinline{scala}{None}, либо \mintinline{scala}{Some of Int}, но не обе альтернативы разом, причём в каждый момент времени известно, какую альтернативу он содержит.
+
+Заметим, что определение алгебраического типа похоже на определение дизъюнкции в ИИВ (в ИИВ если выполнено $\vdash a \vee b$, известно, что из $\vdash a$ и $\vdash b$ выполнено).
+
+Для реализации алгебраических типов в $\lambda$-исчислении напишем три функции:
+
+\begin{enumerate}
+	\item $in_1$, создающее экземпляр алгебраического типа из первой альтернативы, то есть запаковывающее первую альтернативу в алгебраический тип
+	
+	\item $in_2$, выполняющее аналогичные действия, но со второй альтернативой.
+	
+	\item $case$, принимающую три параметра: экземпляр алгебраического типа, функцию, определяющую, что делать, если этот экземпляр был создан из первой альтернативы (то есть с использованием $in_1$), и функцию, определяющую, что делать, если этот экземпляр был создан из второй альтернативы (то есть с использованием $in_2$)
+\end{enumerate}
+
+Аналогом $case$ в программировании является конструкция, известная как pattern-mathcing, или сопоставление с образцом.
+
+\begin{minted}{ocaml}
+let isEmptyList list = match list with
+	| Nil -> true
+	| Cons(_, _) -> false
+;;
+\end{minted}
+
+Функция $in_1$ будет выглядеть следующим образом: 
+
+$$in_1 \equiv \lambda \; x. \; \lambda \; f. \; \lambda \; g. \; f \; x$$
+
+А $in_1$ -  следующим:
+
+$$in_2 \equiv \lambda \; x. \; \lambda \; f. \; \lambda \; g. \; g \; x$$
+
+То есть $in_1$ принимает две функции, и применяет первую к $x$, а $in_2$ применяет вторую.
+
+Тогда $case$ будет выглядеть следующим образом:
+
+$$case \equiv \lambda \; algebraic. \; \lambda \; f. \; \lambda \; g. \; algebraic \; f \; g$$
+
+Заметим, что 
+
+\begin{align*}
+case \; (in_1 A) \; F \; G \\ =_\beta (\lambda \; algebraic. \; \lambda \; f. \; \lambda \; g. \; algebraic \; f \; g) \; (\textcolor{magenta}{(\lambda \; x. \; \lambda \; h. \; \lambda \; s. \; h \; x)} \textcolor{blue}{A}) \; F \; G \\ =_\beta  \textcolor{magenta}{(\lambda \; algebraic. \; \lambda \; f. \; \lambda \; g. \; algebraic \; f \; g)} \; \textcolor{blue}{(\lambda \; h. \; \lambda \; s. \; h \; A)} \; F \; G \\ =_\beta \textcolor{magenta}{(\lambda \; f. \; \lambda \; g. \; (\lambda \; h. \; \lambda \; s. \; h \; A) \; f \; g)} \; \textcolor{blue}{F} \; G \\ =_\beta \textcolor{magenta}{(\lambda \; g. \; (\lambda \; h. \; \lambda \; s. \; h \; A) \; F \; g)} \; \textcolor{blue}{G}  \\ =_\beta \textcolor{magenta}{(\lambda \; h. \; \lambda \; s. \; h \; A)} \; \textcolor{blue}{F} \; G \\ =_\beta \textcolor{magenta}{(\lambda \; s. \; F \; A)} \; \textcolor{blue}{G} \\ =_\beta F \; A
+\end{align*}
+
+Аналогично, $case \; (in_2 B) \; F \; G =_\beta G \; B$. 
+
+То есть $case, in_1$ и $in_2$ умеют применять нужную функцию к запакованной в экземпляр алгебраического типа одной из альтернатив.
+
+Теперь добавим к просто типизированному $\lambda$-исчислению правила вывода, позволяющие типизировать эти конструкции.
+
+Добавим три новых правила вывода:
+
+\begin{enumerate}
+	\item Правило типизации левой инъекции
+	\[
+	\infer{\Gamma \vdash in_1 \; A: \varphi \vee \psi}{\Gamma\vdash A: \varphi}
+	\]
+	\item Правило типизации правой инъекции:
+	\[
+	\infer{\Gamma \vdash in_2 \; B: \varphi \vee \psi}{\Gamma\vdash B: \psi}
+	\]
+	
+	\item Правило типизации case:
+	\[
+	\infer{case \; L \; f \; g : \tau}{\Gamma \vdash L: \varphi \vee \psi, \;\;\;\; \Gamma \vdash f : \varphi \to \tau, \;\;\;\; \Gamma \vdash g: \psi \to \tau}
+	\]
+\end{enumerate}
+
+\subsection{Изоморфизм Карри-Ховарда для расширения просто типизированного $\lambda$-исчисления}
+
+Заметим точное соответствие только что введённых конструкций аксиомам ИИВ.
+
+$\newline$
+\begin{tabular}{ | p{8cm} | p{8cm} | }
+	\hline
+	Расширенное просто типизирпованное $\lambda$-исчисление & ИИВ \\ \hline
+	$\infer{\Gamma \vdash <A, B>: \varphi \text{\&} \psi}{\Gamma\vdash A: \varphi && \Gamma\vdash B: \psi}$ & $\vdash \varphi \to \psi \to \varphi \text{\&} \psi$ \\
+	\\
+	$\infer{\Gamma \vdash \Pi_1 <M, N> : \varphi}{\Gamma \vdash <A, B>: \varphi \text{\&} \psi}$ & $\vdash \varphi \text{\&} \psi \to \varphi$  \\
+	\\
+	$\infer{\Gamma \vdash \Pi_2 <M, N> : \psi}{\Gamma \vdash <A, B>: \varphi \text{\&} \psi}$ & $\vdash \varphi \text{\&} \psi \to \psi$  \\
+	
+	\\
+	
+	$\infer{\Gamma \vdash in_1 \; A: \varphi \vee \psi}{\Gamma\vdash A: \varphi}$ & $\vdash \varphi \to \varphi \vee \psi$ \\
+	\\
+	$\infer{\Gamma \vdash in_2 \; B: \varphi \vee \psi}{\Gamma\vdash B: \psi}$ & $\vdash \psi \to \varphi \vee \psi$ \\
+	\\
+	$\infer{case \; L \; f \; g : \tau}{\Gamma \vdash L: \varphi \vee \psi, \;\; \Gamma \vdash f : \varphi \to \tau, \;\; \Gamma \vdash g: \psi \to \tau}$ & $\vdash  (\varphi \to \tau) \to (\psi \to \tau) \to (\varphi \vee \psi) \to \tau$  \\
+	\hline
+\end{tabular}
+
+$\newline$
+
+\subsection{Просто типизированное по Чёрчу $\lambda$-исчисление}
+
+\begin{definition}
+	Тип в просто типизированном по Чёрчу $\lambda$-исчислении это то же самое, что тип в просто типизированном по Карри $\lambda$-исчислении 
+\end{definition}
+
+\begin{definition}
+	Язык просто типизированного по Чёрчу $\lambda$-исчисления удовлетворяет следующей грамматике
+	
+	$\Lambda_{\text{ч}} ::= x \; | \; \Lambda_{\text{ч}} \; \Lambda_{\text{ч}} \; | \; \lambda\; x^\tau. \; \Lambda_{\text{ч}} \; | \; (\Lambda_{\text{ч}})$
+\end{definition}
+
+\begin{note}
+	Иногда абстракция записывается не как $\lambda\; x^\tau. \; \Lambda_{\text{ч}}$, а как $\lambda\; x : \tau. \; \Lambda_{\text{ч}}$
+\end{note}
+
+\begin{definition}
+	Просто типизипрованное по Чёрчу $\lambda$-исчисление.
+	
+	Рассмотрим исчисление с единственной схемой аксиом:
+	
+	$$\Gamma, x : \theta \vdash x : \theta, \text{если } x \text{ не входит в } \Gamma$$
+	
+	И следующими правилами вывода
+	
+	\begin{enumerate}
+		\item Правило типизации абстракции
+		\[
+		\infer[\text{если } x \text{ не входит в } \Gamma]{\Gamma \vdash (\lambda \; x : \varphi. \; P) : \varphi \rightarrow \psi}{\Gamma, x : \varphi \vdash P : \psi}
+		\]
+		\item Правило типизации аппликации:
+		\[
+		\infer{\Gamma \vdash PQ : \psi}{\Gamma \vdash P : \varphi \to \psi && \Gamma \vdash Q : \varphi}
+		\]
+	\end{enumerate}
+	
+	Если $\lambda$-выражение типизируется с использованием этих двух правил и одной схемы аксиом, то будем говорить, что оно типизируется по Чёрчу.
+\end{definition}
+
+В исчислении по Чёрчу остаются верными все предыдущие теоремы (в том числе теорема Чёрча-Россера), но правило строгой типизации абстракций позволяет доказать ещё одну теорему:
+
+\begin{theorem}[Уникальность типов в исчислении по Чёрчу] \ 
+	\begin{enumerate}
+		\item Если $\Gamma \vdash_{\text{ч}} M : \theta$ и $\Gamma \vdash_{\text{ч}} M : \tau$, то $\theta = \tau$
+		\item Если $\Gamma \vdash_{\text{ч}} M : \theta$ и $\Gamma \vdash_{\text{ч}} N : \tau$,и $M =_\beta N$ то $\theta = \tau$
+	\end{enumerate}
+\end{theorem}
+
+\subsection{Связь типизации по Чёрчу и по Карри}
+
+\begin{definition}[Стирание] Функцией стирания называется следующая функция: 
+	
+$|\cdot| : \Lambda_{\text{ч}} \to \Lambda_{\text{к}}$:
+	\[
+	|{A}| =
+	\begin{cases}
+	x                                   & A \equiv x \\
+	|M| \; |N| & A \equiv M \; N \\
+	\lambda x . |P|           & A \equiv \lambda \; x : \tau. \; P
+	\end{cases}
+	\]
+\end{definition}
+
+\begin{lemma}
+	Пусть $M, N \in \Lambda_{\text{ч}}, M \to_\beta N$, тогда $|M| \to_\beta |N|$
+\end{lemma}
+
+\begin{lemma}
+	Если $\Gamma \vdash_{\text{ч}} M : \tau$, тогда $\Gamma' \vdash_{\text{к}} |M| : \tau$, где $\Gamma'$ получается из $\Gamma$ применением функции стирания к каждому терму из $\Gamma$
+\end{lemma}
+
+\begin{theorem}[Теорема о поднятии] \ 
+	\begin{enumerate}
+		\item Пусть $M, N \in \Lambda_{\text{к}}, P \in \Lambda_{\text{ч}}, |P| = M, M \to_\beta N$. Тогда найдётся такое $Q \in \Lambda_{\text{ч}}$, что $|Q| = N$, и $P \to_\beta Q$
+		\item Пусть $M \in \Lambda_{\text{к}}, \Gamma \vdash_{\text{к}} M : \tau$. Тогда существует $P \in \Lambda_{\text{ч}}$, что $|P| = M$, и $\Gamma \vdash_{\text{ч}} P : \tau$
+	\end{enumerate}
+\end{theorem}
