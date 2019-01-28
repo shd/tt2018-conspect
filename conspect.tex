@@ -1,28 +1,42 @@
 \documentclass[12pt,a4paper,oneside]{article}
-\usepackage[utf8]{inputenc}
 \usepackage[english,russian]{babel}
+\usepackage[utf8]{inputenc}
 \usepackage{amsmath}
 \usepackage{amsthm}
+\usepackage{bnf}
 \usepackage{amssymb}
 \usepackage{enumerate}
+\usepackage{mathtext}
+\usepackage{mathtools}
+\usepackage{mathabx}
 \usepackage[left=2cm,right=2cm,top=2cm,bottom=2cm,bindingoffset=0cm]{geometry}
 \usepackage{proof}
+
 \usepackage[usenames]{color}
 \usepackage{colortbl}
 \usepackage{minted}
+\usepackage{tikz}
 
 \title{Введение в Теорию Типов\\\it{Конспект лекций}}
 \author{Штукенберг Д.~Г.\\Университет ИТМО}
+\DeclareMathOperator{\FV}{FV}
 
 \begin{document}
 
 \theoremstyle{definition}
 \newtheorem{definition}{Определение}[section]
 \newtheorem{note}{Замечание}[section]
+\newtheorem{cons}{Следствие}[section]
 \newtheorem*{example}{Пример}
 \newtheorem{theorem}{Теорема}[section]
 \newtheorem{axiom}{Аксиома}[section]
-\newtheorem{lemma}[theorem]{Лемма}
+\newtheorem{lemma}{Лемма}[section]
+\newtheorem{statement}{Утверждение}[section]
+
+\newcommand{\comb}[1]{\operatorname{\mathcal{#1}}}
+\newcommand{\func}[1]{\operatorname{#1}}
+\newcommand{\reduction}[1]{{\color{OrangeRed}#1}}
+\newcommand{\set}[1]{\left\{#1\right\}}
 
 \def\from#1{\par \parbox{0.7\textwidth}{\par \hfill\raggedleft \it #1}} 
 
@@ -32,7 +46,8 @@
 
 \maketitle
 \input{intro}
+\input{lection1}
+\input{lection2}
 \input{lection3}
 \input{lection4}
-
 \end{document}
