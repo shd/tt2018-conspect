@@ -1,0 +1,518 @@
+\documentclass[12pt]{article}
+\usepackage{amsmath} 
+\usepackage{graphicx}
+\usepackage[utf8]{inputenc}
+\usepackage[english,russian]{babel}
+\usepackage{stmaryrd}
+\usepackage{xcolor}
+\usepackage{mathtools}% Loads amsmath
+\usepackage[left=2cm,right=2cm,top=2cm,bottom=2cm,bindingoffset=0cm]{geometry}
+\usepackage{enumitem}
+\usepackage{soul}
+\usepackage{changepage}
+\usepackage{lipsum}
+\usepackage{scrextend}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{minted}
+\usepackage{proof}
+\usepackage{paracol}
+
+\newsavebox\MBox
+\newcommand\Cline[2][red]{{\sbox\MBox{$#2$}%
+  \rlap{\usebox\MBox}\color{#1}\rule[-1.2\dp\MBox]{\wd\MBox}{0.5pt}}}
+
+\begin{document}
+
+\section{Лекция 9}
+
+\noindent\textbf{Def.} Ранг типа  m 
+
+$R(x)$ --- все типа ранга $x$.
+\begin{itemize}
+    \item $R(0)$ --- все типы без кванторов
+    \item $R(x + 1) = R(x)\ |\ R(x) \rightarrow R(x + 1)\ |\ \forall \alpha.R(x + 1)$
+\end{itemize}
+\noindent\textbf{Enddef.} 
+
+Например:
+\begin{paracol}{2}
+\begin{itemize}
+    \item $\alpha \in R(0)$
+    \item $\forall \alpha.\alpha \in R(1)$
+    \item $(\forall \alpha.\alpha) \rightarrow (\forall b.b) \in R(2)$ 
+    \item $((\forall \alpha.\alpha) \rightarrow (\forall b.b)) \rightarrow b \in R(3)$
+\end{itemize}
+\switchcolumn
+Тут видно, если если выражение слева от знака имликации имеет ранг $n$, то все выражение будет иметь ранг $\geq (n + 1)$.
+\end{paracol}
+
+\textbf{Утверждение}: Пусть $x$ --- выражение только с поверхностными кванторами, тогда $x \in R(1)$. 
+
+\noindent\textbf{Def.} Типовая система
+
+$\sigma ::= \forall \alpha_1. \forall \alpha_2. \dots \forall \alpha_n. \tau$, где $\tau \in R(0)$ и, следовательно, $\sigma \in R(1)$.
+
+\noindent\textbf{Enddef.} 
+
+\noindent\textbf{Def.} Частный случай (спциализация) типовой схемы
+
+$\sigma_1 \sqsubseteq \sigma_2$ --- типовая схема
+
+$\sigma_2$ --- частный случай (специализация) $\sigma_1$, если 
+
+\begin{enumerate}
+    \item $\sigma_1 =  \forall \alpha_1. \forall \alpha_2. \dots \forall \alpha_n. \tau_1$
+    \item $\sigma_2 =  \forall \beta_1. \forall \beta_2. \dots \forall \beta_m. \tau_1[\alpha_i := S(\alpha_i)]$
+    \item $\forall i. \beta_i \in FV(\tau_1)$
+\end{enumerate}
+
+\noindent\textbf{Enddef.} 
+
+\begin{paracol}{2}
+\begin{itemize}[label={}]
+    \item $M_1 : \forall \alpha . \alpha \rightarrow \alpha$
+    \item $M : \forall \beta_1.\forall \beta_2: (\beta_1 \rightarrow \beta_2) \rightarrow (\beta_1 \rightarrow \beta_2)$
+\end{itemize}
+\switchcolumn
+Вполне возможно, что в ходе замены, все типы будут уточнены ($\alpha$ уточниться как $\beta_1 \rightarrow \beta_2$.
+\end{paracol}
+
+
+\subsection{Хиндли-Милнер}
+
+\begin{enumerate}
+    \item Все типы только с поверхностными кванторами ($R(1)$)
+    \item $\overline{HM} ::= p\ |\ \overline{HM}\ \overline{HM}\ |\ \lambda p. \overline{HM}\ |\ let =  \overline{HM}\ in\ \overline{HM}$
+\end{enumerate}
+
+\begin{itemize}
+    \item $\exists p.\phi = \forall b.(\forall p. (\phi \rightarrow b)) \rightarrow b$
+    \item $\phi \rightarrow \bot \equiv \forall b. (\phi \rightarrow b)$
+    
+    \item $\vcenter{\infer[]{\Gamma \vdash \forall b.(\forall p.(\phi \rightarrow b)) \rightarrow b}{\infer{\Gamma \vdash (\forall p. (\phi \rightarrow b)) \rightarrow b}{\infer{\Gamma, \forall p. (\phi \rightarrow b) \vdash b}{\infer{\Gamma, \forall p. (\phi \rightarrow b) \vdash \phi [p := \Theta] \rightarrow b}{\Gamma, \forall p. (\phi \rightarrow b) \vdash \forall p.(\phi \rightarrow b)}}}}}$
+    % \item $\Gamma, \forall p. (\phi \rightarrow b) \vdash \forall p.(\phi \rightarrow b)$
+    % \item $\Gamma, \forall p. (\phi \rightarrow b) \vdash \phi [p := \Theta] \rightarrow b$
+    % \item $\Gamma, \forall p. (\phi \rightarrow b) \vdash b$
+    % \item $\Gamma \vdash (\forall p. (\phi \rightarrow b)) \rightarrow b$
+    % \item $\Gamma \vdash \forall b.(\forall p.(\phi \rightarrow b)) \rightarrow b$
+\end{itemize}
+
+Соглашение:
+\begin{itemize}
+    \item $\sigma$ --- типовая схема
+    \item $\tau$ --- простой тип
+\end{itemize}
+
+
+\begin{enumerate}
+    \item $\vcenter{\infer{\Gamma, x : \sigma \vdash x : \sigma}{}}$
+    \item $\vcenter{\infer{\Gamma \vdash e_0\ e_1 : \tau'}{\Gamma \vdash e_0 : \tau \rightarrow \tau' \qquad \Gamma \vdash e_1 : \tau}}$
+    \item $\vcenter{\infer{\Gamma \vdash \lambda x.e : \tau \rightarrow \tau'}{\Gamma, x : \tau \vdash e : \tau'}}$
+    \item $\vcenter{\infer[,\ let\ x = a\ in\ b \equiv (\lambda x.b)\ a]{\Gamma \vdash let\ x = e_0\ in\ e_1 : \tau}{\Gamma \vdash e_0 : \sigma \qquad \Gamma, x : \sigma \vdash e_1 : \tau}}$ 
+    \item $\vcenter{\infer{\Gamma \vdash e : \sigma}{\Gamma \vdash e : \sigma' \qquad  \sigma' \sqsubseteq \sigma}}$
+    \item $\vcenter{\infer[\alpha \not \in FV(\Gamma)]{\Gamma \vdash e : \forall \alpha.\sigma}{\Gamma \vdash e : \sigma}}$
+\end{enumerate}
+
+
+\subsection{Алгоритм вывода типов в системе Хиндли-Милнера W}
+На вход подаются $\Gamma,\ M$, на выходе наиболее общая пара $(S, \tau)$
+\begin{enumerate}
+    \item $M = x ,\ x:\tau  \in \Gamma$ (иначе ошибка)
+    \begin{itemize}
+        \item Выбросить все кванторы из $\tau$
+        \item Переименовать все свободные переменные в свежие \\
+        Например: $\forall \alpha_1.\phi \Rightarrow \phi[\alpha_1 := \beta_1]$, где $\beta_1$ --- свежая переменная
+    \end{itemize}
+    $(\emptyset, \Gamma(x))$
+    \item $M = \lambda n.e$
+    \begin{itemize}
+        \item $\tau$ --- новая типовая переменная
+        \item $\Gamma' = \Gamma \setminus \{n : \_ \}$ (т.е. $\Gamma$ без переменной $n$)
+        \item $\Gamma'' = \Gamma' \cup {n : \tau}$
+        \item $(S',\ \tau') = W(\Gamma'', e)$
+    \end{itemize}
+    $(S', S'(\tau) \rightarrow \tau')$
+    \item $M = P\ Q$
+    \begin{itemize}
+        \item $(S_1, \tau_1) = W(\Gamma, P)$
+        \item $(S_2, \tau_2) = W(S_1(\Gamma), Q)$
+        \item $S_3$ --- Унификация $(S_2(\tau_1), \tau_2 \rightarrow \tau)$
+    \end{itemize}
+    $(S_3 \circ S_2 \circ S_3, S_3(\tau))$
+    \item $let\ x = P\ in\ Q$
+    \begin{itemize}
+        \item $(S, \tau) = W(\Gamma, P)$
+        \item $\Gamma' = \Gamma$ без $x$
+        \item $\Gamma'' = \Gamma' \cup \{ x : \forall \alpha_1 \dots \alpha_k. \tau_1 \}$, где $\alpha_1 \dots \alpha_k$ все свободные переменные в $\tau_1$
+        \item $(S_2, \tau_2) = W(S_1(\Gamma''), Q)$
+    \end{itemize}
+    $(S_1 \circ S_2), \tau_2)$
+\end{enumerate}
+
+Надеемся, что логика второго порядка противоречива. \\
+
+\subsection{Рекурсивные типы}
+
+Ранее мы уже рассматривали $Y$-комбинатор, но не могли типизировать его и отказывались. 
+Однако в программировании хотелось бы использовать рекурсию, поэтому тут мы введем его аксиоматически.
+
+$Y f =_\beta f (Y\ f)$
+
+$Y : \forall \alpha . (\alpha \rightarrow \alpha) \rightarrow \alpha$ --- аксиома
+
+И теперь, когда мы хотим написать какую-то рекурсивную функцию, скажем, на языке Ocaml, то интерпретировать ее можно будет следующим образом:
+
+\begin{paracol}{2}
+\begin{minted}[escapeinside=||,mathescape=true]{fsharp}
+let rec f = expr in
+    expression
+\end{minted}
+\switchcolumn
+\begin{minted}[escapeinside=||,mathescape=true]{fsharp}
+let f = Y (|$\lambda$| f. expr) in
+    expression
+\end{minted}
+\end{paracol}
+
+Рекурсивными могут быть не только функции, но и типы. Как, например, список из целых чисел:
+
+\begin{minted}{fsharp}
+type intList = Nil | Cons of int * intList;;
+\end{minted}
+
+На нем мы можем вызывать рекурсивные функции, например, ниже представлен фрагмент кода, позволяющий найти длину списка. 
+
+\begin{minted}{fsharp}
+
+let rec length l = match l with 
+  | Nil -> 0
+  | Cons (x, s) -> 1 + length s;;
+
+let my_list = Cons(1, Cons (2, Cons (3, Nil)));;
+
+print_int (length my_list);;  (* output: 3 *)
+\end{minted}
+
+Рассмотрим, что из себя представляет тип списка выше:
+
+
+$Nil = inLeft\ O = \lambda a. \lambda b. a\ O$ 
+
+$Cons = inRight\ p = \lambda a. \lambda b. b\ p$
+
+$\lambda a. \lambda b. a\ O : \forall \gamma .(\alpha \rightarrow \gamma) \rightarrow (\beta \rightarrow \gamma) \rightarrow \gamma$
+
+$\lambda a. \lambda b. b\ O: \forall \gamma .(\alpha \rightarrow \gamma) \rightarrow (\beta \rightarrow \gamma) \rightarrow \gamma$
+
+$\delta = \forall \gamma .(\alpha \rightarrow \gamma) \rightarrow (\beta \rightarrow \gamma) \rightarrow \gamma$
+
+$\lambda a. \lambda b. b\ (\lambda a. \lambda b. a\ O) : \forall \alpha. (\alpha \rightarrow \gamma) \rightarrow (\delta \rightarrow \gamma) \rightarrow \gamma$
+
+
+\vspace{5mm}
+Научимся задавать рекурсивные типы, а именно рассмотрим два способа решения:
+
+\begin{enumerate}
+    \item Эквирекурсивный 
+    \begin{minted}{fsharp}
+        list = Nil | Cons a * list
+    \end{minted}
+    $\alpha = f(\alpha)$ --- уравнение с неподвижной точкой. Пусть $\mu \alpha. f(\alpha) = f(\mu \alpha.f(\alpha))$. Используем это в типах, а именно $f$ - это и тип список. То есть мы по сути использовали $Y$ комбинатор, который для выражений, а для типов ввели аналогичный $\nu$.
+    
+    На практике такой подход используеься и в языке программирования Java:
+    
+    \begin{minted}{java}
+        class Enum <extends Enum<E>>
+    \end{minted}
+    
+    Также приведем пример вывода типа $\lambda x. x\ x$ (можно вспомнить, что именно этот терм помешал нам типизировать $Y$-комбинатор в простотипизированном $\lambda$-исчислении): 
+    
+    \begin{paracol}{2}
+    \switchcolumn
+            $\vcenter{\infer{\vdash \lambda x. x\ x : \tau \rightarrow \beta}{\infer[]{x : \tau \vdash x\ x : \beta}{x : \tau \vdash x : \tau \rightarrow \beta \qquad x : \tau \vdash x : \tau}}}$
+    \switchcolumn
+        Пусть $\tau = \mu \alpha. \alpha \rightarrow \beta$. Если мы раскроем $\tau$ один раз, то получим $\tau = \tau \rightarrow \beta$. Если раскроем еще раз, то получим $\tau = (\tau \rightarrow \beta) \rightarrow \beta$.
+    \end{paracol}
+    
+    Ранее мы ввели $Y$-комбинатор аксиоматически, а можем ли мы его типизировать используя рекурсивные типы? Ответ: Да, можем. Напомним, что $Y = \lambda f.(\lambda x. f\ (x\ x))\ (\lambda x. f\ (x\ x))$.
+    
+    $\vcenter{\infer[]{\vdash \lambda f.(\lambda x. f\ (x\ x))\ (\lambda x. f\ (x\ x)) : \forall \beta. (\beta \rightarrow \beta) \rightarrow \beta}{\infer[]{\vdash \lambda f.(\lambda x. f\ (x\ x))\ (\lambda x. f\ (x\ x)) : (\beta \rightarrow \beta) \rightarrow \beta}{\infer[]{f : \beta \rightarrow \beta \vdash (\lambda x. f\ (x\ x))\ (\lambda x. f\ (x\ x)) : \beta}{\infer {\lambda f : \beta \rightarrow \beta \vdash \lambda x. f\ (x\ x) : \tau \rightarrow \beta}{\infer[]{f : \beta \rightarrow \beta \vdash \lambda x. f\ (x\ x) : \tau}{\infer[]{f : \beta \rightarrow \beta, x : \tau \vdash f\ (x\ x)}{\lambda f : \beta \rightarrow \beta,\ x : \tau \vdash f : \beta \rightarrow \beta \qquad f : \beta \rightarrow \beta,\ x : \tau \vdash x\ x : \beta}}} \qquad \infer{\lambda f : \beta \rightarrow \beta \vdash \lambda x. f\ (x\ x) : \tau}{\text{аналогично в другой ветке}}}}}}$
+    
+    Загадочка: А можно ли типизировать, скажем $\lambda x : Nat. x (S x)$?
+    \item Изорекурсивный
+    
+    В отличии от эквирекурсивных типов будем считать, что $\mu \alpha. f(\alpha)$ изоморфно $f(\mu \alpha.f(\alpha))$. Такой подход используется в языке программирования C.
+    \begin{minted}{C}
+    struct list {
+        list* x;
+        int a;
+    }
+    (*x).(*x).(*x).a
+    // или, что эквивалентно
+    x->x->x.a
+    \end{minted}
+    
+    Можно заметить, что выше для работы со списком мы использовали специальную операцию:
+    $*: list* \rightarrow list$ --- разыменовывание 
+    
+    В изорекурсивных типах введены специальный операции для работы с этими типами и оператор * из C это как раз был примером одной из них (в частности roll):
+    \begin{itemize}
+        \item $Roll: Nil | Cons (a * list) \rightarrow list$
+        \item $Unroll: list \rightarrow Nil | Cons (a * list)$
+    \end{itemize}
+    
+    В более общем виде (введение в типовую систему): 
+    \begin{itemize}
+        \item $roll: f(\alpha) \rightarrow \alpha$
+        \item $unroll: \alpha \rightarrow f(\alpha)$
+    \end{itemize}
+    
+    Можно привести еще пример из языка C:
+    \begin{itemize}
+        \item $*: T* \rightarrow T$
+        \item $\&: T \rightarrow T*$
+        \item $T = \alpha$
+        \item $T* = f(\alpha)$
+    \end{itemize}
+    
+\end{enumerate}
+
+\subsection{Зависимые типы}
+    
+Рассмотрим функцию sprintf из языка C:
+    
+    $sprintf : string \rightarrow smth \rightarrow string$
+    
+    $sprintf "\%d" : int \rightarrow string$
+    
+    $sprintf "\%f" : float \rightarrow string$
+    
+Легко видеть, что тип sprintf определяется первым аргументом. То есть тип этой функции зависит от терма - именно такой тип и называется зависимым (\textit{англ: dependent type}). 
+
+Рассмотрим несколько иной пример, а именно список. Предположим, что мы хотим скалярно перемножить два списка: 
+
+\begin{minted}{fsharp}
+let rec dot lst1 lst2 = match (lst1, lst2) with
+  | ([], []) -> 0
+  | (x :: xs, y :: ys) -> x * y + (dot xs ys)
+;;
+
+dot [1; 2] [3; 4] (* results in 11 *)
+
+dot [1; 2] [3; 4; 5] (* получим ошибку *)
+
+\end{minted}
+
+Было бы очень здорово уметь отлавливать эту ошибку не в рантайме, а во время компиляции программы и завсимые типы могут в этом помочь. Например в языке Idris можно использовать Vect: 
+
+\begin{minted}{fsharp}
+dot : {n : Nat} -> Vect n Integer -> Vect n Integer -> Integer
+dot {n = Z} [] [] = 0
+dot {n = (S len)} (x :: xs) (y :: ys) = y * x + dot xs ys 
+
+let v1 = Data.Vect.fromList [1, 2, 3]
+let v2 = Data.Vect.fromList [4, 5, 6]
+dot v1 v2 -- results in 32
+
+let v1 = Data.Vect.fromList [1, 2, 3, 4]
+dot v1 v2 -- Type mismatch between
+          --      Vect 3 Integer (Type of v2)
+          -- and
+          --      Vect 4 Integer (Expected type)
+\end{minted}
+
+Если подойти к типу функции dot ближе с точки зрения теории типов, то мы бы записали это так (о * речь пойдет в следующей главе [стоит ее воспринимать как тип типа]):
+
+$Nat : *,\ Integer : *,\ Vect : Nat \rightarrow Integer \rightarrow * \vdash dot : \Pi n : Nat. (Vect\ n\ Integer) \rightarrow (Vect\ n\ Integer) \rightarrow Integer$
+
+\subsubsection{$\Pi$-типы и $\Sigma$-типы}
+
+\begin{itemize}
+    \item $\Pi x : \alpha . P(x)$ - это запись можно читать как (в каком-то смысле в интуционистском понимании): "У меня есть метод для конструирования объекта типа $P(x)$, использующий любой предоставленный $x$ типа $\alpha$". Если же смотреть на эту запись с точки зрения классической логики, то ее можно понимать как бесконечную  конъюнкцию $P(x_1)\&P(x_2)\&...$. Данная конъюнкция соответствует декартовопу произведению, отсюда и называние $\Pi$-типа (иногда в англоязычной литературе можно встретить \textit{dependent function type}).
+    \item $\Sigma x : \alpha . P(x)$. Аналогично предыдущему пункту рассмотрим значение с интуционистской точки зрения: "У меня есть объект $x$ тип $\alpha$, но больше ничего про него не знаю кроме того, что он обладает свойством $P(x)$". Это как раз в стиле интуционизма, что нам приходится знать и объект $x$ и его свойство $P(x)$. Это можно представить как пару, а пара - бинарной произведение. С точки же зрения классической логики, мы можем принимать эту формулу как бесконечную дизъюнкицю $P(x_1) \vee P(x_2)\vee ...$, которая соответствует алгебраическим типам данных. (иногда в англоязычной литературе можно встретить \textit{dependent sum}).
+\end{itemize}
+
+Ранее обсуждалось, что тип может быть сопоставлен множеству его значений, как например тип uint32\_t в С++ может быть сопоставлен множеству $\{0, 1, ..., 2^{32} - 1\}$. Рассмотрим $\Pi x : \alpha . P(x)$: этому $\Pi$-типу можно сопоставить прямое произведение $B^A$ (где $A$ --- множество, сопоставленное типу $\alpha$, а $B(a)$ - множество сопоставленное типу $P(a)$), которое следует воспринимать, как $B^A = \prod_{a \in A} B(a) = \{ f : A \rightarrow \bigcup_{a \in A} B(a)\ |\ f(a) \in B(a), a \in A  \}$. Можно отметить, что если $B(a) = C = const$, то на любой вход $f(a) \in C$, т.е. тип значения $f(a)$ не меняется, собственно поэтому этот тип в таком случае записывают как $A \rightarrow P$. Рассмотрим $\Sigma x : \alpha . P(x)$: этому $\Sigma$-типу можно сопоставить дизъюнктное объединение $\sqcup_{a \in A} B(a) = \bigcup_{a \in A}\{(a, x) | x \in B(a)\}$, где $A$ --- множество, сопоставленное типу $\alpha$, а $B(a)$ - множество сопоставленное типу $P(a)$. Тут также можно отметиеть, что если $B(a) = C = const$, то результатом дизъюнктивного объелинения будет прямое произведение $A \times B$. В языке программирования Idris примером $\Sigma$-типа является зависимая пара:
+
+\begin{minted}{fsharp}
+data DPair : (a : Type) -> (P : a -> Type) -> Type where
+  MkDPair : {P : a -> Type} -> (x : a) -> P x -> DPair a P
+\end{minted}
+
+Также есть некоторый синтаксический сахар (a : A ** P), который значит, что а типа DPair A P, где P может содержать в себе имя a.
+
+В документации Idris'а есть хороший пример использования: мы хотим отфильтровать вектор  (Vect) по какому-то предикату - мы не можем знать заранее длину результатирующего вектора, поэтому зависамая пара выручает:
+
+\begin{minted}{fsharp}
+filter : (a -> Bool) -> Vect n a -> (p ** Vect p a)
+filter p Nil = (_ ** [])
+filter p (x :: xs) with (filter p xs)
+  | ( _ ** _xs ) = if (p x) then 
+                    ( _ ** x :: _xs ) 
+                  else 
+                    ( _ ** _xs )
+\end{minted}
+
+
+\section{Лекция 10}
+
+\subsection{Введение}
+
+Прежде мы разбирали простотипизированное лямбда исчисление, в котором термы зависили от термов, например, терм $F\ M$ зависит от терма $M$. После того, как было замечено, что, скажем, I может иметь разные типы, которые по сути различаются лишь аннотацией, например, $\lambda x. x : \alpha \rightarrow \alpha$, $\lambda x. x : (\alpha \rightarrow \alpha) \rightarrow (\alpha \rightarrow \alpha)$, была введена типовая абстракция, то есть термы теперь могли зависеть от типов и такая типовая система была названа System F и можно было писать $\Lambda \alpha. \lambda x : \alpha . x : \forall \alpha. \alpha \rightarrow \alpha$. То есть это было своего рода изобретением шаблонов в языке C++. Но на этом все не ограничено. System $F_w$, в которой типы могут зависить от типов, как, например, скажем, список - алгебраический тип данных, у которого есть две альтернативы $Nil : \forall \alpha . List \alpha$ и $Cons : \forall \alpha. \alpha \rightarrow List \alpha \rightarrow \alpha$ (рекурсивные типы смотри выше). Для лучшего понимания различия системы $F$ и $F_w$ ниже представлены грамматики для типов:
+\begin{itemize}
+    \item $T_\rightarrow ::= \alpha\ |\ (T_\rightarrow)\ |\ T_\rightarrow \rightarrow T_\rightarrow$
+    \item $T_F ::= \alpha\ |\ \forall \alpha. T_F\ |\ (T_F)\ |\ T_F \rightarrow T_F$ 
+    \item $T_{F_w} ::= \alpha\ |\ \lambda \alpha. T_{F_w}\ |\ (T_{F_w})\ |\ T_{F_w} \rightarrow T_{F_w}\ |\ T_{F_w}\ T_{F_w} $
+\end{itemize}
+
+Ничего не мешает рассматривать типовую систему, в которой тип может зависеть от терма, как это было сделано раньше. Пусть для всех $a : \alpha$ мы можем определить тип $\beta_\alpha$ и пусть существует $b_\alpha : \beta_\alpha$. Тогда вполне обоснована запись функции $\lambda \alpha : b_\alpha$. Тип данного выражения приянто записывать как $\Pi a :\alpha . \beta_\alpha$ (стоит сделать замечание, что если $\beta_\alpha$ не зависит от $\alpha$ [то есть функция константа], то вместо $\Pi a :\alpha . \beta_\alpha$ пишут $\alpha \rightarrow \beta$). Примером может быть тип вектора, длина которого зависит от натурального числа и типа (пример из языка Idris):
+\begin{minted}{Fsharp}
+data Vect : (len : Nat) -> (elem : Type) -> Type where
+  Nil  : Vect Z elem
+ (::) : (x : elem) -> (xs : Vect len elem) -> Vect (S len) elem
+\end{minted}
+
+Теперь наша грамматика стало обширной и появилась необходимость более формально говорить о типах, т.е. ввести их в систему. Для этого были придуман род (\textit{англ: kind}), который обозначают $*$.
+
+Рассмотрим пару примеров, как используется род:
+
+\begin{itemize}
+    \item $\lambda m : \alpha.F\ m : (\alpha \rightarrow \beta) : *$
+    \item $\lambda \alpha : *.I_\alpha : (\Pi \alpha : * : \alpha \rightarrow \alpha) : *$
+    \item $\lambda n : Nat . A^n \rightarrow B : Nat \rightarrow * : *$
+    \item $\lambda \alpha : * . \alpha \rightarrow \alpha : * \rightarrow *$
+\end{itemize}
+
+Рассмотри подробнее последнее выражение, а именно $* \rightarrow *$. Это не тип, так как иначе бы могли записать $* \rightarrow * : *$, однако понятно, что это не так. В частности для этого вводится понятие сорта (\textit{англ. sort}), которое можно воспринимать как тип рода и тогда $* \rightarrow * : \openbox $ и $* : \openbox$.
+
+Обобщая все вышесказанное, построим обобщенную типовую систему.
+
+\subsection{Обобщенная типовая система}
+\begin{itemize}
+    
+\item Сорта: \{*, \openbox\}
+\begin{itemize}
+    \item Выражение "$A:*$" означает, что $A$ --- тип. И тогда, если на метаязыке мы хотим сказать "Если $A$ тип, то и $A \rightarrow A$ тоже тип", то формально это выглядит как $A:* \vdash (A \rightarrow A):*$
+    \item $\openbox$ - это абстракция над сортом для типов.
+    \item Например:
+    \begin{itemize}[leftmargin = 2cm]
+        \item $5:int:*:\openbox$
+        \item $[]:*\rightarrow*:\openbox$
+        \item $\Lambda M.List<M>:*\rightarrow* : \openbox$
+    \end{itemize}
+\end{itemize}
+
+\item $T ::= x\ |\ c\ |\ T\ T\ |\ \lambda x:T.\ T\ | \Pi x:T.\ T$
+
+\item Аксиома:
+\begin{itemize}
+    \item $\vcenter{\infer{\vdash * . \openbox}{}}$
+\end{itemize}
+
+\item Правила вывода:
+\begin{enumerate}
+    \item $\vcenter{\infer[x \not \in \Gamma]{\Gamma, x : A \vdash x : A}{\Gamma \vdash A:S}}$
+    \item $\vcenter{\infer[\text{--- правило ослабление (примерно как } \alpha \rightarrow \beta \rightarrow \alpha \text{ в И.В.)}]{\Gamma, x : C \vdash A:B}{\Gamma \vdash A:B \qquad \Gamma C:S}}$
+    \item $\vcenter{\infer[\text{--- правило конверсии}]{\Gamma \vdash A:B'}{\Gamma \vdash A:B \qquad \Gamma \vdash B':S \qquad B =_\beta B'}}$
+    \item $\vcenter{\infer[\text{--- правило применения}]{\Gamma \vdash (F\ a) : B[x := a]}{\Gamma \vdash F : (\Pi x:A.B) \qquad \Gamma \vdash a : A}}$
+\end{enumerate}
+
+\item Семейства правила (generic-правила)
+
+Пусть $(s_1, s_2) \in S \subseteq \{*, \openbox\}^2$.
+
+\begin{enumerate}
+    \item $\Pi$-правило: $\vcenter{\infer[]{\Gamma \vdash (\Pi x : A.B) : s_2}{\Gamma \vdash A : s_1 \qquad \Gamma, x : A \vdash B : s_2}}$
+    \item $\lambda$-правило: $\vcenter{\infer[]{\Gamma \vdash (\lambda x : A . b) : (\Pi x : A. B)}{\Gamma \vdash A:s_1 \qquad \Gamma, x : A \vdash b : B \qquad \Gamma, x : A \vdash B : s_2}}$
+\end{enumerate}
+
+\end{itemize}
+
+\subsection{$\lambda$-куб}
+
+В обобщенных типовых системах есть generic-правила, которые зависят от выбора $s_1$ и $s_2$ из множества сортов. Этот выбор можно проиллюстрировать в виде куба.
+
+\begin{center}
+    {\includegraphics[scale=0.5]{pic.png}}
+\end{center}
+
+Выбор правил означает следующее:
+\begin{itemize}
+    \item $(*,\ *)$ - позволяет записывать термы, которые зависят от термов
+    \item $(\openbox,\ *)$ - позволяет записывать термы, которые зависят от типов
+    \item $(*,\ \openbox)$ - позволяет записывать типы, которые зависят от термов
+    \item $(\openbox,\ \openbox)$ - позволяет записывать типы, которые зависят от типов
+\end{itemize}
+    
+Также на этом кубике можно расположить языки программирования, например:
+\begin{itemize}
+    \item Haskell будет распологаться на левой грани куба, недалеко от $\lambda w$
+    \item Idris и Coq, очевидно, будет находиться в $\lambda C$
+    \item C++ очень ограниченно приближается к $\lambda C$ (мысли вслух):
+    \begin{enumerate}
+        \item $(*,\ *)$ - без этого не может обойтись ни один язык программирования
+        \item $(\openbox,\ *)$ - например, sizeof(type)
+        \item $(*,\ \openbox)$ - например, std::array<int, 19> - тут есть ограничение на то, значение каких типов можно подставлять.
+        \item $(\openbox,\ \openbox)$ - например, std::vector<int>, int*
+    \end{enumerate}
+\end{itemize}
+
+\subsection{Свойства}
+
+Для систем в $\lambda$-кубе верны следующие утверждения:
+\begin{itemize}
+    \item \textbf{Th. SN} \qquad \qquad \qquad \quad \quad \ Обобщенная типовая система сильно нормализуема
+    \item \textbf{Th. Черча-Россера} \quad \begin{minipage}{0.6\textwidth}
+\raggedright % obviates the need for explicit linebreaks
+\begin{enumerate}
+    \item Для любых двух элементов $A$, $B$ и $C$, таких, 
+    $A \twoheadrightarrow B$ и $A \twoheadrightarrow C$ верно,
+    что существует $D$, что 
+    $B \twoheadrightarrow D$ и $C \twoheadrightarrow D$
+    \item Для любых двух элементов $A$, $B$, для которых верно $A =_\beta B$, 
+    существует $C$, что $A \twoheadrightarrow C$ и $B \twoheadrightarrow C$
+\end{enumerate}
+\end{minipage}
+    \item \textbf{Th. Subject reduction} \quad \begin{minipage}{0.6\textwidth}
+\raggedright % obviates the need for explicit linebreaks
+    $\Gamma \vdash A : T$ и $A \twoheadrightarrow B$, тогда $\Gamma \vdash B : T$ 
+\end{minipage}
+    \item \textbf{Th. Unicity of types} \quad \ \  \begin{minipage}{0.6\textwidth}
+\raggedright % obviates the need for explicit linebreaks
+    $\Gamma \vdash A : T$ и $\Gamma \vdash A : T'$ тогда $T =_\beta T'$ 
+\end{minipage}
+\end{itemize}
+
+
+\vspace{5mm}   
+
+Примеры:
+
+\begin{itemize}
+    \item $\lambda \omega$:
+\begin{center}
+    $\vdash (\lambda \alpha : * . \alpha \rightarrow \alpha) (* \rightarrow *) : \openbox$
+
+\vspace{5mm}
+
+\begin{enumerate}[]
+    \item \begin{center}
+        $\vcenter{\infer{\vdash (* \rightarrow *) : \openbox}{\vdash * : \openbox \qquad \infer{a:* \vdash *.\openbox}{\vdash *.\openbox} }}$
+    \end{center}
+    \item \begin{center} $\vcenter{\infer{\vdash (\lambda \alpha : * . \alpha \rightarrow \alpha) : * \rightarrow *}{\vdash * : \openbox \qquad \infer{\alpha : * \vdash \alpha \rightarrow \alpha : x}{\alpha : * \vdash \alpha : * \qquad \alpha : *, x : \alpha \vdash \alpha : *} \qquad \infer{a:* \vdash *: \openbox}{\vdash * :\openbox} } }$
+    \end{center}
+\end{enumerate}
+\end{center}
+
+% \item $\lambda \rightarrow$
+
+\end{itemize}
+
+Notes:
+\begin{itemize}
+    \item $(\lambda x.x) : (A \rightarrow A)$ - implicit typing (Curry style)
+    \item $I_A = \lambda x : A.x$ - explicit typing (Church style)
+\end{itemize}
+
+\end{document}
