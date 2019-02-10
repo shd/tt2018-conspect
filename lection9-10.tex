@@ -1,29 +1,3 @@
-\documentclass[12pt]{article}
-\usepackage{amsmath} 
-\usepackage{graphicx}
-\usepackage[utf8]{inputenc}
-\usepackage[english,russian]{babel}
-\usepackage{stmaryrd}
-\usepackage{xcolor}
-\usepackage{mathtools}% Loads amsmath
-\usepackage[left=2cm,right=2cm,top=2cm,bottom=2cm,bindingoffset=0cm]{geometry}
-\usepackage{enumitem}
-\usepackage{soul}
-\usepackage{changepage}
-\usepackage{lipsum}
-\usepackage{scrextend}
-\usepackage{amsthm}
-\usepackage{amssymb}
-\usepackage{minted}
-\usepackage{proof}
-\usepackage{paracol}
-
-\newsavebox\MBox
-\newcommand\Cline[2][red]{{\sbox\MBox{$#2$}%
-  \rlap{\usebox\MBox}\color{#1}\rule[-1.2\dp\MBox]{\wd\MBox}{0.5pt}}}
-
-\begin{document}
-
 \section{Лекция 9}
 
 \noindent\textbf{Def.} Ранг типа  m 
@@ -514,5 +488,3 @@ Notes:
     \item $(\lambda x.x) : (A \rightarrow A)$ - implicit typing (Curry style)
     \item $I_A = \lambda x : A.x$ - explicit typing (Church style)
 \end{itemize}
-
-\end{document}
