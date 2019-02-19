@@ -1,13 +1,23 @@
-\documentclass[12pt,a4paper,oneside]{article}
+\documentclass[12pt, a4paper]{article}
+\usepackage{graphicx}
+\usepackage{stmaryrd}
+\usepackage[T1,T2A]{fontenc}
 \usepackage[utf8]{inputenc}
 \usepackage[english,russian]{babel}
 \usepackage{amsmath}
-\usepackage{amsthm}
+\usepackage{amsfonts}
 \usepackage{amssymb}
+\usepackage{makeidx}
+\usepackage{verbatim}
+\usepackage{tikz}
+\usepackage{amsthm}
 \usepackage{enumerate}
 \usepackage[left=2cm,right=2cm,top=2cm,bottom=2cm,bindingoffset=0cm]{geometry}
 \usepackage{proof}
-
+\usetikzlibrary{graphs}
+\usetikzlibrary{graphs.standard}
+\usetikzlibrary{automata,positioning}
+\usepackage{float}
 \title{Введение в Теорию Типов\\\it{Конспект лекций}}
 \author{Штукенберг Д.~Г.\\Университет ИТМО}
 
@@ -15,18 +25,24 @@
 
 \theoremstyle{definition}
 \newtheorem{definition}{Определение}[section]
+\newtheorem{note}{Замечание}[section]
 \newtheorem*{example}{Пример}
 \newtheorem{theorem}{Теорема}[section]
 \newtheorem{axiom}{Аксиома}[section]
 \newtheorem{lemma}[theorem]{Лемма}
-
+\newtheorem{statement}{Утверждение}[section]
+\newtheorem{oun_paragraph}{Пункт}[section]
 \def\from#1{\par \parbox{0.7\textwidth}{\par \hfill\raggedleft \it #1}} 
+
 
 \newenvironment{epigraph}% 
 {\begin{list}{}{\setlength{\leftmargin}{0.3\textwidth}}\item[]}% 
 {\end{list}} 
 
 \maketitle
+
 \input{intro}
+\input{lection7}
+\input{lection8}
 
 \end{document}
