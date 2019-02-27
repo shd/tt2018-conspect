@@ -1,6 +1,6 @@
 \section{Лекция 4}
 
-\subsection{Расширение просто типизированного $\lambda$-исчисления до изоморфного ИИВ}
+\subsection{Расширение просто типизированного $\lambda$-исчисления \\до изоморфного ИИВ}
 
 Заметим, что между просто типизированным по Карри $\lambda$-исчислением и имликационным фрагментом ИИВ существует изоморфизм, но при этом в просто типизированном $\lambda$-исчислении нет аналогов лжи, а также связок $\vee$ и $\&$.
 
@@ -56,13 +56,13 @@ def throwError(a: A): Nothing = throw new Error()
 
 Функция $makePair$ будет выглядеть следующим образом:
 
-$$makePair \equiv \lambda \; first. \; \lambda \; second. \; \lambda \; f. \; f \; first \; second$$
+$$makePair \equiv \lambda \; first. \; \lambda \; second. \; \lambda \; f. \; f \; first \; second$$\newline
 
 Тогда 
 
 $$<first, second> \equiv makePair \; first \; second$$
 
-Надо также написать функции, которые будут доставать из пары упакованные в неё значения. Назовём иъ $\Pi_1$ и $\Pi_2$. 
+Надо также написать функции, которые будут доставать из пары упакованные в неё значения. Назовём их $\Pi_1$ и $\Pi_2$. 
 
 Пусть 
 $$\Pi_1 \equiv \lambda \; Pair. \; Pair \; (\lambda \; a. \lambda \; b. \; a)$$
@@ -89,12 +89,12 @@ $$\Pi_2 \equiv \lambda \; Pair. \; Pair \; (\lambda \; a. \lambda \; b. \; b)$$
 	\]
 	\item Правило типизации первого проектора:
 	\[
-	\infer{\Gamma \vdash \Pi_1 <M, N> : \varphi}{\Gamma \vdash <A, B>: \varphi \text{\&} \psi}
+	\infer{\Gamma \vdash \Pi_1 <A, B> : \varphi}{\Gamma \vdash <A, B>: \varphi \text{\&} \psi}
 	\]
 	
 	\item Правило типизации второго проектора:
 	\[
-	\infer{\Gamma \vdash \Pi_2 <M, N> : \psi}{\Gamma \vdash <A, B>: \varphi \text{\&} \psi}
+	\infer{\Gamma \vdash \Pi_2 <A, B> : \psi}{\Gamma \vdash <A, B>: \varphi \text{\&} \psi}
 	\]
 \end{enumerate}
 
@@ -116,7 +116,7 @@ $$\Pi_2 \equiv \lambda \; Pair. \; Pair \; (\lambda \; a. \lambda \; b. \; b)$$
 	\item $case$, принимающую три параметра: экземпляр алгебраического типа, функцию, определяющую, что делать, если этот экземпляр был создан из первой альтернативы (то есть с использованием $in_1$), и функцию, определяющую, что делать, если этот экземпляр был создан из второй альтернативы (то есть с использованием $in_2$)
 \end{enumerate}
 
-Аналогом $case$ в программировании является конструкция, известная как pattern-mathcing, или сопоставление с образцом.
+Аналогом $case$ в программировании является конструкция, известная как pattern-matching, или сопоставление с образцом.
 
 \begin{minted}{ocaml}
 let isEmptyList list = match list with
@@ -129,7 +129,7 @@ let isEmptyList list = match list with
 
 $$in_1 \equiv \lambda \; x. \; \lambda \; f. \; \lambda \; g. \; f \; x$$
 
-А $in_1$ -  следующим:
+А $in_2$ -  следующим:
 
 $$in_2 \equiv \lambda \; x. \; \lambda \; f. \; \lambda \; g. \; g \; x$$
 
@@ -169,27 +169,25 @@ case \; (in_1 A) \; F \; G \\ =_\beta (\lambda \; algebraic. \; \lambda \; f. \;
 	\]
 \end{enumerate}
 
-\subsection{Изоморфизм Карри-Ховарда для расширения просто типизированного $\lambda$-исчисления}
+\subsection{Изоморфизм Карри-Ховарда для расширения \\просто типизированного $\lambda$-исчисления}
 
 Заметим точное соответствие только что введённых конструкций аксиомам ИИВ.
 
 $\newline$
-\begin{tabular}{ | p{8cm} | p{8cm} | }
+\begin{tabular}{ | p{8.5cm} | p{7.5cm} | }
 	\hline
-	Расширенное просто типизирпованное $\lambda$-исчисление & ИИВ \\ \hline
+	Расширенное просто типизированное &ИИВ\\$\lambda$-исчисление &\\ \hline
 	$\infer{\Gamma \vdash <A, B>: \varphi \text{\&} \psi}{\Gamma\vdash A: \varphi && \Gamma\vdash B: \psi}$ & $\vdash \varphi \to \psi \to \varphi \text{\&} \psi$ \\
-	\\
-	$\infer{\Gamma \vdash \Pi_1 <M, N> : \varphi}{\Gamma \vdash <A, B>: \varphi \text{\&} \psi}$ & $\vdash \varphi \text{\&} \psi \to \varphi$  \\
-	\\
-	$\infer{\Gamma \vdash \Pi_2 <M, N> : \psi}{\Gamma \vdash <A, B>: \varphi \text{\&} \psi}$ & $\vdash \varphi \text{\&} \psi \to \psi$  \\
-	
-	\\
-	
+	&\\
+	$\infer{\Gamma \vdash \Pi_1 <A, B> : \varphi}{\Gamma \vdash <A, B>: \varphi \text{\&} \psi}$ & $\vdash \varphi \text{\&} \psi \to \varphi$  \\
+	&\\
+	$\infer{\Gamma \vdash \Pi_2 <A, B> : \psi}{\Gamma \vdash <A, B>: \varphi \text{\&} \psi}$ & $\vdash \varphi \text{\&} \psi \to \psi$  \\	
+	&\\	
 	$\infer{\Gamma \vdash in_1 \; A: \varphi \vee \psi}{\Gamma\vdash A: \varphi}$ & $\vdash \varphi \to \varphi \vee \psi$ \\
-	\\
+	&\\
 	$\infer{\Gamma \vdash in_2 \; B: \varphi \vee \psi}{\Gamma\vdash B: \psi}$ & $\vdash \psi \to \varphi \vee \psi$ \\
-	\\
-	$\infer{case \; L \; f \; g : \tau}{\Gamma \vdash L: \varphi \vee \psi, \;\; \Gamma \vdash f : \varphi \to \tau, \;\; \Gamma \vdash g: \psi \to \tau}$ & $\vdash  (\varphi \to \tau) \to (\psi \to \tau) \to (\varphi \vee \psi) \to \tau$  \\
+	&\\
+	$\infer{case \; L \; f \; g : \tau}{\Gamma \vdash L: \varphi \vee \psi, \;\; \Gamma \vdash f : \varphi \to \tau, \;\; \Gamma \vdash g: \psi \to \tau}$ & $\vdash  (\varphi \to \tau) \to (\psi \to \tau) \to (\varphi \vee \psi) \to \tau$ \\
 	\hline
 \end{tabular}
 
@@ -212,7 +210,7 @@ $\newline$
 \end{note}
 
 \begin{definition}
-	Просто типизипрованное по Чёрчу $\lambda$-исчисление.
+	Просто типизированное по Чёрчу $\lambda$-исчисление.
 	
 	Рассмотрим исчисление с единственной схемой аксиом:
 	

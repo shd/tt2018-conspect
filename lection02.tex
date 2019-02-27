@@ -11,7 +11,7 @@
 	$(=_{\alpha})$ "--- отношение эквивалентности.
 \end{lemma}
 
-Пусть в A есть $\beta$-редекc $(\lambda{}x.P)Q$, но $Q$ не свободен для подстановски вместо $x$ в $P$,
+Пусть в A есть $\beta$-редекc $(\lambda{}x.P)Q$, но $Q$ не свободен для подстановки вместо $x$ в $P$,
 тогда найдем $y\notin V[P]$, $y\notin V[Q]$. Сделаем замену $P[x\coloneqq{}y]$.
 Тогда замена $P[x\coloneqq{}y][y\coloneqq{}Q]$ допустима. То есть, можно сказать, что мы просто переименовали переменную $x$ в $P$ и получили свободу для подстановки, тем самым получив возможность редукции.
 
@@ -19,10 +19,10 @@
 	$P[x\coloneqq{}Q]=_{\alpha}P[x\coloneqq{}y][y\coloneqq{}Q]$, если замена допустима.
 \end{lemma}
 
-\subsection{Нормальная форма, $\lambda$-выражения без нормальной формы, комбинаторы $K$, $I$, $\Omega$}
+\subsection{Нормальная форма, $\lambda$-выражения без нормальной формы, \\комбинаторы $K$, $I$, $\Omega$}
 
 \begin{definition}
-	$\lambda$-выражение $A$ находится в нормальноф форме, если оно не содержит $\beta$-редексов.
+	$\lambda$-выражение $A$ находится в нормальной форме, если оно не содержит $\beta$-редексов.
 \end{definition}
 
 \begin{definition}
@@ -47,13 +47,13 @@
 \end{lemma}
 
 \begin{proof}
-	$\Omega$ Имеет единтсвенный $\beta$-редекс, где $A \equiv xx$, $B \equiv (\lambda{}x.xx)$. Тогда единственный возможный путь редукции "--- подставить $B$ вместо $x$ в $A$. Но тогда мы получим $\Omega$. Следовательно у $\Omega$ нет нормальной формы, так как в полученном выражении у нас всегда будет $\beta$-редекс.
+	$\Omega$ Имеет единственный $\beta$-редекс, где $A \equiv xx$, $B \equiv (\lambda{}x.xx)$. Тогда единственный возможный путь редукции "--- подставить $B$ вместо $x$ в $A$. Но тогда мы получим $\Omega$. Следовательно у $\Omega$ нет нормальной формы, так как в полученном выражении у нас всегда будет $\beta$-редекс.
 \end{proof}
 
 \subsection{$\beta$-редуцируемость}
 
 \begin{definition}
-	Будем говорить, что $A\twoheadrightarrow_{\beta}B$, если $\exists$ такие $X_{1}..X_{n}$, что $A=_{\alpha}X_{1}\to_{\beta}X_{2}\to_{\beta}...\to_{\beta}X_{n-1}\to_{\beta}X_{n}=_{\alpha}B$.
+	Будем говорить, что $A\twoheadrightarrow_{\beta}B$, если $\exists$ такие $X_{1}$\ldots $X_{n}$, что $A=_{\alpha}X_{1}\to_{\beta}X_{2}\to_{\beta}\ldots\to_{\beta}X_{n-1}\to_{\beta}X_{n}=_{\alpha}B$.
 \end{definition}
 
 $(\twoheadrightarrow_{\beta})$ "--- рефлексивное и транзитивное замыкание $(\to_{\beta})$. $(\twoheadrightarrow_{\beta})$ не обязательно приводит к нормальной форме
@@ -72,7 +72,7 @@ $(\twoheadrightarrow_{\beta})$ "--- рефлексивное и транзити
 	$(>)$ на множестве натуральных чисел не обладает ромбовидным свойством.
 \end{example}
 
-\subsection{Теорема Чёрча-Россер, следствие о единственности нормальной формы}
+\subsection{Теорема Чёрча-Россера, следствие о единственности \\нормальной формы}
 
 \begin{theorem}[Черча-Россера]
 	$(\twoheadrightarrow_{\beta})$ обладает ромбовидным свойством.
@@ -80,7 +80,7 @@ $(\twoheadrightarrow_{\beta})$ "--- рефлексивное и транзити
 
 
 \begin{cons}
-	Если у $A$ есть нормальная форма, то она единтсвенная с точностью до $(=_{\alpha})$ (переименования переменных).
+	Если у $A$ есть нормальная форма, то она единственная с точностью до $(=_{\alpha})$ (переименования переменных).
 \end{cons}
 
 \begin{proof}
@@ -115,7 +115,7 @@ $(\twoheadrightarrow_{\beta})$ "--- рефлексивное и транзити
 \end{lemma}
 
 \begin{proof}
-	Пусть $A=(\lambda{}x.x x)(\comb I \comb I)$. Покажем что в таком случае не будет выполняться ромбовидное свойство:
+	Пусть $A=(\lambda{}x.x x)(\comb I \comb I)$. Покажем, что в таком случае не будет выполняться ромбовидное свойство:
 	\
 	\begin{figure}[ht]
 		\centering
@@ -123,9 +123,9 @@ $(\twoheadrightarrow_{\beta})$ "--- рефлексивное и транзити
 		\node[label={\scriptsize\tikz\node[circle,draw]{$A$};}]     at (0,   0) (A)  {$(\lambda x . x x)(\comb I \comb I)$};
 		\node[label={135:\scriptsize\tikz\node[circle,draw]{$B$};}] at (-2, -1) (B)  {$(\comb I \comb I)(\comb I \comb I)$};
 		\node[label={45:\scriptsize\tikz\node[circle,draw]{$C$};}]  at (2,  -1) (C)  {$(\lambda x . x x)  \comb I$};
-		\node                                                       at (-3, -2) (B1) {$(\comb I \comb I)\comb I$};
-		\node                                                       at (-1, -2) (B2) {$\comb I(\comb I \comb I)$};
-		\node                                                       at (0,  -3) (D)  {$\comb I \comb I$};
+		\node[label={180:\scriptsize\tikz\node[circle,draw]{$B1$};}]                                                       at (-3, -2) (B1) {$(\comb I \comb I)\comb I$};
+		\node[label={0:\scriptsize\tikz\node[circle,draw]{$B2$};}]                                                       at (-1, -2) (B2) {$\comb I(\comb I \comb I)$};
+		\node[label={0:\scriptsize\tikz\node[circle,draw]{$D$};}]                                                       at (0,  -3) (D)  {$\comb I \comb I$};
 		\path (A)  edge (B)
 		edge (C)
 		(B)  edge (B1)
@@ -136,6 +136,7 @@ $(\twoheadrightarrow_{\beta})$ "--- рефлексивное и транзити
 		\end{tikzpicture}
 		\caption{Нет такого $D$, что $B \to_{\beta} D$ и $C \to_{\beta} D$.}
 	\end{figure}	
+	\\
 \end{proof}
 
 
@@ -168,7 +169,7 @@ $(\twoheadrightarrow_{\beta})$ "--- рефлексивное и транзити
 			\item $x \in \FV(B_{1})$. По индукционному предположению $B_{1}[x\coloneqq{}Q_{1}] \bpar B_{2}[x\coloneqq{}Q_{2}]$. Тогда $A_{1}B_{1}[x\coloneqq{}Q_{1}] \bpar A_{2}B_{2}[x\coloneqq{}Q_{2}]$.
 		\end{enumerate}
 		\item Пусть $P_{1}\equiv{}\lambda{}y.A_{1}$, $P_{2}\equiv{}\lambda{}y.A_{2}$. по определению $(\bpar)$ $A_{1}\bpar A_{2}$. Тогда по индукционному предположению $A_{1}[x\coloneqq{}Q_{1}] \bpar A_{2}[x\coloneqq{}Q_{2}]$. Тогда 
-		$\lambda{}y.(A_{1}[x\coloneqq{}Q_{1}]) \bpar \lambda{}y.(A_{2}[x\coloneqq{}Q_{2}])$ по определению $(\bpar)$. Следовательно 	$\lambda{}y.A_{1}[x\coloneqq{}Q_{1}] \bpar \lambda{}y.A_{2}[x\coloneqq{}Q_{2}]$ по определению подствановки.
+		$\lambda{}y.(A_{1}[x\coloneqq{}Q_{1}]) \bpar \lambda{}y.(A_{2}[x\coloneqq{}Q_{2}])$ по определению $(\bpar)$. Следовательно 	$\lambda{}y.A_{1}[x\coloneqq{}Q_{1}] \bpar \lambda{}y.A_{2}[x\coloneqq{}Q_{2}]$ по определению подстановки.
 		\item Пусть $P_{1}=_\alpha(\lambda{}y.A_1)B_1$, $P_{2}=_\alpha A_2[y\coloneqq{}B_2]$ и $ A_1 \bpar A_2 $, $ B_1 \bpar B_2 $. По индукционному предположению получаем, что $A_1[x \coloneqq Q_1] \bpar A_2[x \coloneqq Q_2]$, $B_1[x \coloneqq Q_1] \bpar B_2[x \coloneqq Q_2]$. Следовательно по определению $(\bpar)$ получаем, что $ (\lambda{}y.A_1[x\coloneqq Q_1])B_1[x \coloneqq Q_1] \bpar  A_2[y \coloneqq B_2][x \coloneqq Q_2]$
 	\end{itemize}
 \end{proof}
@@ -225,7 +226,7 @@ $(\twoheadrightarrow_{\beta})$ "--- рефлексивное и транзити
 	
 \end{example}
 
-Как мы видим, в первом случае мы достигли нормальной формы, в то время как во втором мы получаем бесонечную редукцию. Разница двух этих способов в порядке редукции. Первый называется нормальный порядок, а второй аппликативный. 
+Как мы видим, в первом случае мы достигли нормальной формы, в то время как во втором мы получаем бесконечную редукцию. Разница двух этих способов в порядке редукции. Первый называется нормальный порядок, а второй аппликативный. 
 
 \begin{definition}[нормальный порядок редукции]
 	Редукция самого левого $\beta$-редекса.
@@ -235,15 +236,15 @@ $(\twoheadrightarrow_{\beta})$ "--- рефлексивное и транзити
 	Редукция самого левого $\beta$-редекса из самых вложенных.
 \end{definition}
 
-\begin{theorem}[Приводится без доказательсвта]
+\begin{theorem}[Приводится без доказательства]
 	Если нормальная форма существует, она может быть достигнута нормальным порядком редукции.
 \end{theorem}
 
 Нормальный порядок хоть и приводит к нормальной форме ,если она существует, но бывает ситуации в которых аппликативный порядок вычисляется быстрее чем нормальный
 
 \begin{example}
-	Рассмотрим лямбда выражение $(\lambda{}x.x \ x \ x \ x) (\comb I \comb I)$. Попробуем редуцировать его нормальным порядком:
-	 \[(\lambda{}x.x \ x \ x \ x) (\comb I \comb I) \to_{\beta} (\comb I \comb I)(\comb I \comb I)(\comb I \comb I)(\comb I \comb I) \to_{\beta} \comb I(\comb I \comb I)(\comb I \comb I)(\comb I \comb I) \to_{\beta} (\comb I \comb I)(\comb I \comb I)(\comb I \comb I) \to_{\beta} ... \to_{\beta} \comb I\] 
+	Рассмотрим $\lambda$-выражение $(\lambda{}x.x \ x \ x \ x) (\comb I \comb I)$. Попробуем редуцировать его нормальным порядком:
+	 \[(\lambda{}x.x \ x \ x \ x) (\comb I \comb I) \to_{\beta} (\comb I \comb I)(\comb I \comb I)(\comb I \comb I)(\comb I \comb I) \to_{\beta} \comb I(\comb I \comb I)(\comb I \comb I)(\comb I \comb I) \to_{\beta} (\comb I \comb I)(\comb I \comb I)(\comb I \comb I) \to_{\beta} \ldots \to_{\beta} \comb I\] 
 	Как мы увидим, в данной ситуации аппликативный порядок редукции оказывается значительно эффективней: 
 	\[ (\lambda{}x.x \ x \ x \ x) (\comb I \comb I) \to_{\beta} (\lambda{}x.x \ x \ x \ x) \comb I \to_{\beta} \comb I \comb I \comb I \comb I\to_{\beta} \comb I \comb I \comb I \to_{\beta} \comb I \comb I \to_{\beta} \comb I \]
 \end{example}
