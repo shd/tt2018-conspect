@@ -1,0 +1,160 @@
+	\section{Импликацонный фрагмент ИИП второго порядка}
+ 	\begin{center}
+ 		\begin{definition}
+ 			\large Назовем \textit{\underline{граммаикой ИИП второго порядка}} конструкцию вида: 
+ 		\end{definition}
+ 	\textbf{A} ::= 
+ 	(\textbf{A}) |
+ 	\textbf{p} |
+ 	\textbf{A} $\rightarrow$ \textbf{A} |
+ 	$\forall$\textbf{p}.\textbf{A} 
+ 	
+ 	\end{center}
+ 
+ 	\large В этой системе все остальные связки могут быть выражены через основные 4 представленные выше. Например $\perp$ представима в следующем виде
+ 	\begin{center}
+ 		{\textbf{\textsl\textit{\large $\forall$p.p}}} \\
+ 	\end{center}
+ 	
+ 	
+ 	 Также добавим два новых правила вывода дл\textsl{}я кваторов существования и два для всеобщности к уже существующим в ИИВ: \\ \\
+ 	
+	Для квантора всеобщности: \\ 
+ 	
+ 	\Large{$\frac{\Gamma\vdash\phi}{\Gamma\vdash\forall p.\phi}$} \Large$(p\notin FV(\Gamma)) \qquad\qquad$ 
+ 	\Large{$\frac{\Gamma\vdash\forall p.\phi}{\Gamma\vdash\phi[p:=\Theta]}$}	\\
+ 	
+ 	 И две для квантора существования: \\
+ 	
+ 	\Large{$\dfrac{\Gamma\vdash\phi[p:= \psi]}{\Gamma\vdash\exists p.\phi}\qquad\qquad$} 
+ 	\Large{$\dfrac{\Gamma\vdash\exists p.\phi\qquad\Gamma, \phi\vdash\psi}{\Gamma\vdash\psi}$}\\ 
+ 	
+ 	
+ 	\begin{definition}
+ 		\large Грамматику ИИП второго порядка с переведенными выше правилами вывода назовем Импликационным фрагментом ИИВ второго порядка\\ 
+ 	\end{definition}
+ 	\large {С помощью этих правил вывода можно доказать что \textbf{${\perp = \forall p.p}$}
+ 		Действительно, воспользовавшись вторым правилом вывода квантора всеобщности для этого выражения мы можем вывести любое другое}
+ 	
+ 	\large С помощью правил вывода также можно доказать, что \\
+ 	$\phi\&\psi\equiv\forall a((\phi\rightarrow\psi\rightarrow a)\rightarrow a)$\\
+ 	$\phi\vee\psi\equiv\forall a((\phi\rightarrow a)\rightarrow(\psi\rightarrow a)\rightarrow a)$
+ 	
+ 	Докажем например, что
+ 	\begin{center}
+ 		 $\dfrac{\Gamma\vdash\perp}{\Gamma\vdash P}$
+ 	\end{center}
+ 	Воспользуемся вторым правилом вывода для квантора всеобщности
+ 	\begin{center}
+		$\dfrac{\Gamma\vdash\forall\alpha.\alpha}{\Gamma\vdash\alpha[\alpha:=\phi]} $
+ 	\end{center}
+ 	
+ 	\section{Теория Моделей}
+	Добавим к нашему исчислению модель. Напомню что модель это функция которая сопоставляет неокму терму элемент из множества истинностных значений. В нашем случае мы будем сопоставлять высказываниям элементы из множества $\llbracket\text{\textbf{И,Л}}\rrbracket$  по следующим правилам: \\
+
+\begin{center}
+	 	\large$\llbracket p\rrbracket=p$, т. е. $\llbracket p\rrbracket^{p = x} = x$ \\
+\end{center}
+ 	
+ 	
+ \begin{center}
+ 		\begin{equation*}
+ 		\llbracket p\rightarrow Q\rrbracket = 
+ 		\begin{cases}
+ 			\text{Л}, \llbracket p\rrbracket = \text{И}, Q = \text{Л} \\
+ 			\text{И}, \text{иначе}
+ 		\end{cases}
+ 	\end{equation*}
+ \end{center}
+ 	
+ 	
+ 	\begin{equation*}
+ 		\llbracket\forall p.Q\rrbracket = 
+ 		\begin{cases}
+ 			\text{И}, \llbracket Q\rrbracket^{p=\text{л, и}} = \text{И} \\
+ 			\text{Л}, \text{иначе}
+ 		\end{cases}
+ 	\end{equation*}  
+ 	Эта модель корректна, но не полна.
+ 	
+ 	\section{Система F}
+ 	
+\begin{definition}
+	 	Под типом в системе F будем понимать следуюущее
+
+ 	
+ 	\begin{equation*}
+ 	\tau =
+ 	\begin{cases}
+ 	\alpha,\beta,\gamma ...\quad(\text{атомарные типы}) \\
+ 	\tau\rightarrow\tau \\
+ 	\forall\alpha.\tau\qquad(\alpha\text{ - переменная})
+ 	\end{cases}
+ 	\end{equation*}
+ \end{definition}
+
+ \begin{definition}
+ 		\large Введем определение грамматики в системе F:
+ 	\begin{center}
+ 		\large $\Lambda$ ::= x | $\lambda x^{\tau}.\Lambda$ | $\Lambda\Lambda$ | ($\Lambda$) | $\Lambda\alpha.\Lambda$ | $\Lambda\tau$ 
+ 	\end{center}
+ \end{definition}
+ 	
+ 	где $\Lambda\alpha.\Lambda$ - типовая абстракция, явное указание того, что вместо каких-то типов мы можем подставить любые выражения, а $\Lambda\tau$ это применение типа. \\
+ 	
+ 	
+ 	Так пример типовой абстракции это: 
+ 	\begin{verbatim}
+ 		template<typename T>
+ 		class W {
+ 		    A x;
+ 		}
+ 	\end{verbatim}
+ 	
+ 	Типовая апликация это обьявление переменной класса с каким-то типом
+ 	
+ 	\begin{verbatim}
+ 	W<int> w_test;
+ 	\end{verbatim}\
+ 	
+ 	\begin{theorem}
+ 		Изоморфизм Карри - Хорварда :
+    \begin{center}
+ 		$\Gamma\vdash_F M:\tau\Leftrightarrow |\Gamma|\vdash_{\forall, \rightarrow}\tau$ 
+    \end{center}
+ 	
+ 	\end{theorem}
+ 	
+ 	
+ 	
+ 	В системе F определены следующие правила вывода: \\ \\
+  	\noindent
+ 	\Large{$\dfrac{}{\Gamma,x:\tau\vdash x:\tau}\qquad\qquad$} 
+ 	\Large{$\dfrac{\Gamma\vdash M:\sigma\rightarrow\tau\qquad\Gamma\vdash N:\tau}{\Gamma\vdash M N:\tau}$}\\  \\ \\
+ 	\Large{$\dfrac{\Gamma,x:\tau\vdash M:\sigma}{\Gamma\vdash\lambda x^{\tau}.M:\tau\rightarrow\sigma}\quad(x\notin FV(\Gamma))$}\\ \\ \\
+ 	\Large{$\dfrac{\Gamma\vdash M:\sigma}{\Gamma\vdash\Lambda\alpha.M:\forall\alpha.\sigma}\quad(\alpha\notin FV(\Gamma))\qquad$}
+ 	\Large $\dfrac{\Gamma\vdash M:\forall\alpha.\sigma}{\Gamma\vdash M\tau:\sigma[\alpha:=\tau]}$
+ 	\\
+ 	
+ 	\large $\emph{Привидем пример}$. Покажем как выглядит в системе F левая проекция.
+ 	В простом типизированом $\lambda$ - исчислении $\pi_1$ имеет тип $\alpha\&\beta\rightarrow\alpha$. В системе F явно указывается, что элементы пары могут быть любыми и пишется сответственно $\forall\alpha.\forall\beta.\alpha\&\beta\rightarrow\alpha$. Само выражение для проекции также изменится и будет иметь вид  $\pi_1=\Lambda\alpha.\Lambda\beta.\lambda p^{\alpha\&\beta}.p\alpha\rm{T}$
+ 	
+ 	Давайте определим еще несколько понятий из простого $\lambda$-исчисления. \\
+ 	\emph{Начнем с $\beta$-редукции:}\\ \\
+ 	1. Типовая $\beta$-редукция: $(\Lambda\alpha.M^{\sigma})\tau\rightarrow_\beta M[\alpha:= \tau]:\sigma[\alpha:= \tau]$
+ 	2. Классическая $\beta$-редукция: $(\lambda x^{\sigma}.M)^{\sigma\rightarrow\tau}X\rightarrow_\beta M[x:=X]:\tau$ 
+ 	\\ \\
+ 	\emph{Выразим еще несколько функций} \\
+ 	
+ 	\noindent1. Не быввает М:$\perp$\\
+ 	2. Рассмотрим пару <P, Q> ::= $\Lambda\alpha.\lambda z^{\tau\rightarrow\sigma\rightarrow\alpha}.z P Q$ \\
+ 	Проекторы мы рассмотрели ранее. \\
+ 	3. $in_L(M^{\tau}) ::= \Lambda\alpha.\lambda u^{\tau\rightarrow\alpha}.\lambda\omega^{\sigma\rightarrow\alpha}.u M$\\
+ 	$ in_R(M^{\sigma}) ::= \Lambda\alpha.\lambda u^{\tau\rightarrow\alpha}.\lambda\omega^{\sigma\rightarrow\alpha}.u M$\\
+ 	
+
+ 	
+ 	(1) Чёрч Россер и прочетие теоремы доказуемые в строго-типизированом лямбда исчислении доказуемы и в системе F\\
+ 	(2) $\lambda_{(\forall, \rightarrow)}$ Система F силно нормализуема \\
+ 	(3) Y комбинатор не типизируем 
+	(4) Исчисление неразрешимое, но не противоречивое
