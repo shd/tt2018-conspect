@@ -1,28 +1,27 @@
-
-		\section{Лекция 6 \\ Реконструкция типов в просто типизированном лямбда-исчислении, комбинаторы}
+		\section{Лекция 6 \\ Реконструкция типов в просто типизированном $\lambda$-исчислении, комбинаторы}
 		\subsection{Алгоритм вывода типов}
 					
 			Пусть есть: $?\:\vdash \:A\: :\: ?$, хотим найти пару $\big \langle \text{контекст}, \text{тип} \big \rangle$\par
 	\textbf{Алгоритм:}
 	\begin{enumerate}
-		\item Рекурсия по структуре формулы\par Построить по формуле $A$ пару $\big \langle E, \tau\big \rangle$, где\par $E-$набор уравнений, $\tau-$тип $A$
-		\item Решение уравнения, получения подстановки $S$ и из решения $E$ и $S\:(\tau)$ получение ответа	
+		\item Рекурсия по структуре формулы\par Построить по формуле $A$ пару $\big \langle E, \tau\big \rangle$, где\par $E-$система уравнений, $\tau-$тип $A$
+		\item Решение уравнения, получение подстановки $S$ и из решения $E$ и $S\:(\tau)$ получение ответа	
 	\end{enumerate}
-		Т.е. необохимо свести вывод типа к алгоритму унификации.\par
+		Т.е. необходимо свести вывод типа к алгоритму унификации.\par
 		\begin{oun_paragraph}Рассмотрим 3 случая\end{oun_paragraph}
 			\textbf{Обозначение } $\rightarrow-$ алгебраический тип 
 			\begin{enumerate}
-				\item $A\equiv x\implies\:\big \langle \{\}, \alpha_A\big\rangle$, где $\{\}-$пустой конекст, $\alpha_A-$новая переменная нигде не встречавшаяся до этого в формуле
+				\item $A\equiv x\implies\:\big \langle \{\}, \alpha_A\big\rangle$, где $\{\}-$пустой контекст, $\alpha_A-$новая переменная нигде не встречавшаяся до этого в формуле
 				\item $A\equiv P\:Q\implies\big \langle E_P\cup E_Q\cup \{\tau_P=\:\rightarrow\:(\tau_Q\:\alpha_A)\}, \alpha_A\big \rangle$, где $\alpha_A-$новая переменная
 				\item $A\equiv\lambda x.P\implies\big\langle E_P,\alpha_x\:\rightarrow\:\tau_P\big\rangle$
 			\end{enumerate}
 		\begin{oun_paragraph}Алгоритм унификации\end{oun_paragraph} 
-			Рассмотрим $E-$набор уравнений, запишем все уравнения в алгебраическом виде т.е. \par $\alpha\:\rightarrow\:\beta\:\Leftrightarrow\:\rightarrow\:\alpha\:\beta$, затем применяем алгоритм унификации.
+			Рассмотрим $E-$систему уравнений, запишем все уравнения в алгебраическом виде т.е. \par $\alpha\:\rightarrow\:\beta\:\Leftrightarrow\:\rightarrow\:\alpha\:\beta$, затем применяем алгоритм унификации.
 	\begin{lemma}
 	Рассмотрим терм $M$ и пару $\big\langle E_M, \tau_M\big\rangle$, Если $\Gamma\:\vdash M:\rho$, то существует:
 	\end{lemma}	
 		\begin{enumerate}
-		\item $S-$решение $E_M$ тогда $\Gamma=\{x : S(\alpha_x)\:|\:x\in FV(M)\}$, $FV-$множество свободных переменных в терме $M$, $\alpha_x-$ переменная полученная при разборе терма $M$\par
+		\item $S-$решение $E_M$ тогда $\Gamma=\{x : S(\alpha_x)\:|\:x\in FV(M)\}$, $FV-$множество свободных переменных в терме $M$, $\alpha_x-$ переменная, полученная при разборе терма $M$\par
 		$\rho\:=\:S(\tau_M)$
 		\item Если $S-$ решение $E_M$, то $\Gamma\:\vdash M:\rho$,
 		\begin{proof}индукция по структуре терма $M$
@@ -37,7 +36,7 @@
 		 $\big \langle\Gamma,\rho\big\rangle\:-\:$основная пара для терма $M$, если 
 		 \begin{enumerate}
 			\item $\Gamma\:\vdash M:\tau$
-			\item Если $\Gamma'\:\vdash M:\tau'$, то сущесвтует $S:\:S(\Gamma)\:\subset\:\Gamma'$
+			\item Если $\Gamma'\:\vdash M:\tau'$, то существует $S:\:S(\Gamma)\:\subset\:\Gamma'$
 		 \end{enumerate}
 		 \begin{example}
 		\end{example}
@@ -64,20 +63,20 @@
 
 
 \begin{enumerate}
-	\item $E_1=\big \langle \{\},\:\alpha_x \big \rangle$
-	\item $E_2=\big \langle \{\},\:\alpha_f \big \rangle$
-	\item $E_3=\big \langle \{\},\:\alpha_f \big \rangle$
-	\item $E_4=\big \langle \{\alpha_f=\:\rightarrow(\alpha_x\:\alpha_1)\}, \alpha_1 \big \rangle$
-	\item $E_5=\big \langle \begin{Bmatrix}
+	\item $\big\langle E_1, \tau_1\big\rangle=\big \langle \{\},\:\alpha_x \big \rangle$
+	\item $\big\langle E_2, \tau_2\big\rangle=\big \langle \{\},\:\alpha_f \big \rangle$
+	\item $\big\langle E_3, \tau_3\big\rangle=\big \langle \{\},\:\alpha_f \big \rangle$
+	\item $\big\langle E_4, \tau_4\big\rangle=\big \langle \{\alpha_f=\:\rightarrow(\alpha_x\:\alpha_1)\}, \alpha_1 \big \rangle$
+	\item $\big\langle E_5, \tau_5\big\rangle=\big \langle \begin{Bmatrix}
 	\alpha_f=\:\rightarrow(\alpha_x\:\alpha_1)\\
 	\alpha_f=\:\rightarrow(\alpha_1\:\alpha_2)
 \end{Bmatrix},\:\alpha_2 \big \rangle$
-	\item $E_6=\big \langle \begin{Bmatrix}\alpha_f=\:\rightarrow(\alpha_x\:\alpha_1)\\ \alpha_f=\:\rightarrow(\alpha_1\:\alpha_2)\end{Bmatrix},\:\alpha_x\rightarrow\alpha_2 \big \rangle$
-	\item $E_7=\big \langle \begin{Bmatrix}\alpha_f=\:\rightarrow(\alpha_x\alpha_1)\\ \alpha_f=\:\rightarrow(\alpha_1\alpha_2)\end{Bmatrix},\:\alpha_f\rightarrow(\alpha_x\rightarrow\alpha_2) \big \rangle$
+	\item $\big\langle E_6, \tau_6\big\rangle=\big \langle \begin{Bmatrix}\alpha_f=\:\rightarrow(\alpha_x\:\alpha_1)\\ \alpha_f=\:\rightarrow(\alpha_1\:\alpha_2)\end{Bmatrix},\:\alpha_x\rightarrow\alpha_2 \big \rangle$
+	\item $\big\langle E_7, \tau_7\big\rangle=\big \langle \begin{Bmatrix}\alpha_f=\:\rightarrow(\alpha_x\alpha_1)\\ \alpha_f=\:\rightarrow(\alpha_1\alpha_2)\end{Bmatrix},\:\alpha_f\rightarrow(\alpha_x\rightarrow\alpha_2) \big \rangle$
 \end{enumerate}
 	$E=\begin{Bmatrix}\alpha_f=\:\rightarrow\:(\alpha_x\:\alpha_1)\\ \alpha_f=\:\rightarrow\:(\alpha_1\:\alpha_2)\end{Bmatrix}$, решим полученную систему:\par 
 	\begin{enumerate}
-		\item Решим сисетму:\par 
+		\item Решим систему:\par 
 			\begin{enumerate}
 			\item \[\begin{cases}
 				\alpha_f=\rightarrow(\alpha_x\:\alpha_1)&\\
@@ -104,7 +103,7 @@
 						\alpha_2=\alpha_x&\\
 				\end{cases}\]
 		\item $\Gamma=\{\}$, так как в заданной формуле нет свободных переменных
-		\item тип  терма $\lambda\:f\lambda\:x.f(f(x))$ является результат подстановки\par $S(\rightarrow\:\alpha_f\:(\alpha_x\rightarrow\alpha_2))$, получаем $\tau=(\alpha_x\rightarrow\alpha_x)\rightarrow(\alpha_x\rightarrow\alpha_x)$
+		\item Тип  терма $\lambda\:f\lambda\:x.f(f(x))$ является результат подстановки\par $S(\rightarrow\:\alpha_f\:(\alpha_x\rightarrow\alpha_2))$, получаем $\tau=(\alpha_x\rightarrow\alpha_x)\rightarrow(\alpha_x\rightarrow\alpha_x)$
 	\end{enumerate}
 	\subsection{Сильная и слабая нормализации}
 	\begin{definition}Если существует последовательность редукций, приводящая терм $M$ в нормальную форму, то $M-$слабо нормализуем. (Т.е. при редуцировании терма $M$ мы можем не прийти в н.ф.)\end{definition} 
@@ -114,7 +113,7 @@
 	 \begin{enumerate}
 	 	\item $KI\Omega-$ слабо нормализуема
 	 		\begin{example}\end{example}
-	 		Перепишем $KI\Omega$ как ${\color{red}(}(\lambda x\:\lambda y.\:x)(\lambda x.\:x){\color{red})}{\color{blue}(}((\lambda x.\:x\:x)(\lambda x.\:x\:x)){\color{blue})}$, очевидно, что этот терм можно средуцировать двумя разными способами:
+	 		Перепишем $KI\Omega$ как ${\color{red}(}(\lambda x\:\lambda y.\:x)(\lambda x.\:x){\color{red})}{\color{blue}(}((\lambda x.\:x\:x)(\lambda x.\:x\:x)){\color{blue})}$, очевидно, что этот терм можно средуцировать двумя разными способами:\\
 	 		\begin{enumerate}
 	 			\item Сначала редуцируем красную скобку 
 	 				\begin{enumerate}
@@ -131,7 +130,7 @@
 	 \begin{lemma}Сильная нормализация влечет слабую.
 	 \end{lemma}
 	 \subsection{Выразимость комбинаторов}
-	 \begin{statement}Любое $\lambda$ выражение можно записать с помощью комбинаторов $S$ и $K$, где\end{statement}
+	 \begin{statement}Любое $\lambda$-выражение без свободных переменных можно записать с помощью комбинаторов $S$ и $K$, где\end{statement}
 	 $S\:=\:\lambda x\:\lambda y\:\lambda z.\:(x\:z)\:(y\:z)\: : \:(a\:\rightarrow\:b\:\rightarrow\:c)\:\rightarrow\:(a\:\rightarrow\:b)\:\rightarrow\:a\:\rightarrow\:c$\par 
 	 $K=\lambda x\:\lambda y.\:x\: : a\:\rightarrow\:b\:\rightarrow\:a$\par 
 	 \begin{statement}Комбинаторы $S$ и $K$ являются аксиомами в ИИВ\end{statement}
@@ -149,4 +148,5 @@
 		\item $B=\lambda x\:\lambda y\:\lambda z.\:x\:(y\:z)\: : \:(a\:\rightarrow\:b)\:\rightarrow\:(c\:\rightarrow\:a)\:\rightarrow\:c\:\rightarrow\:b$
 		\item $C=\lambda x\:\lambda y\:\lambda z.\:((x\:z)\:y)\: : \:(a\:\rightarrow\:b\:\rightarrow\:c)\:\rightarrow\:b\:\rightarrow\:a\:\rightarrow\:c$
 		\item $W=\lambda x\:\lambda y.\:((x\:y)\:y)\: : \: (a\:\rightarrow\:a\:\rightarrow\:b)\:\rightarrow\:a\:\rightarrow\:b$
+		\\\\\\
 	 \end{enumerate}
