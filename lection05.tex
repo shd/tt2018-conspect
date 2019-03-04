@@ -1,4 +1,4 @@
-\section{Лекция 5 \\ Изоморфизм Карри-Ховарда (завершение), Унификация}
+\section{Лекция 5 \\ Изоморфизм Карри-Ховарда (завершение), \\Унификация}
 		\subsection{Изоморфизм Карри-Ховарда}
 	\begin{definition}Изоморфизм Карри-Ховарда\end{definition}
 
@@ -7,7 +7,7 @@
 		\item Если $\Gamma\vdash\sigma$, то существует M и существует $\Delta$, такое что $|\Delta|=\Gamma$, что $\Delta \vdash M: \sigma$, где $\Delta=\{x_{\sigma} : \sigma\:|\:\sigma\in\Gamma  \}$
 	\end{enumerate}
 	\begin{example}
-	$\{f\: :\:\alpha\:\rightarrow\:\beta,\:x\: :\:\beta\}\:\vdash\:f\:x\::\:\beta$ \\Применив, изоморфизм Карри-Ховарда получим: $\{\alpha\:\rightarrow\:\beta,\:\beta\}\:\vdash\:\beta$
+	$\{f\: :\:\alpha\:\rightarrow\:\beta,\:x\: :\:\beta\}\:\vdash\:f\:x\::\:\beta$ \\Применив изоморфизм Карри-Ховарда получим: $\{\alpha\:\rightarrow\:\beta,\:\beta\}\:\vdash\:\beta$
 	\end{example}
 	\begin{proof}
 		\par П.1 доказывается индукцией по длине выражения
@@ -65,16 +65,16 @@
 			\end{tabular}
 		\end{table}
 		на шаге 3 становится понятно, что $f:a\:\rightarrow\:a$ и $x:a$
+		\\($\bot$ в данном контексте означает, что такой терм не типизируем в данном предположении)
 		\end{proof}
 
-
-	\begin{statement}Основные задачи типизации $\lambda$ исчисления\end{statement}
+	\begin{statement}Основные задачи типизации $\lambda$-исчисления\end{statement}
 		\begin{enumerate}
-			\item \emph{Проверка типа$-$}выполняется ли $\Gamma\vdash M:\sigma$ для контекста $\Gamma\text{ терма }M\text{ и типа }\sigma$ (для проверки типа обычно откидывают $\sigma$ и рассматривают п.2).
+			\item \emph{Проверка типа$-$}выполняется ли $\Gamma\vdash M:\sigma$ для контекста $\Gamma\text{, терма }M\text{ и типа }\sigma$ (для проверки типа обычно опускают $\sigma$ и рассматривают п.2).
 			\item \emph{Реконструкция типа$-$}можно ли подставить вместо $?$ и $?_1$ в $?_1\vdash M:\:?$ подставить конкретный тип $\sigma$ в $?$ и контекст $\Gamma$ в $?_1$.
-			\item \emph{Обитаемость типа$-$}пытается подобрать, такой терм $M$ и контекст $\Gamma$, что бы было выполнено $\Gamma\vdash M:\sigma$.
-		\end{enumerate}
-	\begin{definition}Алгебраический терм Выражение типа $$\Theta::=a\:|\:(f_k\:\Theta_1\:\dotsb\:\Theta_n)$$ где $a-$переменная, $(f_k\:\Theta_1\:\dotsb\:\Theta_n)-$применение функции \end{definition}
+			\item \emph{Обитаемость типа$-$}пытается подобрать, такой терм $M$ и контекст $\Gamma$, чтобы было выполнено $\Gamma\vdash M:\sigma$.
+		\end{enumerate}			
+	\begin{definition}Алгебраический терм $$\Theta::=a\:|\:(f\:\Theta_1\:\ldots\:\Theta_n)$$ где $a-$переменная, $(f\:\Theta_1\:\ldots\:\Theta_n)-$применение функции \end{definition}
 	\subsection{Уравнение в алгебраических термах $\Theta_1=\Theta_2$\\Система уравнений в алгебраических термах}
 	\begin{definition}Система уравнений в алгебраических термах\end{definition}
 	$
@@ -84,14 +84,15 @@
 			\Theta_n=\sigma_n&\\
 		\end{cases}
 	$\par где $\Theta_i \text{ и } \sigma_i-\text{термы}$\par
-	\begin{definition}$\{a_i\}=A-$множество перменных, $\{\Theta_i\}=T-$множество термов.\end{definition}
-	\begin{definition}Подстановка$-$отображение вида: $S_0:A\to T$, которое является решением в алгебраических термах.\par $S_0(a)$ может быть либо $S_0(a)=\Theta_i\text{, либо }S_0(a)=a$.\end{definition}
-	Доопределим $S$ на все $T$ т.е. $S:T\to T$, где \begin{enumerate}
+	\begin{definition}$\{a_i\}=A-$множество переменных, $\{\Theta_i\}=T-$множество термов.\end{definition}
+	\begin{definition}Подстановка$-$отображение вида: $S_0:A\to T$, которое является решением в алгебраических термах.\par $S_0(a)$ может быть либо $S_0(a)=\Theta_i\text{, либо }S_0(a)=a$.\end{definition} 
+	$S$ то же, что и много $if'$ов, либо $map$ строк. Доопределим $S:T\to T$, где \begin{enumerate}
 		\item $S(a)=S_0(a)$
-		\item $S(f(\Theta_1 \dotsb \Theta_k))=f(S(\Theta_1) \dotsb S(\Theta_k))$
+		\item $S(f(\Theta_1 \ldots \Theta_k))=f(S(\Theta_1) \ldots S(\Theta_k))$
 	\end{enumerate}
-	$S$ то же самое что и много $if'$ов либо $map$ строк.\par
-	\begin{definition}Решить уравнение в алгебраических термах$-$найти такое $S$, что $S(\Theta_1)=S(\Theta_2)$\end{definition}
+	
+	\begin{definition}Решить уравнение в алгебраических термах$-$найти такое $S$, что $S(\Theta_1)=S(\Theta_2)$\end{definition} 
+
 	\begin{example}\end{example}
 		Заранее обозначим: $a,\:b-\text{переменные}\hspace{1em} f,\:g,\:h-\text{функции}$
 		\begin{enumerate}
@@ -133,13 +134,13 @@
 		\begin{proof} Пункт $a\:-$ доказан выше, докажем теперь пункт $b:$\par Пусть есть решение вида $T = \begin{cases} a = \Theta_a &\\ \vdots \end{cases}$
 		и уравнение вида $f\:a\:\hdots\:z\:=\:\Theta_c\:$, тогда, $T(f\:a\:\hdots\:z) = f\:T(a)\:\hdots\:T(z)$, которое в свою очередь является $f\: \Theta_a\:\hdots\:T(z)$
 		\end{proof}
-	\end{enumerate}
-		\begin{definition}Система уравнений в разрешеной форме если \end{definition}
+	\end{enumerate}	
+		\begin{definition}Система уравнений в разрешенной форме если \end{definition}
 			\begin{enumerate}
 				\item Все уравнения имеют вид $a_i=\Theta_i$
 				\item Каждый из $a_i$ входит в систему уравнений только один раз
 			\end{enumerate}
-		\begin{definition}Система несовместима если\end{definition}
+		\begin{definition}Система несовместна если\end{definition} 
 		\begin{enumerate}
 			\item существует уравнение вида $f\:\Theta_1\hdots\Theta_n=g\:\sigma_1\hdots\sigma_n$, где $f\neq g$
 			\item существует уравнение вида $a=f\:\Theta_1\hdots\Theta_n\:$, причем $a$ входит в какой-то из $\Theta_i$
@@ -150,18 +151,18 @@
 		\item Пройдемся по системе, выберем такое уравнение, что оно удовлетворяет одному из условий:\begin{enumerate}
 			\item Если $\Theta_i=a_i$, то перепишем, как $a_i=\Theta_i$, $\Theta_i-$не переменная
 			\item $a_i=a_i-$ удалим
-			\item $f\:\Theta_1\hdots\Theta_n=f\:\sigma_1\hdots\sigma_n-$  применим редукцию термов
-			\item $a_i=\Theta_i-$Применим подстановку переменной $-$ подставим во все остальне уравнения $\Theta_i$ вместо $a_i$ (Если $a_i$ встречается в системе где-то еще)
+			\item $f\:\Theta_1\hdots\Theta_n=f\:\sigma_1\hdots\sigma_n-$  применим редукцию термов 
+			\item $a_i=\Theta_i-$Применим подстановку переменной $-$ подставим во все остальные уравнения $\Theta_i$ вместо $a_i$ (Если $a_i$ встречается в системе где-то еще)
 		\end{enumerate}
-		\item Проверим разрешима ли система, совместима ли система (два пункта несовместимости)
-		\item повторим пункт 1
+		\item Проверим разрешима ли система, совместна ли система (два пункта несовместимости)
+		\item Повторим пункт 1 		
 		\end{enumerate}
 
 		\begin{statement} Алгоритм не изменяет множетва решений\end{statement}
 		\begin{statement} Несовместная система не имеет решений\end{statement}
-		\begin{statement} Если система имеет решение, то его разрешеная форма единствена\end{statement}
-		\begin{statement} Система в разрешеной форме имеет решение:\end{statement}
-
+		\begin{statement} Если система имеет решение, то его разрешеная форма единственна\end{statement}
+		\begin{statement} Система в разрешенной форме имеет решение:\end{statement}	
+		
 	\begin{align*}
 		\begin{cases}
 			a_1=\Theta_1&\\
@@ -173,8 +174,8 @@
 			S_0(a_n)=\Theta_n&\\
 		\end{cases}\\
 	\end{align*}
-	\begin{statement}Алгоритм всегда закначивается\end{statement}
-	\begin{proof}По индукции, выберем три числа $ \big \langle x\:y\:z\big \rangle$, где\par $x-$количество переменных, которые встречаются строго больше одного раза в левой части некоторого уравнения ($b$ не повлияет на $x$, а $a$ повлияет в уравнении $f(a(g\:a)\:b)=\Theta$),\par $y-$ количество функциональных символов в системе,\par $z-$количество уравнеий типа $a=a$ и $\Theta=b$, где $\Theta$ не переменная.\par Определим отношение $\leq$  между двумя кортежами,	 как $\big \langle x_1\:y_1\:z_1\big \rangle \leq \big \langle x_2\:y_2\:z_2\big \rangle$ если верно одно из следующих условий: \begin{enumerate}
+	\begin{statement}Алгоритм всегда заканчивается\end{statement}
+	\begin{proof}По индукции, выберем три числа $ \big \langle x\:y\:z\big \rangle$, где\par $x-$количество переменных, которые встречаются строго больше одного раза в левой части некоторого уравнения ($b$ не повлияет на $x$, а $a$ повлияет в уравнении $f(a(g\:a)\:b)=\Theta$),\par $y-$ количество функциональных символов в системе,\par $z-$количество уравнеий типа $a=a$ и $\Theta=b$, где $\Theta$ не переменная.\par Определим отношение $\leq$  между двумя кортежами,	 как $\big \langle x_1\:y_1\:z_1\big \rangle \leq \big \langle x_2\:y_2\:z_2\big \rangle$ если верно одно из следующих условий:\\ \begin{enumerate}
 	\item $x_1 < x_2$
 	\item $x_1 = x_2 \:\& \:y_1 < y_2$
 	\item $x_1 = x_2 \:\&  \:y_1 = y_2 \:\& \:z_1 < z_2$
@@ -241,7 +242,6 @@
 
 			Применим пункт $(d)$ для первого уравнения к последнему уравнению, удалим последнее уравнение и \\
 			получим систему в разрешеной форме
-
 \[
 			E=
 			\left \{
