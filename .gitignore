@@ -4,3 +4,12 @@
 *~
 *.cm?
 *.exe
+*.log
+*.gz
+*.synctex.gz
+*.pyg
+local_tt5.tex
+local_tt6.tex
+local*
+*.pdf
+!conspect.pdf

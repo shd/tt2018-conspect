@@ -9,12 +9,19 @@
 \usepackage{amssymb}
 \usepackage{makeidx}
 \usepackage{verbatim}
+\usepackage{amsthm}
+\usepackage{bnf}
 \usepackage{tikz}
 \usepackage{amsthm}
 \usepackage{enumerate}
+\usepackage{mathtext}
+\usepackage{mathtools}
+\usepackage{mathabx}
 \usepackage[left=2cm,right=2cm,top=2cm,bottom=2cm,bindingoffset=0cm]{geometry}
 \usepackage{proof}
-\usepackage[usenames]{color}
+\usepackage{paracol}
+\usepackage{enumitem}
+\usepackage{float}
 \usepackage{colortbl}
 \usepackage{minted}
 \usetikzlibrary{graphs}
@@ -24,18 +31,27 @@
 
 \title{Введение в Теорию Типов\\\it{Конспект лекций}}
 \author{Штукенберг Д.~Г.\\Университет ИТМО}
+\DeclareMathOperator{\FV}{FV}
 
 \begin{document}
 
 \theoremstyle{definition}
 \newtheorem{definition}{Определение}[section]
 \newtheorem{note}{Замечание}[section]
-\newtheorem*{example}{Пример}
-\newtheorem{theorem}{Теорема}[section]
+
 \newtheorem{axiom}{Аксиома}[section]
+\newtheorem{theorem}{Теорема}[section]
 \newtheorem{lemma}[theorem]{Лемма}
 \newtheorem{statement}{Утверждение}[section]
 \newtheorem{oun_paragraph}{Пункт}[section]
+\newtheorem{cons}{Следствие}[section]
+\newtheorem*{example}{Пример}
+
+\newcommand{\comb}[1]{\operatorname{\mathcal{#1}}}
+\newcommand{\func}[1]{\operatorname{#1}}
+\newcommand{\reduction}[1]{{\color{OrangeRed}#1}}
+\newcommand{\set}[1]{\left\{#1\right\}}
+
 \def\from#1{\par \parbox{0.7\textwidth}{\par \hfill\raggedleft \it #1}} 
 
 
@@ -47,9 +63,14 @@
 
 \input{intro}
 
-\input{lection3}
-\input{lection4}
-\input{lection7}
-\input{lection8}
+\input{lection01}
+\input{lection02}
+\input{lection03}
+\input{lection04}
+\input{lection05}
+\input{lection06}
+\input{lection07}
+\input{lection08}
+\input{lection9-10}
 
 \end{document}
