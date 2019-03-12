@@ -48,10 +48,10 @@
 	 \textbf{pop}: $\alpha\rightarrow\alpha\&\nu$\\
 	 
 	 Тогда очевидно что тип stack$\equiv\alpha\&(\alpha\&\nu\rightarrow\alpha)\&(\alpha\rightarrow\alpha\&\nu)$
-	 Но что если мы реализовали хранилище как-то по особенному, не меняя типов операций. Мы хотим скрыть данные о реализации, в частности о типе $\alpha$. Вместо деталей просто скажем что существует интерфейс, удовлетворяющий такому типу:\\$\exists\alpha.\alpha\&(\alpha\&\nu\rightarrow\alpha)\&(\alpha\rightarrow\alpha\&\nu)$
+	 Но что если мы реализовали хранилище как-то по-особенному, не меняя типов операций. Мы хотим скрыть данные о реализации, в частности о типе $\alpha$. Вместо деталей просто скажем, что существует интерфейс, удовлетворяющий такому типу:\\$\exists\alpha.\alpha\&(\alpha\&\nu\rightarrow\alpha)\&(\alpha\rightarrow\alpha\&\nu)$
 	 
 	 \section{Абстрактные типы}	 
-	 Предположим, что мы захотим создать стек в котором лежвт целые числа. Рассмотрим, как тогда будет выглядеть тип созданного стека: \\
+	 Предположим, что мы захотим создать стек в котором лежат целые числа. Рассмотрим, как тогда будет выглядеть тип созданного стека: \\
 	 \textbf{stack}$\equiv\forall\nu.\exists\alpha.\alpha\&(\alpha\&\nu\rightarrow\alpha)\&(\alpha\rightarrow\alpha\&\nu)$\\
  	По аналогии с правилом удаления квантора существования, можно определить правила вывода для выражений абстрактных типов: \\
 
@@ -62,13 +62,13 @@
  	\dfrac{\Gamma \vdash M : \exists \alpha . \varphi\qquad\Gamma, x : \varphi \vdash N : \psi}{\Gamma \vdash \text{abstype } \alpha \text{ with } x:\varphi \text{ in } M \text{ is } N:\psi}
 	(\alpha \notin FV(\Gamma, \psi))$
 	\\ \\
-	Это правило вывода соответствует виртульному вызову стека какойто реализации, например: 
+	Это правило вывода соответствует виртульному вызову стека какой-то реализации, например: 
 	\begin{verbatim}
 		foo(Stack s) {
 			...
 		}
 	\end{verbatim}
-	Поскольку выводимые формулы выглядят слишком грамоздко, перепишем их, вспомнив, что: \\
+	Поскольку выводимые формулы выглядят слишком громоздко, перепишем их, вспомнив, что: \\
 	$\exists\alpha.\beta\equiv\forall\beta.(\forall\alpha.\sigma\rightarrow\beta)\rightarrow\beta$\\\\
 	Тогда: \\
 	$	\text{\textbf{pack} } M, \theta \text{ \textbf{to} } \exists \alpha . \varphi =
@@ -77,7 +77,7 @@
 		M \psi (\Lambda \alpha . \lambda x ^ \varphi . N)
 	$
 	
-	 \section{Типовая система Хиндли Милнера}
+	 \section{Типовая система Хиндли-Милнера}
 	   
 	 Начнем с определения типа. \underline{Тип в системе Хиндли-Милнера}: \\ \\
 	 Монотип - выражение в грамматике вида $\tau::=\alpha|\tau\rightarrow\tau|(\tau)$\\
