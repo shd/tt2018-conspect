@@ -3,7 +3,7 @@
 		 Введем определение. Под {рангом типа} мы будем понимать число, получаемое по следующим правилам: \\
 	    Rn(x) - множество всех типов x\\
 	    Rn(0) - все типы без кванторов\\
-	    Rn(x+1) = R(x) | R(x) $\rightarrow$ R(x+1) | $\forall\alpha.R(x+1)$
+	    Rn(x+1) = Rn(x) | Rn(x) $\rightarrow$ Rn(x+1) | $\forall\alpha.Rn(x+1)$
 	\end{definition}
 	 
 	\textbf{Примеры}
@@ -12,18 +12,18 @@
 	 3. $ (\forall\alpha.\alpha)\rightarrow(\forall\beta.\beta) \in$Rn(2), так как каждый тип вида $ \forall\alpha.\alpha \in$Rn(1) то по третьему правилу весь тип $ \in $Rn(2) \\
 
 	\begin{definition}
-		Тип с поверхностными кванторами - это любой тип вида $ \forall\alpha.\tau $ где в $ \tau $ отсутсвуют кванторы. Очевидно, что любой такой тип $ \in $Rn(1). Действительно, тип внутри кватнора точно имеет ранг 0. Навешивание одного или нескольких кванторов всеобщности увеличт его ранг на единицу.
+		Тип с поверхностными кванторами - это любой тип вида $ \forall\alpha.\tau $ где в $ \tau $ отсутсвуют кванторы. Очевидно, что любой такой тип $ \in $Rn(1). Действительно, тип внутри квантора точно имеет ранг 0. Навешивание одного или нескольких кванторов всеобщности увеличит его ранг на единицу.
 	\end{definition}
 	 
 	 \section{Типовая схема}
 	 Возьмем только типы с поверхностными кванторами(из Rn(1)). \\
-	 Также можно формулу превратить любую формулу из Rn(1) в формулу с поверхностными кванторами. \\
+	 Также можно превратить любую формулу из Rn(1) в формулу с поверхностными кванторами. \\
 	 Например:\\ 
 	 $ \beta\rightarrow\forall\alpha.\alpha\equiv\forall\alpha.(\beta\rightarrow\alpha) $
 	 \\
 	 
 	 \begin{definition}
-	 	{типовой схемой} назовем выражение вида: 
+	 	{Типовой схемой} назовем выражение вида: 
 
 \begin{center}
 		 $ \sigma\equiv\forall\alpha_1.\forall\alpha_2.....\forall\alpha_n.t $ где t$ \in $Rn(0)
@@ -31,7 +31,7 @@
 	 	 \end{definition}
  	 
 	 Также будем считать что $ \sigma_1 <= \sigma_2 $\\
-	 ($\sigma_2$ является спецификацией $\sigma_1$) если: \\\\
+	 ($\sigma_1$ является спецификацией $\sigma_2$) если: \\\\
 	 $\sigma_2\equiv\forall\alpha_1...\forall\alpha.\tau_1$\\
 	 $\sigma_1\equiv\forall\beta_1...\beta_n.\tau_1[\alpha_1:=\Theta_1]...[\alpha_n:=\Theta_n]  $
 	 
@@ -47,7 +47,7 @@
 	 \textbf{push}: $\alpha\&\nu\rightarrow\alpha$\\
 	 \textbf{pop}: $\alpha\rightarrow\alpha\&\nu$\\
 	 
-	 Тогда очевидно что тип stack$\equiv\alpha\&(\alpha\&\nu\rightarrow\alpha)\&(\alpha\rightarrow\alpha\&\nu)$
+	 Тогда очевидно что тип stack$\equiv\alpha\&(\alpha\&\nu\rightarrow\alpha)\&(\alpha\rightarrow\alpha\&\nu)$.
 	 Но что если мы реализовали хранилище как-то по-особенному, не меняя типов операций. Мы хотим скрыть данные о реализации, в частности о типе $\alpha$. Вместо деталей просто скажем, что существует интерфейс, удовлетворяющий такому типу:\\$\exists\alpha.\alpha\&(\alpha\&\nu\rightarrow\alpha)\&(\alpha\rightarrow\alpha\&\nu)$
 	 
 	 \section{Абстрактные типы}	 
@@ -92,7 +92,7 @@
 	 \end{center}
  		
  	 \noindent Обозначим контекст $\Gamma$ без типа x как $\Gamma_x$\\
- 	 В новой системе получаем следуюущие правила вывода: \\ \\
+ 	 В новой системе получаем следующие правила вывода: \\ \\
  	 
  	 \noindent 1. Тавтология $\dfrac{}{\Gamma\vdash x.\phi}$ \\\\
  	
