@@ -113,15 +113,15 @@ $\sigma_2$ --- частный случай (специализация) $\sigma_
         \item $(S_2, \tau_2) = W(S_1(\Gamma), Q)$
         \item $S_3$ --- Унификация $(S_2(\tau_1), \tau_2 \rightarrow \tau)$
     \end{itemize}
-    $(S_3 \circ S_2 \circ S_3, S_3(\tau))$
+    $(S_3 \circ S_2 \circ S_1, S_3(\tau))$
     \item $let\ x = P\ in\ Q$
     \begin{itemize}
-        \item $(S, \tau) = W(\Gamma, P)$
+        \item $(S_1, \tau_1) = W(\Gamma, P)$
         \item $\Gamma' = \Gamma$ без $x$
         \item $\Gamma'' = \Gamma' \cup \{ x : \forall \alpha_1 \dots \alpha_k. \tau_1 \}$, где $\alpha_1 \dots \alpha_k$ все свободные переменные в $\tau_1$
         \item $(S_2, \tau_2) = W(S_1(\Gamma''), Q)$
     \end{itemize}
-    $(S_1 \circ S_2), \tau_2)$
+    $(S_2 \circ S_1), \tau_2)$
 \end{enumerate}
 
 Надеемся, что логика второго порядка противоречива. \\
@@ -314,7 +314,7 @@ data DPair : (a : Type) -> (P : a -> Type) -> Type where
   MkDPair : {P : a -> Type} -> (x : a) -> P x -> DPair a P
 \end{minted}
 
-Также есть некоторый синтаксический сахар (a : A ** P), который значит, что а типа DPair A P, где P может содержать в себе имя a.
+Также есть некоторый синтаксический сахар (a : A ** P), который обозначает зависимую пару типа DPair A P, где P может содержать в себе имя a.
 
 В документации Idris'а есть хороший пример использования: мы хотим отфильтровать вектор  (Vect) по какому-то предикату - мы не можем знать заранее длину результатирующего вектора, поэтому зависамая пара выручает:
 
@@ -403,7 +403,7 @@ $* \rightarrow * \rightarrow * : \openbox$ - этот род очень похо
 \item Правила вывода:
 \begin{enumerate}
     \item $\vcenter{\infer[x \not \in \Gamma]{\Gamma, x : A \vdash x : A}{\Gamma \vdash A:S}}$
-    \item $\vcenter{\infer[\text{--- правило ослабление (примерно как } \alpha \rightarrow \beta \rightarrow \alpha \text{ в И.В.)}]{\Gamma, x : C \vdash A:B}{\Gamma \vdash A:B \qquad \Gamma C:S}}$
+    \item $\vcenter{\infer[\text{--- правило ослабление (примерно как } \alpha \rightarrow \beta \rightarrow \alpha \text{ в И.В.)}]{\Gamma, x : C \vdash A:B}{\Gamma \vdash A:B \qquad \Gamma \vdash C:S}}$
     \item $\vcenter{\infer[\text{--- правило конверсии}]{\Gamma \vdash A:B'}{\Gamma \vdash A:B \qquad \Gamma \vdash B':S \qquad B =_\beta B'}}$
     \item $\vcenter{\infer[\text{--- правило применения}]{\Gamma \vdash (F\ a) : B[x := a]}{\Gamma \vdash F : (\Pi x:A.B) \qquad \Gamma \vdash a : A}}$
 \end{enumerate}
