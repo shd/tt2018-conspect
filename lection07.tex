@@ -27,7 +27,7 @@
  	 И две для квантора существования: \\
  	
  	\Large{$\dfrac{\Gamma\vdash\phi[p:= \psi]}{\Gamma\vdash\exists p.\phi}\qquad\qquad$} 
- 	\Large{$\dfrac{\Gamma\vdash\exists p.\phi\qquad\Gamma, \phi\vdash\psi}{\Gamma\vdash\psi}$} \Large$(p\notin FV(\Gamma)) \\ 
+ 	\Large{$\dfrac{\Gamma\vdash\exists p.\phi\qquad\Gamma, \phi\vdash\psi}{\Gamma\vdash\psi}$} \Large$(p\notin FV(\Gamma, \psi))$ \\ 
  	
  	
  	\begin{definition}
@@ -50,7 +50,7 @@
  	\end{center}
  	
  	\section{Теория Моделей}
-	Добавим к нашему исчислению модель. Напомню что модель это функция которая сопоставляет неокму терму элемент из множества истинностных значений. В нашем случае мы будем сопоставлять высказываниям элементы из множества $\llbracket\text{\textbf{И,Л}}\rrbracket$  по следующим правилам: \\
+	Добавим к нашему исчислению модель. Напомню что модель это функция которая сопоставляет неокму терму элемент из множества истинностных значений. В нашем случае мы будем сопоставлять высказываниям элементы из множества $\llbracket\text{\textbf{И,Л}}\rrbracket$  по следующим правилам: \\
 
 \begin{center}
 	 	\large$\llbracket p\rrbracket=p$, т. е. $\llbracket p\rrbracket^{p = x} = x$ \\
@@ -130,7 +130,7 @@
  	В системе F определены следующие правила вывода: \\ \\
   	\noindent
  	\Large{$\dfrac{}{\Gamma,x:\tau\vdash x:\tau}\qquad\qquad$} 
- 	\Large{$\dfrac{\Gamma\vdash M:\sigma\rightarrow\tau\qquad\Gamma\vdash N:\tau}{\Gamma\vdash M N:\tau}$}\\  \\ \\
+ 	\Large{$\dfrac{\Gamma\vdash M:\sigma\rightarrow\tau\qquad\Gamma\vdash N:\sigmaы}{\Gamma\vdash M N:\tau}$}\\  \\ \\
  	\Large{$\dfrac{\Gamma,x:\tau\vdash M:\sigma}{\Gamma\vdash\lambda x^{\tau}.M:\tau\rightarrow\sigma}\quad(x\notin FV(\Gamma))$}\\ \\ \\
  	\Large{$\dfrac{\Gamma\vdash M:\sigma}{\Gamma\vdash\Lambda\alpha.M:\forall\alpha.\sigma}\quad(\alpha\notin FV(\Gamma))\qquad$}
  	\Large $\dfrac{\Gamma\vdash M:\forall\alpha.\sigma}{\Gamma\vdash M\tau:\sigma[\alpha:=\tau]}$
