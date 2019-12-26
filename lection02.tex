@@ -47,7 +47,7 @@
 \end{lemma}
 
 \begin{proof}
-	$\Omega$ Имеет единственный $\beta$-редекс, где $A \equiv xx$, $B \equiv (\lambda{}x.xx)$. Тогда единственный возможный путь редукции "--- подставить $B$ вместо $x$ в $A$. Но тогда мы получим $\Omega$. Следовательно у $\Omega$ нет нормальной формы, так как в полученном выражении у нас всегда будет $\beta$-редекс.
+	$\Omega$ Имеет единственный $\beta$-редекс, где $A \equiv xx$, $B \equiv (\lambda{}x.xx)$. Тогда единственный возможный путь редукции "--- подставить $B$ вместо $x$ в $A$. Но тогда мы получим $\Omega$. Следовательно, у $\Omega$ нет нормальной формы, так как в полученном выражении у нас всегда будет $\beta$-редекс.
 \end{proof}
 
 \subsection{$\beta$-редуцируемость}
@@ -168,9 +168,9 @@ $(\twoheadrightarrow_{\beta})$ "--- рефлексивное и транзити
 			\item $x \in \FV(A_{1})$. По индукционному предположению $A_{1}[x\coloneqq{}Q_{1}] \bpar A_{2}[x\coloneqq{}Q_{2}]$. Тогда $A_{1}[x\coloneqq{}Q_{1}]B_{1} \bpar A_{2}[x\coloneqq{}Q_{2}]B_{2}$. Тогда $A_{1}B_{1}[x\coloneqq{}Q_{1}] \bpar A_{2}B_{2}[x\coloneqq{}Q_{2}]$.
 			\item $x \in \FV(B_{1})$. По индукционному предположению $B_{1}[x\coloneqq{}Q_{1}] \bpar B_{2}[x\coloneqq{}Q_{2}]$. Тогда $A_{1}B_{1}[x\coloneqq{}Q_{1}] \bpar A_{2}B_{2}[x\coloneqq{}Q_{2}]$.
 		\end{enumerate}
-		\item Пусть $P_{1}\equiv{}\lambda{}y.A_{1}$, $P_{2}\equiv{}\lambda{}y.A_{2}$. по определению $(\bpar)$ $A_{1}\bpar A_{2}$. Тогда по индукционному предположению $A_{1}[x\coloneqq{}Q_{1}] \bpar A_{2}[x\coloneqq{}Q_{2}]$. Тогда 
+		\item Пусть $P_{1}\equiv{}\lambda{}y.A_{1}$, $P_{2}\equiv{}\lambda{}y.A_{2}$. По определению $(\bpar)$ $A_{1}\bpar A_{2}$. Тогда по индукционному предположению $A_{1}[x\coloneqq{}Q_{1}] \bpar A_{2}[x\coloneqq{}Q_{2}]$. Тогда 
 		$\lambda{}y.(A_{1}[x\coloneqq{}Q_{1}]) \bpar \lambda{}y.(A_{2}[x\coloneqq{}Q_{2}])$ по определению $(\bpar)$. Следовательно 	$\lambda{}y.A_{1}[x\coloneqq{}Q_{1}] \bpar \lambda{}y.A_{2}[x\coloneqq{}Q_{2}]$ по определению подстановки.
-		\item Пусть $P_{1}=_\alpha(\lambda{}y.A_1)B_1$, $P_{2}=_\alpha A_2[y\coloneqq{}B_2]$ и $ A_1 \bpar A_2 $, $ B_1 \bpar B_2 $. По индукционному предположению получаем, что $A_1[x \coloneqq Q_1] \bpar A_2[x \coloneqq Q_2]$, $B_1[x \coloneqq Q_1] \bpar B_2[x \coloneqq Q_2]$. Следовательно по определению $(\bpar)$ получаем, что $ (\lambda{}y.A_1[x\coloneqq Q_1])B_1[x \coloneqq Q_1] \bpar  A_2[y \coloneqq B_2][x \coloneqq Q_2]$
+		\item Пусть $P_{1}=_\alpha(\lambda{}y.A_1)B_1$, $P_{2}=_\alpha A_2[y\coloneqq{}B_2]$ и $ A_1 \bpar A_2 $, $ B_1 \bpar B_2 $. По индукционному предположению получаем, что $A_1[x \coloneqq Q_1] \bpar A_2[x \coloneqq Q_2]$, $B_1[x \coloneqq Q_1] \bpar B_2[x \coloneqq Q_2]$. Следовательно, по определению $(\bpar)$ получаем, что $ (\lambda{}y.A_1[x\coloneqq Q_1])B_1[x \coloneqq Q_1] \bpar  A_2[y \coloneqq B_2][x \coloneqq Q_2]$
 	\end{itemize}
 \end{proof}
 
