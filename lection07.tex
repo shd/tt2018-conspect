@@ -130,14 +130,14 @@
  	В системе F определены следующие правила вывода: \\ \\
   	\noindent
  	\Large{$\dfrac{}{\Gamma,x:\tau\vdash x:\tau}\qquad\qquad$} 
- 	\Large{$\dfrac{\Gamma\vdash M:\sigma\rightarrow\tau\qquad\Gamma\vdash N:\tau}{\Gamma\vdash M N:\tau}$}\\  \\ \\
+ 	\Large{$\dfrac{\Gamma\vdash M:\sigma\rightarrow\tau\qquad\Gamma\vdash N:\sigma}{\Gamma\vdash M N:\tau}$}\\  \\ \\
  	\Large{$\dfrac{\Gamma,x:\tau\vdash M:\sigma}{\Gamma\vdash\lambda x^{\tau}.M:\tau\rightarrow\sigma}\quad(x\notin FV(\Gamma))$}\\ \\ \\
  	\Large{$\dfrac{\Gamma\vdash M:\sigma}{\Gamma\vdash\Lambda\alpha.M:\forall\alpha.\sigma}\quad(\alpha\notin FV(\Gamma))\qquad$}
  	\Large $\dfrac{\Gamma\vdash M:\forall\alpha.\sigma}{\Gamma\vdash M\tau:\sigma[\alpha:=\tau]}$
  	\\
  	
  	\large $\emph{Приведем пример}$. Покажем как выглядит в системе F левая проекция.
- 	В просто типизированном $\lambda$ - исчислении $\pi_1$ имеет тип $\alpha\&\beta\rightarrow\alpha$. В системе F явно указывается, что элементы пары могут быть любыми и пишется сответственно $\forall\alpha.\forall\beta.\alpha\&\beta\rightarrow\alpha$. Само выражение для проекции также изменится и будет иметь вид  $\pi_1=\Lambda\alpha.\Lambda\beta.\lambda p^{\alpha\&\beta}.p\alpha\rm{T}$
+ 	В просто типизированном $\lambda$ - исчислении $\pi_1$ имеет тип $\alpha\&\beta\rightarrow\alpha$. В системе F явно указывается, что элементы пары могут быть любыми и пишется соответственно $\forall\alpha.\forall\beta.\alpha\&\beta\rightarrow\alpha$. Само выражение для проекции также изменится и будет иметь вид  $\pi_1=\Lambda\alpha.\Lambda\beta.\lambda p^{\alpha\&\beta}.p\alpha\rm{T}$
  	
  	Давайте определим еще несколько понятий из простого $\lambda$-исчисления. \\
  	\emph{Начнем с $\beta$-редукции:}\\ \\
@@ -154,7 +154,7 @@
  	
 
  	
- 	(1) Чёрч Россер и прочие теоремы доказуемые в строго-типизированом лямбда исчислении доказуемы и в системе F\\
+ 	(1) Чёрч Россер и прочие теоремы доказуемые в строго-типизированном лямбда исчислении доказуемы и в системе F\\
  	(2) $\lambda_{(\forall, \rightarrow)}$ Система F сильно нормализуема \\
  	(3) Y комбинатор не типизируем \\
 	(4) Исчисление неразрешимое, но не противоречивое
