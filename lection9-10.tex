@@ -49,7 +49,7 @@ $\sigma_2$ --- частный случай (специализация) $\sigma_
     \item $M : \forall \beta_1.\forall \beta_2: (\beta_1 \rightarrow \beta_2) \rightarrow (\beta_1 \rightarrow \beta_2)$
 \end{itemize}
 \switchcolumn
-Вполне возможно, что в ходе замены, все типы будут уточнены ($\alpha$ уточниться как $\beta_1 \rightarrow \beta_2$.
+Вполне возможно, что в ходе замены, все типы будут уточнены ($\alpha$ уточнится как $\beta_1 \rightarrow \beta_2$.
 \end{paracol}
 
 
@@ -403,7 +403,7 @@ $* \rightarrow * \rightarrow * : \openbox$ - этот род очень похо
 \item Правила вывода:
 \begin{enumerate}
     \item $\vcenter{\infer[x \not \in \Gamma]{\Gamma, x : A \vdash x : A}{\Gamma \vdash A:S}}$
-    \item $\vcenter{\infer[\text{--- правило ослабление (примерно как } \alpha \rightarrow \beta \rightarrow \alpha \text{ в И.В.)}]{\Gamma, x : C \vdash A:B}{\Gamma \vdash A:B \qquad \Gamma \vdash C:S}}$
+    \item $\vcenter{\infer[\text{--- правило ослабления (примерно как } \alpha \rightarrow \beta \rightarrow \alpha \text{ в И.В.)}]{\Gamma, x : C \vdash A:B}{\Gamma \vdash A:B \qquad \Gamma \vdash C:S}}$
     \item $\vcenter{\infer[\text{--- правило конверсии}]{\Gamma \vdash A:B'}{\Gamma \vdash A:B \qquad \Gamma \vdash B':S \qquad B =_\beta B'}}$
     \item $\vcenter{\infer[\text{--- правило применения}]{\Gamma \vdash (F\ a) : B[x := a]}{\Gamma \vdash F : (\Pi x:A.B) \qquad \Gamma \vdash a : A}}$
 \end{enumerate}
