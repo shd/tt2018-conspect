@@ -96,7 +96,7 @@
 	В системе F определены следующие правила вывода: \\ 
 	
 	\huge{$\dfrac{}{\Gamma,x:\tau\vdash x:\tau}\qquad\qquad$} 
-	\Large{$\dfrac{\Gamma\vdash M:\sigma\rightarrow\tau\qquad\Gamma\vdash N:\tau}{\Gamma\vdash M N:\tau}$}\\  \\
+	\Large{$\dfrac{\Gamma\vdash M:\sigma\rightarrow\tau\qquad\Gamma\vdash N:\sigma}{\Gamma\vdash M N:\tau}$}\\  \\
 	\Large{$\dfrac{\Gamma,x:\tau\vdash M:\sigma}{\Gamma\vdash\lambda x^{\tau}.M:\tau\rightarrow\sigma}\quad(x\notin FV(\Gamma))$}\\ \\
 	\Large{$\dfrac{\Gamma\vdash M:\sigma}{\Gamma\vdash\Lambda\alpha.M:\forall\alpha.\sigma}\quad(\alpha\notin FV(\Gamma))\qquad$}
 	\Large $\dfrac{\Gamma\vdash M:\forall\alpha.\sigma}{\Gamma\vdash M\tau:\sigma[\alpha:=\tau]}$

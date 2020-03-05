@@ -21,13 +21,13 @@
  	
 	Для квантора всеобщности: \\ 
  	
- 	\Large{$\frac{\Gamma\vdash\phi}{\Gamma\vdash\forall p.\phi}$} \Large$(p\notin FV(\Gamma)) \qquad\qquad$ 
- 	\Large{$\frac{\Gamma\vdash\forall p.\phi}{\Gamma\vdash\phi[p:=\Theta]}$}	\\
+ 	\Large{$\dfrac{\Gamma\vdash\phi}{\Gamma\vdash\forall p.\phi}$} \Large$(p\notin FV(\Gamma)) \qquad\qquad$ 
+ 	\Large{$\dfrac{\Gamma\vdash\forall p.\phi}{\Gamma\vdash\phi[p:=\Theta]}$}	\\
  	
  	 И два для квантора существования: \\
  	
  	\Large{$\dfrac{\Gamma\vdash\phi[p:= \psi]}{\Gamma\vdash\exists p.\phi}\qquad\qquad$} 
- 	\Large{$\dfrac{\Gamma\vdash\exists p.\phi\qquad\Gamma, \phi\vdash\psi}{\Gamma\vdash\psi}$} \Large$(p\notin FV(\Gamma)) \\ 
+ 	\Large{$\dfrac{\Gamma\vdash\exists p.\phi\qquad\Gamma, \phi\vdash\psi}{\Gamma\vdash\psi}$} \Large$(p\notin FV(\Gamma, \psi))$ \\ 
  	
  	
  	\begin{definition}
@@ -74,7 +74,7 @@
  			\text{И}, \llbracket Q\rrbracket^{p=\text{л, и}} = \text{И} \\
  			\text{Л}, \text{иначе}
  		\end{cases}
- 	\end{equation*}  
+ 	\end{equation*}
  	Эта модель корректна, но не полна.
  	
  	\section{Система F}
