@@ -14,3 +14,4 @@ local_tt6.tex
 local*
 *.pdf
 !conspect.pdf
+*.toc
