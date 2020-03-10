@@ -1,0 +1,58 @@
+\section{Лекция 13}
+
+\subsection{Теорема Диаконеску}
+\begin{theorem}[Диаконеску]
+    Аксиома выбора влечёт закон исключённого третьего.
+\end{theorem}
+
+\begin{proof}
+
+Для любого утверждения $P$ по аксиоме выделения мы можем построить два множества:
+\[
+    A = \set{x \in \set{0, 1} \mid \left(x = 0\right) \lor P} \qquad
+    B = \set{x \in \set{0, 1} \mid \left(x = 1\right) \lor P}
+\]
+По аксиоме выбора мы знаем, что их декартово произведение непусто.
+Иначе говоря, существует функция $f : \set{A, B} \to \set{0, 1}$, что
+\[
+    f(A) \in A \& f(B) \in B
+\]
+Это, по определению двух множеств, эквивалентно
+\[
+    \left(f(A) = 0 \vee P\right) \& \left(f(B) = 1 \vee P\right)
+\]
+Из этого следует, что
+\begin{gather}
+    \left(f(A) \neq f(B)\right) \vee P \label{firstOption} \tag{$*$}
+\end{gather}
+Однако, по принципу объёмности $P \to \left(A=B\right)$. Значит, $P \to \left(f(A) = f(B)\right)$. Значит,
+\begin{gather}
+    \left(f(A) \neq f(B)\right) \to \neg P \label{secondOption} \tag{$**$}
+\end{gather}
+Из \ref{firstOption} и \ref{secondOption} можно вывести $P \vee \neg P$.
+
+\end{proof}
+
+\subsection{Сетоид}
+\begin{definition}[Сетоид]
+    \[
+        \left<C : \mathrm{Type}, \mathrm{Eq} : C \to C \to \mathrm{Type}, P : \mathrm{IsEquivalence}~\mathrm{Eq}\right>
+    \]
+    $Eq$ "--- отношение эквивалентности, $P$ "--- доказательство этого факта.
+\end{definition}
+\begin{definition}[Экстенциональность]
+    \[
+        f : \left< A, =_A, P_A\right> \to \left<B, =_B, P_B\right>
+    \]
+    $f$ экстенциональна ($\mathrm{Ext}~f$), если из $x =_A y$ следует $f x =_B f y$
+\end{definition}
+
+Пример сетоида "--- целые числа:
+\[
+    \left< \left<p : \mathrm{Nat}, n : \mathrm{Nat}\right>, \overline{Eq(a+d=b+c)}, \mathrm{IsEquivalence} Eq\right>
+\]
+
+
+Интенциональное исчисление "--- это исчисление, равенство в котором является структурным.
+
+Экстенциональное исчисление "--- это исчисление, равенство в котором задаётся отношением эквивалентности.
