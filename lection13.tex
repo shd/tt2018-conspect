@@ -2,12 +2,12 @@
 
 \subsection{Теорема Диаконеску}
 \begin{theorem}[Диаконеску]
-    Аксиома выбора влечёт закон исключённого третьего в ИИП и ZF
+    В аксиомах ZF аксиома выбора влечет закон исключенного третьего.
 \end{theorem}
 
 \begin{proof}
 
-Так как в ИИП и ZF у нас есть полная аксиома выделения то для любого утверждения $P$ мы можем построить два множества:
+По аксиоме выделения для любого утверждения $P$ мы можем построить два множества из множества \{0, 1\}:
 \[
     A = \set{x \in \set{0, 1} \mid \left(x = 0\right) \lor P} \qquad
     B = \set{x \in \set{0, 1} \mid \left(x = 1\right) \lor P}
@@ -33,58 +33,3 @@
 
 \end{proof}
 
-\subsection{Сетоид}
-\begin{definition}[Сетоид]
-    \[
-        \left<C : \mathrm{Type}, \mathrm{Eq} : C \to C \to \mathrm{Type}, P : \mathrm{IsEquivalence}~\mathrm{Eq}\right>
-    \]
-    $Eq$ --- отношение эквивалентности, $P$ "--- доказательство этого факта.
-\end{definition}
-\begin{definition}[Экстенциональность]
-    \[
-        f : \left< A, =_A, P_A\right> \to \left<B, =_B, P_B\right>
-    \]
-    $f$ экстенциональна ($\mathrm{Ext}~f$), если из $x =_A y$ следует $f x =_B f y$
-\end{definition}
-
-Интенциональное исчисление --- это исчисление, равенство в котором является структурным.
-
-Экстенциональное исчисление --- это исчисление, равенство в котором задаётся отношением эквивалентности.
-
-Пример сетоида --- целые числа:
-\[
-    \left< \left<p : \mathrm{Nat}, n : \mathrm{Nat}\right>, \overline{Eq(a+d=b+c)}, \mathrm{IsEquivalence} Eq\right>
-\]
-
-Пример реализации сетоида на языке Idris
-\begin{verbatim}
-    Reflx: {A : Type} -> (R: A -> A -> Type) -> Type
-    Reflx {A} R = (x : A) -> R x x
-
-    Symm: {A : Type} -> (R: A -> A -> Type) -> Type
-    Symm {A} R = (x : A) -> (y : A) -> R x y -> R y x
-
-    Trans: {A : Type} -> (R: A -> A -> Type) -> Type
-    Trans {A} R = (x : A) -> (y : A) -> (z : A) -> R x y -> R y z -> R x z
-
-    data IsEquivalence: {A : Type} -> (R: A -> A -> Type) -> Type where
-    EqProof: {A: Type} -> (R: A -> A -> Type) -> Reflx {A} R -> Symm {A} R -> Trans {A} R -> IsEquivalence {A} R
-
-    record Setoid where
-    constructor MkSetoid
-    Carrier: Type
-    Equiv: Carrier -> Carrier -> Type
-    EquivProof: IsEquivalence Equiv
-
-    refl_eq: {Carrier: Type} -> Reflx {A=Carrier} (=)
-    refl_eq x = Refl {x=x}
-
-    symm_eq: {Carrier: Type} -> Symm {A = Carrier} (=)
-    symm_eq x y = \(Refl {x=p}) => Refl {x=p}
-
-    trans_eq: {Carrier: Type} -> Trans {A = Carrier} (=)
-    trans_eq a b c = \(Refl{x=p}) => \(Refl{x=p}) => Refl {x=p}
-
-    e: {Carrier: Type} -> IsEquivalence {A=Carrier} (=)
-    e {Carrier} = EqProof {A=Carrier} (=) refl_eq symm_eq trans_eq
-\end{verbatim}
