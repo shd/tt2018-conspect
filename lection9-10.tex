@@ -22,17 +22,17 @@ $R(x)$ --- все типы ранга $x$.
 
 \textbf{Утверждение}: Пусть $x$ --- выражение только с поверхностными кванторами, тогда $x \in R(1)$. 
 
-\begin{definition}[Типовая схема]
+\begin{definition}[Типовая схема]\
 
 $\sigma ::= \forall \alpha_1. \forall \alpha_2. \dots \forall \alpha_n. \tau$, где $\tau \in R(0)$ и, следовательно, $\sigma \in R(1)$.
 
 \end{definition}
 
-\begin{definition}[Частный случай (специализация) типовой схемы]
+\begin{definition}[Частный случай (специализация) типовой схемы]\
 
-$\sigma_1 \sqsubseteq \sigma_2$ --- типовая схема
+$\sigma_1, \sigma_2$ --- типовые схемы
 
-$\sigma_2$ --- частный случай (специализация) $\sigma_1$, если 
+$\sigma_2$ --- частный случай $\sigma_1$ (обознается как $\sigma_1 \sqsubseteq \sigma_2$), если 
 
 \begin{enumerate}
     \item $\sigma_1 =  \forall \alpha_1. \forall \alpha_2. \dots \forall \alpha_n. \tau_1$
@@ -42,14 +42,14 @@ $\sigma_2$ --- частный случай (специализация) $\sigma_
 
 \end{definition}
 
-\begin{paracol}{2}
-\begin{itemize}[label={}]
-    \item $M_1 : \forall \alpha . \alpha \rightarrow \alpha$
-    \item $M : \forall \beta_1.\forall \beta_2: (\beta_1 \rightarrow \beta_2) \rightarrow (\beta_1 \rightarrow \beta_2)$
-\end{itemize}
-\switchcolumn
+\begin{example}\
+	
+$\forall \alpha . \alpha \rightarrow \alpha 
+\sqsubseteq 
+\forall \beta_1.\forall \beta_2: (\beta_1 \rightarrow \beta_2) \rightarrow (\beta_1 \rightarrow \beta_2)$
+
 Вполне возможно, что в ходе замены, все типы будут уточнены ($\alpha$ уточнится как $\beta_1 \rightarrow \beta_2$.
-\end{paracol}
+\end{example}
 
 
 \subsection{Хиндли-Милнер}
