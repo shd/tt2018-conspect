@@ -1,13 +1,12 @@
 \section{Лекция 9}
 
-\noindent\textbf{Def.} Ранг типа  m 
-
-$R(x)$ --- все типа ранга $x$.
+\begin{definition}[Ранг типа]
+$R(x)$ --- все типы ранга $x$.
 \begin{itemize}
     \item $R(0)$ --- все типы без кванторов
     \item $R(x + 1) = R(x)\ |\ R(x) \rightarrow R(x + 1)\ |\ \forall \alpha.R(x + 1)$
 \end{itemize}
-\noindent\textbf{Enddef.} 
+\end{definition}
 
 Например:
 \begin{paracol}{2}
@@ -23,17 +22,17 @@ $R(x)$ --- все типа ранга $x$.
 
 \textbf{Утверждение}: Пусть $x$ --- выражение только с поверхностными кванторами, тогда $x \in R(1)$. 
 
-\noindent\textbf{Def.} Типовая система
+\begin{definition}[Типовая схема]\
 
 $\sigma ::= \forall \alpha_1. \forall \alpha_2. \dots \forall \alpha_n. \tau$, где $\tau \in R(0)$ и, следовательно, $\sigma \in R(1)$.
 
-\noindent\textbf{Enddef.} 
+\end{definition}
 
-\noindent\textbf{Def.} Частный случай (специализация) типовой схемы
+\begin{definition}[Частный случай (специализация) типовой схемы]\
 
-$\sigma_1 \sqsubseteq \sigma_2$ --- типовая схема
+$\sigma_1, \sigma_2$ --- типовые схемы
 
-$\sigma_2$ --- частный случай (специализация) $\sigma_1$, если 
+$\sigma_2$ --- частный случай $\sigma_1$ (обознается как $\sigma_1 \sqsubseteq \sigma_2$), если 
 
 \begin{enumerate}
     \item $\sigma_1 =  \forall \alpha_1. \forall \alpha_2. \dots \forall \alpha_n. \tau_1$
@@ -41,16 +40,16 @@ $\sigma_2$ --- частный случай (специализация) $\sigma_
     \item $\forall i. \beta_i \in FV(\tau_1)$
 \end{enumerate}
 
-\noindent\textbf{Enddef.} 
+\end{definition}
 
-\begin{paracol}{2}
-\begin{itemize}[label={}]
-    \item $M_1 : \forall \alpha . \alpha \rightarrow \alpha$
-    \item $M : \forall \beta_1.\forall \beta_2: (\beta_1 \rightarrow \beta_2) \rightarrow (\beta_1 \rightarrow \beta_2)$
-\end{itemize}
-\switchcolumn
+\begin{example}\
+	
+$\forall \alpha . \alpha \rightarrow \alpha 
+\sqsubseteq 
+\forall \beta_1.\forall \beta_2: (\beta_1 \rightarrow \beta_2) \rightarrow (\beta_1 \rightarrow \beta_2)$
+
 Вполне возможно, что в ходе замены, все типы будут уточнены ($\alpha$ уточнится как $\beta_1 \rightarrow \beta_2$.
-\end{paracol}
+\end{example}
 
 
 \subsection{Хиндли-Милнер}
@@ -333,7 +332,7 @@ filter p (x :: xs) with (filter p xs)
 
 \subsection{Введение}
 
-Прежде мы разбирали просто типизированное лямбда исчисление, в котором термы зависели от термов, например, терм $(F\ M)$ зависит от терма $M$. После того, как было замечено, что, скажем, I может иметь разные типы, которые по сути различаются лишь аннотацией, например, $\lambda x. x : \alpha \rightarrow \alpha$, $\lambda x. x : (\alpha \rightarrow \alpha) \rightarrow (\alpha \rightarrow \alpha)$, была введена типовая абстракция, то есть термы теперь могли зависеть от типов и такая типовая система была названа System F и можно было писать $\Lambda \alpha. \lambda x : \alpha . x : \forall \alpha. \alpha \rightarrow \alpha$. То есть это было своего рода изобретением шаблонов в языке C++. Но на этом все не ограничено. System $F_w$, в которой типы могут зависеть от типов, как, например, список - алгебраический тип данных, у которого есть две альтернативы $Nil : \forall \alpha . List \alpha$ и $Cons : \forall \alpha. \alpha \rightarrow List \alpha \rightarrow \alpha$ (рекурсивные типы смотри выше). Для лучшего понимания различия системы $F$ и $F_w$ ниже представлены грамматики для типов:
+Прежде мы разбирали просто типизированное лямбда-исчисление, в котором термы зависели от термов, например, терм $(F\ M)$ зависит от терма $M$. После того, как было замечено, что, скажем, I может иметь разные типы, которые по сути различаются лишь аннотацией, например, $\lambda x. x : \alpha \rightarrow \alpha$, $\lambda x. x : (\alpha \rightarrow \alpha) \rightarrow (\alpha \rightarrow \alpha)$, была введена типовая абстракция, то есть термы теперь могли зависеть от типов и такая типовая система была названа System F и можно было писать $\Lambda \alpha. \lambda x : \alpha . x : \forall \alpha. \alpha \rightarrow \alpha$. То есть это было своего рода изобретением шаблонов в языке C++. Но на этом все не ограничено. System $F_w$, в которой типы могут зависеть от типов, как, например, список - алгебраический тип данных, у которого есть две альтернативы $Nil : \forall \alpha . List \alpha$ и $Cons : \forall \alpha. \alpha \rightarrow List \alpha \rightarrow \alpha$ (рекурсивные типы смотри выше). Для лучшего понимания различия системы $F$ и $F_w$ ниже представлены грамматики для типов:
 \begin{itemize}
     \item $T_\rightarrow ::= \alpha\ |\ (T_\rightarrow)\ |\ T_\rightarrow \rightarrow T_\rightarrow$
     \item $T_F ::= \alpha\ |\ \forall \alpha. T_F\ |\ (T_F)\ |\ T_F \rightarrow T_F$ 
