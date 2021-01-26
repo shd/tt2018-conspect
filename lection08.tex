@@ -2,8 +2,8 @@
 	\subsection{Ранг типа}
 	\begin{definition}
 		 Введем определение. Под {рангом типа} мы будем понимать число, получаемое по следующим правилам: \\
-	    Rn(x) - множество всех типов x\\
-	    Rn(0) - все типы без кванторов\\
+	    Rn(x) --- множество всех типов x\\
+	    Rn(0) --- все типы без кванторов\\
 	    Rn(x+1) = Rn(x) | Rn(x) $\rightarrow$ Rn(x+1) | $\forall\alpha.Rn(x+1)$
 	\end{definition}
 	 
@@ -13,7 +13,7 @@
 	 3. $ (\forall\alpha.\alpha)\rightarrow(\forall\beta.\beta) \in$Rn(2), так как каждый тип вида $ \forall\alpha.\alpha \in$Rn(1), то по третьему правилу весь тип $ \in $Rn(2) \\
 
 	\begin{definition}
-		Тип с поверхностными кванторами — это любой тип вида $ \forall\alpha.\tau $, где в $ \tau $ отсутствуют кванторы. Очевидно, что любой такой тип $ \in $Rn(1). Действительно, тип внутри квантора точно имеет ранг 0. Навешивание одного или нескольких кванторов всеобщности увеличит его ранг на единицу.
+		Тип с поверхностными кванторами --- это любой тип вида $ \forall\alpha.\tau $, где в $ \tau $ отсутствуют кванторы. Очевидно, что любой такой тип $ \in $Rn(1). Действительно, тип внутри квантора точно имеет ранг 0. Навешивание одного или нескольких кванторов всеобщности увеличит его ранг на единицу.
 	\end{definition}
 	 
 	 \subsection{Типовая схема}
@@ -31,7 +31,7 @@
 \end{center}
 	 	 \end{definition}
  	 
-	 Также будем считать что $ \sigma_1 <= \sigma_2 $\\
+	 Также будем считать, что $ \sigma_1 <= \sigma_2 $\\
 	 ($\sigma_1$ является спецификацией $\sigma_2$) если: \\\\
 	 $\sigma_2\equiv\forall\alpha_1...\forall\alpha.\tau_1$\\
 	 $\sigma_1\equiv\forall\beta_1...\beta_n.\tau_1[\alpha_1:=\Theta_1]...[\alpha_n:=\Theta_n]  $
@@ -58,7 +58,7 @@
 
 	
  	$\dfrac{\Gamma \vdash M : \varphi[\alpha := \theta]}{\Gamma\vdash (\text{pack } M, \theta \text{ to } \exists \alpha . \varphi) : \exists \alpha.\varphi}\\ \\ \\
- 	 $ Это правило вывода позволяет скрыть реализацию стека, так как если $\alpha$ это тип стека, то $\alpha[\nu := \theta]$ его конкретная реализация, например ArrayStack, LinkedListStack и подобные \\ \\
+	$ Это правило вывода позволяет скрыть реализацию стека, так как если $\alpha$ --- это тип стека, то $\alpha[\nu := \theta]$ --- его конкретная реализация, например ArrayStack, LinkedListStack и подобные \\ \\
  	 $
  	\dfrac{\Gamma \vdash M : \exists \alpha . \varphi\qquad\Gamma, x : \varphi \vdash N : \psi}{\Gamma \vdash \text{abstype } \alpha \text{ with } x:\varphi \text{ in } M \text{ is } N:\psi}
 	(\alpha \notin FV(\Gamma, \psi))$
@@ -81,8 +81,8 @@
 	 \subsection{Типовая система Хиндли-Милнера}
 	   
 	 Начнем с определения типа. \underline{Тип в системе Хиндли-Милнера}: \\ \\
-	 Монотип — выражение в грамматике вида $\tau::=\alpha|\tau\rightarrow\tau|(\tau)$\\
-	 Политип — выражение в грамматике вида $\sigma::=\tau|\forall\alpha.\sigma$\\
+	 Монотип --- выражение в грамматике вида $\tau::=\alpha|\tau\rightarrow\tau|(\tau)$\\
+	 Политип --- выражение в грамматике вида $\sigma::=\tau|\forall\alpha.\sigma$\\
 	 
 	 \noindent Поэтому типы вида $\alpha\rightarrow\forall\beta.\beta$ - некорректны в системе ХМ\\
 	 
