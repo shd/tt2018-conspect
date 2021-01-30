@@ -14,14 +14,14 @@
 Рассмотрим реализацию натуральных чисел в языке Аренд.
 \newpage
 \begin{minted}{latex}
-    \data Nat
-        | zero
-        | suc Nat
-    \where {
-        func \infixl 6 + (x y : Nat) : Nat \elim y
-            | zero => x
-            | suc y => suc (x + y)
-    }
+\data Nat
+    | zero
+    | suc Nat
+\where {
+    func \infixl 6 + (x y : Nat) : Nat \elim y
+        | zero => x
+        | suc y => suc (x + y)
+}
 \end{minted}
 
 Здесь \texttt{zero} --- из ничего делает \texttt{Nat}, а \texttt{suc} из \texttt{Nat} делает \texttt{Nat}.
@@ -43,8 +43,8 @@
 Определим тип \texttt{Path}.
 
 \begin{minted}{latex}
-    \data Path (A : I -> \Type) (a : A left) (a' : A right)
-        | path (\Pi (i : I) -> A i)
+\data Path (A : I -> \Type) (a : A left) (a' : A right)
+    | path (\Pi (i : I) -> A i)
 \end{minted} 
 
 Разберём это определение. Здесь \texttt{A} --- это пространство, \texttt{a} и \texttt{a'} --- точки в нём.
@@ -62,52 +62,54 @@
 зависимый тип \texttt{Path}, соединяющий две точки.
 
 \subsection{Основные функции}
-\textbf{idp}. Вспомним определение равенства. Попробуем населить тип $0 = 0$. Это можно сделать так:
+\begin{itemize}
+\item [\bf idp:] Вспомним определение равенства. Попробуем населить тип $0 = 0$. Это можно сделать так:
 
 \begin{minted}{latex}
-    path (\lam _ => 0)
+path (\lam _ => 0)
 \end{minted}
 
 \texttt{idp} является некоторым обобщением на произвольный неявный аргумент.
 
 \begin{minted}{latex}
-    \cons idp {A : \Type} {a : A} => path (\lam _ => a)
+\cons idp {A : \Type} {a : A} => path (\lam _ => a)
 \end{minted}
 
-\textbf{coe}. Функция \texttt{coe} позволяет <<разобрать>> равенство.
+\item [\bf coe:] Функция \texttt{coe} позволяет <<разобрать>> равенство.
 
 \begin{minted}{latex}
-    \func coe (A : I -> \Type) (a : A left) (i : I) : A i
+\func coe (A : I -> \Type) (a : A left) (i : I) : A i
 \end{minted}
 
 Первый аргумент показывает, на каких типах определено равенство. Второй --- начальное значение. Третий --- интервал.
 Результатом будет применение \texttt{A} к \texttt{i}.
 
-\textbf{pmap}. Принимает функцию $f$ и тип равенства $A = B$. Возвращает тип $f(A) = f(B)$.
+\item [\bf pmap:] Принимает функцию $f$ и тип равенства $A = B$. Возвращает тип $f(A) = f(B)$.
 Пример: докажем, что если $a = b$, то $a+1 = b+1$.
 \begin{minted}{latex}
-    \lemma example (a b : Nat) (p : a = b) 
-        : (suc a = suc b) => pmap suc p
+\lemma example (a b : Nat) (p : a = b) 
+    : (suc a = suc b) => pmap suc p
 \end{minted}
 
-\textbf{absurd}. Позволяет получить любой тип из лжи (\texttt{Empty}).
+\item [\bf absurd:] Позволяет получить любой тип из лжи (\texttt{Empty}).
 \begin{minted}{latex}
     \func absurd {A : \Type} (x : Empty) : A
 \end{minted}
 
-\textbf{rewrite}. Принимает тип равенства $A = B$, некоторое выражение $t$, и эта функция переписывает его, подставляя $B$ вместо $A$.
+\item [\bf rewrite:] Принимает тип равенства $A = B$, некоторое выражение $t$, и эта функция переписывает его, подставляя $B$ вместо $A$.
 Пример:
 \begin{minted}{latex}
-    \lemma example (x y : Nat) (f : Nat -> Nat)
-    : f (x + y) = f (y + x)
-        => rewrite (NatSemiring.+-comm {x} {y}) idp
+\lemma example (x y : Nat) (f : Nat -> Nat)
+: f (x + y) = f (y + x)
+    => rewrite (NatSemiring.+-comm {x} {y}) idp
 \end{minted}
 
-\textbf{transport}. Эта функция является основным механизмом для работы \texttt{rewrite}.
+\item [\bf transport:] Эта функция является основным механизмом для работы \texttt{rewrite}.
 \begin{minted}{latex}
-    \func transport {A : \Type} (B : A -> \Type)
-            {a a' : A} (p : a = a') (b : B a) : B a'
+\func transport {A : \Type} (B : A -> \Type)
+    {a a' : A} (p : a = a') (b : B a) : B a'
 \end{minted}
+\end{itemize}
 
 \subsection{Сигма и пи-типы}
 Иногда мы хотим оперировать с кортежами зависимых типов, например, если мы хотим,
@@ -115,18 +117,18 @@
 
 Покажем их использование на примере:
 \begin{minted}{latex}
-    \data DivisibleBy5
-        | mkDiv5 (n : Nat) (\Sigma (m : Nat) (m * 5 = n))
+\data DivisibleBy5
+    | mkDiv5 (n : Nat) (\Sigma (m : Nat) (m * 5 = n))
 
-    \func ten : DivisibleBy5 => mkDiv5 10 (2, idp)
+\func ten : DivisibleBy5 => mkDiv5 10 (2, idp)
 \end{minted}
 
 Здесь, чтобы доказать, что число 10 делится нацело на 5, мы предоставили кортеж из частного $m$ и доказательства, что $m \cdot 5 = 10$.
 
 Также, с помощью сигма-типов удобно требовать выполнение нескольких условий одновременно.
 \begin{minted}{latex}
-    \lemma example (a b k : Nat) (p : a + b < k)
-        : (\Sigma (a < k) (b < k))
+\lemma example (a b k : Nat) (p : a + b < k)
+    : (\Sigma (a < k) (b < k))
 \end{minted}
 
 Чтобы доказать эту лемму, потребуется предоставить доказательства \texttt{(a < k)} и \texttt{(b < k)}.
@@ -140,7 +142,7 @@
 Например, представим, что мы определили понятие <<делится нацело>> и хотим определить понятие простого числа $n$.
 Хочется проверить, что если число делит $n$ нацело, то оно либо $1$, либо $n$. Здесь можно применить пи-типы.
 \begin{minted}{latex}
-    \Pi (d : Nat) (k : Divisible n d) -> ((d = 1) || (d = n))
+\Pi (d : Nat) (k : Divisible n d) -> ((d = 1) || (d = n))
 \end{minted}
 
 \newpage
@@ -165,7 +167,7 @@
 Введём специальный универсум \texttt{Prop}. Этот универсум состоит только из тех значений, у которых единственный элемент.
 
 \begin{minted}{latex}
-    \func isProp (A : \Type) => \Pi (a a' : A) -> a = a'
+\func isProp (A : \Type) => \Pi (a a' : A) -> a = a'
 \end{minted}
 
 Такой тип может быть либо пустым, либо одноэлементным (ложь/истина).
@@ -173,7 +175,7 @@
 Теперь введём понятие множества (Set). Множеством будут называться все такие элементы, у которых единственное доказательство равенства.
 
 \begin{minted}{latex}
-    \func isSet (A : \Type) => \Pi (a b : A) -> isProp (a = b)
+\func isSet (A : \Type) => \Pi (a b : A) -> isProp (a = b)
 \end{minted}
 
 Наконец, научимся делать из любого типа \texttt{Prop}.
