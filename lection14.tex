@@ -14,8 +14,7 @@
 Здесь конструкторами (выражениями, конструирущими объекты надлежащего типа) будут $0$ и $n'$: если $n$ --- натуральное, то и $n'$ натуральное.
 
 Рассмотрим реализацию натуральных чисел в языке Аренд.
-\newpage
-\begin{minted}{latex}
+\begin{minted}[samepage]{latex}
 \data Nat
     | zero
     | suc Nat
@@ -44,15 +43,13 @@
 Введём интервальный тип \ard{I}, представляющий из себя интервал $[l, r]$.
 Определим тип \ard{Path}.
 
-\begin{minted}{latex}
+\begin{minted}[samepage]{latex}
 \data Path (A : I -> \Type) (a : A left) (a' : A right)
     | path (\Pi (i : I) -> A i)
 \end{minted} 
 
 Разберём это определение. Здесь \ard{A} --- это пространство, \ard{a} и \ard{a'} --- точки в нём.
 Единственный конструктор является функцией, которая по левому концу пути вернёт конечную точку, а по правому концу --- начальную точку.
-
-\newpage 
 
 Теперь, с помощью путей, определим равенство.
 
@@ -118,7 +115,7 @@ path (\lam _ => 0)
 чтобы одновременно удовлетворялись несколько условий. В языке Аренд сигма-тип --- это тип (зависимых) кортежей.
 
 Покажем их использование на примере:
-\begin{minted}{latex}
+\begin{minted}[samepage]{latex}
 \data DivisibleBy5
     | mkDiv5 (n : Nat) (\Sigma (m : Nat) (m * 5 = n))
 
@@ -146,8 +143,6 @@ path (\lam _ => 0)
 \begin{minted}{latex}
 \Pi (d : Nat) (k : Divisible n d) -> ((d = 1) || (d = n))
 \end{minted}
-
-\newpage
 
 \subsection{Prop, Universe}
 
