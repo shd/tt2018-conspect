@@ -17,7 +17,7 @@
 Иногда для упрощения записи мы будем опускать скобки. В этом случае перед разбором выражения следует расставить все опущенные скобки. При их расставлении будем придерживаться правил:
 \begin{enumerate}
 	\item В аппликации расставляем скобки слева направо: $A \ B \ C \implies (A \ B) \ C$.
-	\item Абстракции жадные "--- поглощают скобками все что могут до конца строки: 
+	\item Абстракции жадные "--- поглощают скобками все, что могут, до конца строки: 
 	$\lambda{}a.\lambda{}b.a \ b \implies \lambda{}a.(\lambda{}b.(a \ b))$.
 	\vspace{1mm}
 	\begin{example}
@@ -87,7 +87,7 @@ $\lambda$-выражение можно понимать как функцию.
 \end{example}
 
 \begin{definition}[$\beta$-редекс]
-	$\beta$-редекс "--- выражение вида: $\left(\lambda{}x.A\right)B$
+	$\beta$-редекс "--- выражение вида: $\left(\lambda{}x.A\right)B$.
 \end{definition}
 
 \begin{definition}[$\beta$-редукция]
@@ -99,10 +99,10 @@ $\lambda$-выражение можно понимать как функцию.
 		\item $A\equiv\lambda{}x.P$, $B\equiv\lambda{}x.Q$ и $P\to_{\beta}Q$
 	\end{enumerate}
 	\begin{example} 
-		$\left(\lambda{}x.x\right) y\to_{\beta} y$
+		$\left(\lambda{}x.x\right) y\to_{\beta} y$.
 	\end{example}
 	\begin{example}
-		 $a \left(\left(\lambda{}x.x\right) y\right)\to_{\beta} a y$
+		 $a \left(\left(\lambda{}x.x\right) y\right)\to_{\beta} a y$.
 	\end{example}
 \end{definition}
 
@@ -136,7 +136,7 @@ $\lambda$-выражение можно понимать как функцию.
 	\end{proof}
 \end{example}
 
-Как мы видим If $\Tl$ действительно возвращает результат первой ветки.
+Как мы видим, If $\Tl$ действительно возвращает результат первой ветки.
 
 
 Другие логические операции:
@@ -157,7 +157,7 @@ $\lambda$-выражение можно понимать как функцию.
 		\begin{cases}
 			f\left(f^{n-1} x\right) & \text{при } n > 0 \\
 			x 						& \text{при } n = 0
-		\end{cases}
+		\end{cases}.
 	\]
 \end{definition}
 
