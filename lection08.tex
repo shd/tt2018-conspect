@@ -97,7 +97,7 @@
  	 
  	 \noindent 1. Тавтология $\dfrac{}{\Gamma\vdash x.\phi}$ \\\\
  	
- 	 \noindent 2. Уточнение $\dfrac{\Gamma\vdash e:\sigma}{\Gamma\vdash e:\sigma'}$ \\\\
+ 	 \noindent 2. Уточнение $\dfrac{\Gamma\vdash e:\sigma\qquad\sigma' <= \sigma}{\Gamma\vdash e:\sigma'}$ \\\\
  	 
  	 \noindent 3. Обобщение $\dfrac{\Gamma\vdash e:\sigma}{\Gamma\vdash e:\forall\alpha.\sigma}$ \\ \\
  	 \noindent 4. Абстракция $\dfrac{\Gamma_x, x:\tau'\vdash e:\tau}{\Gamma\vdash \lambda x.e:\tau'\rightarrow\tau}$ \\ \\
