@@ -91,18 +91,6 @@
 	 \begin{center}
 	 $\Lambda::=x | \lambda x.\Lambda | \Lambda\Lambda | (\Lambda) | \text{let x = }\Lambda \text{ in }\Lambda $ 
 	 \end{center}
- 		
- 	 \noindent Обозначим контекст $\Gamma$ без типа x как $\Gamma_x$\\
- 	 В новой системе получаем следующие правила вывода: \\ \\
- 	 
- 	 \noindent 1. Тавтология $\dfrac{}{\Gamma\vdash x.\phi}$ \\\\
- 	
- 	 \noindent 2. Уточнение $\dfrac{\Gamma\vdash e:\sigma\qquad\sigma' <= \sigma}{\Gamma\vdash e:\sigma'}$ \\\\
- 	 
- 	 \noindent 3. Обобщение $\dfrac{\Gamma\vdash e:\sigma}{\Gamma\vdash e:\forall\alpha.\sigma}$ \\ \\
- 	 \noindent 4. Абстракция $\dfrac{\Gamma_x, x:\tau'\vdash e:\tau}{\Gamma\vdash \lambda x.e:\tau'\rightarrow\tau}$ \\ \\
- 	 \noindent 5. Применение $\dfrac{\Gamma\vdash e:\tau'\rightarrow\tau\qquad\Gamma\vdash e':\tau'}{\Gamma ee':\tau}$ \\ \\
- 	 \noindent 6. Let $\dfrac{\Gamma\vdash e:\sigma\qquad\Gamma_x,x:\sigma\vdash e':\tau}{\Gamma\vdash\text{ \textbf{let} } x = e \textbf{ in }e':\tau}$ \\
  	 
  	 Хотя в системе Хиндли-Милнера (как и во всех рассматриваемых нами типовых системах) нельзя типизировать $\mathcal{Y} $-комбинатор,
  	 можно добавить его, расширив язык.
@@ -117,6 +105,7 @@
  	 
  	 Через такой $\mathcal{Y}$ можно определять рекурсивные функции, и они будут типизироваться.
  	 
+ 	 Правила вывода для системы Хиндли-Милнера будут даны в следующей лекции.
  
  	 
 
