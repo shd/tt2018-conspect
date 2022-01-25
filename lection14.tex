@@ -102,6 +102,7 @@ path (\lam _ => 0)
 С её помощью, например, можно показать, что у \ard{I} один элемент
 
 \begin{minted}{latex}
+-- Note: `left=i` is a correct identifier
 \func left=i (i : I) : (left = i)
     => coe (\lam i => left = i) idp i
 \end{minted}
