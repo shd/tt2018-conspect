@@ -13,7 +13,7 @@ jobs:
         with:
           fetch-depth: 0
       - name: Compile
-        run: pdflatex -shell-escape conspect.tex
+        run: latexmk -pdf -e "\$pdflatex='pdflatex --shell-escape -interaction=nonstopmode -file-line-error -synctex=1 %O %S';" conspect.tex
       - name: Set env
         run: echo "COMMIT_MSG=Built pdf from commit $(git rev-parse --short $GITHUB_SHA)" >> $GITHUB_ENV
       - name: Remove anything but the pdf
