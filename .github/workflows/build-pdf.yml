@@ -17,10 +17,7 @@ jobs:
       - name: Set env
         run: echo "COMMIT_MSG=Built pdf from commit $(git rev-parse --short $GITHUB_SHA)" >> $GITHUB_ENV
       - name: Remove anything but the pdf
-        run: |
-          shopt -s globstar
-          shopt -s extglob
-          rm -v !("conspect.pdf")
+        run: find . ! \( -name conspect.pdf -o -path "./.git/*" \) -type f -exec rm -f {} +
         shell: "bash"
       - name: Commit changes
         uses: peaceiris/actions-gh-pages@v3.8.0
