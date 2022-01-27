@@ -29,3 +29,4 @@ jobs:
           user_email: "github-actions[bot]@users.noreply.github.com"
           full_commit_message: ${{ env.COMMIT_MSG }}
           keep_files: false
+          force_orphan: true
