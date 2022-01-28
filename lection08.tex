@@ -70,7 +70,7 @@
 		}
 	\end{verbatim}
 	Поскольку выводимые формулы выглядят слишком громоздко, перепишем их, вспомнив, что: \\
-	$\exists\alpha.\beta\equiv\forall\beta.(\forall\alpha.\sigma\rightarrow\beta)\rightarrow\beta$\\\\
+	$\exists\alpha.\sigma\equiv\forall\beta.(\forall\alpha.\sigma\rightarrow\beta)\rightarrow\beta$\\\\
 	Тогда: \\
 	$	\text{\textbf{pack} } M, \theta \text{ \textbf{to} } \exists \alpha . \varphi =
 		\Lambda \beta . \lambda x^{\forall \alpha . \varphi \to \beta} . x \theta M \\
@@ -101,7 +101,7 @@
  	 
  	 \noindent 3. Обобщение $\dfrac{\Gamma\vdash e:\sigma}{\Gamma\vdash e:\forall\alpha.\sigma}$ \\ \\
  	 \noindent 4. Абстракция $\dfrac{\Gamma_x, x:\tau'\vdash e:\tau}{\Gamma\vdash \lambda x.e:\tau'\rightarrow\tau}$ \\ \\
- 	 \noindent 5. Применение $\dfrac{\Gamma\vdash e:\tau'\rightarrow\tau\qquad\Gamma\vdash e':\tau'}{\Gamma ee':\tau}$ \\ \\
+ 	 \noindent 5. Применение $\dfrac{\Gamma\vdash e:\tau'\rightarrow\tau\qquad\Gamma\vdash e':\tau'}{\Gamma\vdash e\ e':\tau}$ \\ \\
  	 \noindent 6. Let $\dfrac{\Gamma\vdash e:\sigma\qquad\Gamma_x,x:\sigma\vdash e':\tau}{\Gamma\vdash\text{ \textbf{let} } x = e \textbf{ in }e':\tau}$ \\
  	 
  	 Хотя в системе Хиндли-Милнера (как и во всех рассматриваемых нами типовых системах) нельзя типизировать $\mathcal{Y} $-комбинатор,
