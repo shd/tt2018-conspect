@@ -161,6 +161,85 @@ $$\Gamma, \varphi \vdash \varphi$$
 	
 \end{example}
 
+\begin{note}
+	В дальнейшем символом $\vdash_\rightarrow$ будем обозначать доказуемость в импликационном фрагменте.
+\end{note}
+
+\begin{theorem} Замкнутость И.Ф.ИИВ
+	
+	Если $\Gamma$ и $\varphi$ состоят только из импликаций, то $\Gamma \vdash \varphi$ равносильна $\Gamma \vdash_\rightarrow \varphi$.
+\end{theorem}
+
+\begin{lemma}
+	\label{conj}
+	Если $\Gamma \vdash \varphi$, то в любой модели Крипке из $\Vdash \Gamma$ следует $\Vdash \varphi$
+\end{lemma}
+\begin{proof}\ \\
+	Пусть $\Gamma \vdash \varphi$. 
+	Тогда $\vdash \& \Gamma \rightarrow \varphi$, где $\& \Gamma$ --- конъюнкция всех утверждений в $\Gamma$.
+	По корректности моделей Крипке, будет выполнено $\Vdash \& \Gamma \rightarrow \varphi$. Переписывая $\&$ и $\rightarrow$ по определению, получаем $\Vdash \Gamma \ \Rightarrow \ \Vdash \varphi$.
+\end{proof}
+
+\begin{theorem}
+	\label{kripke}
+	$\Gamma \vdash_\rightarrow \varphi$ т.и.т.т. в любой модели Крипке из $\Vdash \Gamma$ следует $\Vdash \varphi$
+\end{theorem}
+\begin{proof}\
+	\begin{itemize}
+		\item $(\Rightarrow)$ Очевидно по лемме \ref{conj}.
+		\item $(\Leftarrow)$ Пусть в любой модели Крипке из $\Vdash \Gamma$ следует $\Vdash \varphi$. Докажем $\Gamma \vdash_\rightarrow \varphi$.
+		
+		Выберем подходящую модель Крипке. Напомним, что моделью Крипке называется тройка $\langle C, \succcurlyeq, \Vdash\rangle$, где $C$ -- множество миров, $\succcurlyeq$ -- отношение частичного порядка на $C$, $\Vdash$ -- отношение вынужденности переменной.
+		
+		\textbf{Построим модель Крипке} $\mathcal C = \langle C, \succcurlyeq, \Vdash \rangle$. 
+		
+		Пусть $C = \{\Delta \ |\ \Gamma \subseteq \Delta, \Delta \text{ замкнут относительно }\vdash_\rightarrow\}$. $\Delta$ замкнут относительно доказуемости, когда для любого $\varphi$ если $\Delta \vdash_\rightarrow \varphi$, то $\varphi \in \Delta$.
+		
+		$C_1 \succcurlyeq C_2$, если $C_1 \supseteq C_2$.
+		
+		$\Delta \Vdash \alpha$, если $\alpha \in \Delta$, $\alpha$ -- переменная.
+		
+		\begin{lemma}
+			\label{mymodel}
+			В модели $\mathcal C$ $\Delta \Vdash \varphi$ т.и.т.т. $\varphi \in \Delta$
+		\end{lemma}
+		\begin{proof}
+			Индукция по структуре $\varphi$. 
+			
+			\textbf{База.} $\varphi \equiv \alpha$. $\Delta \Vdash \alpha \Leftrightarrow \alpha \in \Delta$ следует из определения вынужденности.
+			
+			\textbf{Индукционный переход.} $\varphi \equiv \psi \rightarrow \sigma$
+			
+			Индукционное предположение:
+			$\forall \Delta \in C: \Delta \Vdash \psi \Leftrightarrow \psi \in \Delta$, $\Delta \Vdash \sigma \Leftrightarrow \sigma \in \Delta$.
+			
+			Докажем, что $\Delta \Vdash \psi \rightarrow \sigma \Leftrightarrow \psi \rightarrow \sigma \in \Delta$.
+			\begin{itemize}
+				\item $(\Rightarrow)$ Пусть $\Delta \Vdash \psi \rightarrow \sigma$.
+				
+				Рассмотрим мир $\Pi = (\Delta \cup \{\psi\})^*$. $\Pi \Vdash \psi \rightarrow \sigma$, т.к. $\Delta \preccurlyeq \Pi$.
+				
+				$\psi \in \Pi$. Тогда, по инд. пред., $\Pi \Vdash \psi$. Значит, $\Pi \Vdash \sigma$. В самом деле, из определения вынужденности импликации в $\Pi$ следует, что если $\Pi \Vdash \psi$, то $\Pi \Vdash \sigma$.
+				
+				По инд. пред. заключаем $\sigma \in \Pi$, т.е. $\Pi \vdash_\rightarrow \sigma$, т.к. $\Pi$ -- замкнут по доказуемости. Ясно, что $\Delta, \psi \vdash_\rightarrow \sigma$. Действительно, в гипотезах доказательства $\Pi \vdash_\rightarrow \sigma$ использовалось не все бесконечное множество $\Pi$, а лишь конечный набор утверждений из него. Каждое такое утверждение выводится из $\Delta, \psi$, потому что $\Pi$ - замыкание $\Delta \cup \{\psi\}$. 
+				
+				Из $\Delta, \psi \vdash_\rightarrow \sigma$ следует $\Delta \vdash_\rightarrow \psi \rightarrow \sigma$. Таким образом, $\psi \rightarrow \sigma \in \Delta$.
+				
+				\item $(\Leftarrow)$ Пусть $\psi \rightarrow \sigma \in \Delta$.
+				
+				Рассмотрим произвольный мир $\Pi: \Delta \preccurlyeq \Pi \land \Pi \Vdash \psi$. По инд. пред. $\psi \in \Pi$. $\psi \rightarrow \sigma \in \Pi$, т.к. $\Delta \subseteq \Pi$. $\Pi \vdash_\rightarrow \psi$, $\Pi \vdash_\rightarrow \psi \rightarrow \sigma$. Очевидно, $\Pi \vdash_\rightarrow \sigma$. $\sigma \in \Pi$. Тогда, по инд. пред., $\Pi \Vdash \sigma$. Таким образом, $\Pi \Vdash \psi \rightarrow \sigma$, а следовательно, $\Delta \Vdash \psi \rightarrow \sigma$.
+			\end{itemize}
+		\end{proof}
+		$\mathcal C \Vdash \Gamma$, т.к. любой мир модели $\mathcal C$ -- надмножество $\Gamma$. В любой модели Крипке из $\Vdash \Gamma$ следует $\Vdash \varphi$. В частности, это выполнено в модели $\mathcal C$. Значит $\mathcal C \Vdash \varphi$, в том числе $\Gamma^* \Vdash \varphi$. По лемме \ref{mymodel} $\varphi \in \Gamma^*$, то есть $\Gamma^* \vdash_\rightarrow \varphi$. Следовательно, $\Gamma \vdash_\rightarrow \varphi$.
+	\end{itemize}
+\end{proof}
+
+Теперь можем доказать теорему о замкнутости ИФИИВ.
+\begin{proof}\ \\
+	Следствие $\Gamma \vdash_\rightarrow \varphi \ \Rightarrow \ \Gamma \vdash \varphi$ очевидно.\\
+	Пусть $\Gamma \vdash \varphi$. По \ref{conj} получаем, что в любой модели Крипке из $\Vdash \Gamma$ следует $\Vdash \varphi$. Отсюда, по теореме \ref{kripke}, доказывается $\Gamma \vdash_\rightarrow \varphi$.
+\end{proof}
+
 \subsection{Просто типизированное по Карри $\lambda$-исчисление}
 
 \begin{definition}
