@@ -2,7 +2,7 @@
 	\subsection{Импликационный фрагмент ИИП второго порядка}
  	\begin{center}
  		\begin{definition}
- 			\large Назовем \textit{\underline{грамматикой ИИП второго порядка}} конструкцию вида: 
+ 			Назовем \textit{\underline{грамматикой ИИП второго порядка}} конструкцию вида: 
  		\end{definition}
  	\textbf{A} ::= 
  	(\textbf{A}) |
@@ -12,9 +12,9 @@
  	
  	\end{center}
  
- 	\large В этой системе все остальные связки могут быть выражены через основные 4, представленные выше. Например, $\perp$ представима в следующем виде
+ 	В этой системе все остальные связки могут быть выражены через основные 4, представленные выше. Например, $\perp$ представима в следующем виде
  	\begin{center}
- 		{\textbf{\textsl\textit{\large $\forall$p.p}}} \\
+ 		{\textbf{\textsl\textit{$\forall$p.p}}} \\
  	\end{center}
  	
  	
@@ -22,24 +22,24 @@
  	
 	Для квантора всеобщности: \\ 
  	
- 	\Large{$\dfrac{\Gamma\vdash\phi}{\Gamma\vdash\forall p.\phi}$} \Large$(p\notin FV(\Gamma)) \qquad\qquad$ 
- 	\Large{$\dfrac{\Gamma\vdash\forall p.\phi}{\Gamma\vdash\phi[p:=\Theta]}$}	\\
+    \[ \dfrac{\Gamma\vdash\phi}{\Gamma\vdash\forall p.\phi} (p\notin FV(\Gamma)) \qquad
+        \dfrac{\Gamma\vdash\forall p.\phi}{\Gamma\vdash\phi[p:=\Theta]} \]
  	
  	 И два для квантора существования: \\
  	
- 	\Large{$\dfrac{\Gamma\vdash\phi[p:= \psi]}{\Gamma\vdash\exists p.\phi}\qquad\qquad$} 
- 	\Large{$\dfrac{\Gamma\vdash\exists p.\phi\qquad\Gamma, \phi\vdash\psi}{\Gamma\vdash\psi}$} \Large$(p\notin FV(\Gamma, \psi))$ \\ 
+    \[ \dfrac{\Gamma\vdash\phi[p:= \psi]}{\Gamma\vdash\exists p.\phi}\qquad
+        \dfrac{\Gamma\vdash\exists p.\phi\quad\Gamma, \phi\vdash\psi}{\Gamma\vdash\psi} (p\notin FV(\Gamma, \psi)) \]
  	
  	
  	\begin{definition}
- 		\large Грамматику ИИП второго порядка с приведенными выше правилами вывода назовем Импликационным фрагментом ИИВ второго порядка\\ 
+ 		Грамматику ИИП второго порядка с приведенными выше правилами вывода назовем Импликационным фрагментом ИИВ второго порядка\\ 
  	\end{definition}
-	\large {С помощью этих правил вывода можно доказать, что \textbf{${\perp = \forall p.p}$}
+	{С помощью этих правил вывода можно доказать, что \textbf{${\perp = \forall p.p}$}
 		Действительно, воспользовавшись вторым правилом вывода квантора всеобщности для этого выражения, мы можем вывести любое другое выражение.}
  	
- 	\large С помощью правил вывода также можно доказать, что \\
- 	$\phi\&\psi\equiv\forall a((\phi\rightarrow\psi\rightarrow a)\rightarrow a)$\\
- 	$\phi\vee\psi\equiv\forall a((\phi\rightarrow a)\rightarrow(\psi\rightarrow a)\rightarrow a)$
+ 	С помощью правил вывода также можно доказать, что \\
+ 	$\phi\&\psi\equiv\forall a. ((\phi\rightarrow\psi\rightarrow a)\rightarrow a)$\\
+ 	$\phi\vee\psi\equiv\forall a. ((\phi\rightarrow a)\rightarrow(\psi\rightarrow a)\rightarrow a)$
  	
  	Докажем например, что
  	\begin{center}
@@ -54,7 +54,7 @@
 	Добавим к нашему исчислению модель. Напомню, что модель это функция которая сопоставляет некому терму элемент из множества истинностных значений. В нашем случае мы будем сопоставлять высказываниям элементы из множества $\llbracket\text{\textbf{И,Л}}\rrbracket$ по следующим правилам: \\
 
 \begin{center}
-	 	\large$\llbracket p\rrbracket=p$, т. е. $\llbracket p\rrbracket^{p = x} = x$ \\
+	 	$\llbracket p\rrbracket=p$, т. е. $\llbracket p\rrbracket^{p = x} = x$ \\
 \end{center}
  	
  	
@@ -95,9 +95,9 @@
  \end{definition}
 
  \begin{definition}
- 		\large Введем определение грамматики в системе F:
+ 		Введем определение грамматики в системе F:
  	\begin{center}
- 		\large $\Lambda$ ::= x | $\lambda x^{\tau}.\Lambda$ | $\Lambda\Lambda$ | ($\Lambda$) | $\Lambda\alpha.\Lambda$ | $\Lambda\tau$ 
+ 		$\Lambda$ ::= x | $\lambda x^{\tau}.\Lambda$ | $\Lambda\Lambda$ | ($\Lambda$) | $\Lambda\alpha.\Lambda$ | $\Lambda\tau$ 
  	\end{center}
  \end{definition}
  	
@@ -105,18 +105,18 @@
  	
  	
  	Так, пример типовой абстракции это: 
- 	\begin{verbatim}
- 		template<typename T>
- 		class W {
- 		    T x;
- 		}
- 	\end{verbatim}
+    \begin{minted}{cpp}
+template<typename T>
+class W {
+    T x;
+}
+    \end{minted}
  	
 	Типовая аппликация --- это объявление переменной класса с каким-то типом
  	
- 	\begin{verbatim}
- 	W<int> w_test;
- 	\end{verbatim}\
+    \begin{minted}{cpp}
+W<int> w_test;
+    \end{minted}
  	
  	\begin{theorem}
  		Изоморфизм Карри - Ховарда:
@@ -130,32 +130,37 @@
  	
  	В системе F определены следующие правила вывода: \\ \\
   	\noindent
- 	\Large{$\dfrac{}{\Gamma,x:\tau\vdash x:\tau}\qquad\qquad$} 
- 	\Large{$\dfrac{\Gamma\vdash M:\sigma\rightarrow\tau\qquad\Gamma\vdash N:\sigma}{\Gamma\vdash M N:\tau}$}\\  \\ \\
- 	\Large{$\dfrac{\Gamma,x:\tau\vdash M:\sigma}{\Gamma\vdash\lambda x^{\tau}.M:\tau\rightarrow\sigma}\quad(x\notin FV(\Gamma))$}\\ \\ \\
- 	\Large{$\dfrac{\Gamma\vdash M:\sigma}{\Gamma\vdash\Lambda\alpha.M:\forall\alpha.\sigma}\quad(\alpha\notin FV(\Gamma))\qquad$}
- 	\Large $\dfrac{\Gamma\vdash M:\forall\alpha.\sigma}{\Gamma\vdash M\tau:\sigma[\alpha:=\tau]}$
+ 	{$\dfrac{}{\Gamma,x:\tau\vdash x:\tau}\qquad\qquad$} 
+ 	{$\dfrac{\Gamma\vdash M:\sigma\rightarrow\tau\qquad\Gamma\vdash N:\sigma}{\Gamma\vdash M N:\tau}$}\\  \\ \\
+ 	{$\dfrac{\Gamma,x:\tau\vdash M:\sigma}{\Gamma\vdash\lambda x^{\tau}.M:\tau\rightarrow\sigma}\quad(x\notin FV(\Gamma))$}\\ \\ \\
+ 	{$\dfrac{\Gamma\vdash M:\sigma}{\Gamma\vdash\Lambda\alpha.M:\forall\alpha.\sigma}\quad(\alpha\notin FV(\Gamma))\qquad$}
+ 	 $\dfrac{\Gamma\vdash M:\forall\alpha.\sigma}{\Gamma\vdash M\tau:\sigma[\alpha:=\tau]}$
  	\\
  	
- 	\large $\emph{Приведем пример}$. Покажем как выглядит в системе F левая проекция.
+ 	$\emph{Приведем пример}$. Покажем как выглядит в системе F левая проекция.
  	В просто типизированном $\lambda$ - исчислении $\pi_1$ имеет тип $\alpha\&\beta\rightarrow\alpha$. В системе F явно указывается, что элементы пары могут быть любыми и пишется соответственно $\forall\alpha.\forall\beta.\alpha\&\beta\rightarrow\alpha$. Само выражение для проекции также изменится и будет иметь вид  $\pi_1=\Lambda\alpha.\Lambda\beta.\lambda p^{\alpha\&\beta}.p\alpha\rm{T}$
  	
  	Давайте определим еще несколько понятий из простого $\lambda$-исчисления. \\
- 	\emph{Начнем с $\beta$-редукции:}\\ \\
- 	1. Типовая $\beta$-редукция: $(\Lambda\alpha.M^{\sigma})\tau\rightarrow_\beta M[\alpha:= \tau]:\sigma[\alpha:= \tau]$
- 	2. Классическая $\beta$-редукция: $(\lambda x^{\sigma}.M)^{\sigma\rightarrow\tau}X\rightarrow_\beta M[x:=X]:\tau$ 
- 	\\ \\
+    \emph{Начнем с $\beta$-редукции:}
+    \begin{enumerate}
+        \item Типовая $\beta$-редукция: $(\Lambda\alpha.M^{\sigma})\tau\rightarrow_\beta M[\alpha:= \tau]:\sigma[\alpha:= \tau]$
+        \item Классическая $\beta$-редукция: $(\lambda x^{\sigma}.M)^{\sigma\rightarrow\tau}X\rightarrow_\beta M[x:=X]:\tau$ 
+    \end{enumerate}
  	\emph{Выразим еще несколько функций} \\
  	
- 	\noindent1. Не бывает М:$\perp$\\
- 	2. Рассмотрим пару <P, Q> ::= $\Lambda\alpha.\lambda z^{\tau\rightarrow\sigma\rightarrow\alpha}.z P Q$ \\
- 	Проекторы мы рассмотрели ранее. \\
- 	3. $in_L(M^{\tau}) ::= \Lambda\alpha.\lambda u^{\tau\rightarrow\alpha}.\lambda\omega^{\sigma\rightarrow\alpha}.u M$\\
- 	$ in_R(M^{\sigma}) ::= \Lambda\alpha.\lambda u^{\tau\rightarrow\alpha}.\lambda\omega^{\sigma\rightarrow\alpha}.u M$\\
+    \begin{enumerate}
+        \item Не бывает М:$\perp$
+        \item Рассмотрим пару <P, Q> ::= $\Lambda\alpha.\lambda z^{\tau\rightarrow\sigma\rightarrow\alpha}.z P Q$ \\
+            Проекторы мы рассмотрели ранее.
+        \item $in_L(M^{\tau}) ::= \Lambda\alpha.\lambda u^{\tau\rightarrow\alpha}.\lambda\omega^{\sigma\rightarrow\alpha}.u M$\\
+            $ in_R(M^{\sigma}) ::= \Lambda\alpha.\lambda u^{\tau\rightarrow\alpha}.\lambda\omega^{\sigma\rightarrow\alpha}.u M$\\
+    \end{enumerate}
  	
 
  	
- 	(1) Теорема Чёрча-Россера и прочие теоремы, доказуемые в строго-типизированном лямбда-исчислении, доказуемы и в системе F\\
- 	(2) $\lambda_{(\forall, \rightarrow)}$ Система F сильно нормализуема \\
- 	(3) Y комбинатор не типизируем \\
-	(4) Исчисление неразрешимое, но не противоречивое
+    \begin{enumerate}
+        \item Теорема Чёрча-Россера и прочие теоремы, доказуемые в строго-типизированном лямбда-исчислении, доказуемы и в системе F
+ 	    \item $\lambda_{(\forall, \rightarrow)}$ Система F сильно нормализуема
+ 	    \item Y комбинатор не типизируем
+	    \item Исчисление неразрешимое, но не противоречивое
+    \end{enumerate}

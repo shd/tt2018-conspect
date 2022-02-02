@@ -1,45 +1,6 @@
 \section{Лекция 8}
-	\subsection{Ранг типа}
-	\begin{definition}
-		 Введем определение. Под {рангом типа} мы будем понимать число, получаемое по следующим правилам: \\
-	    Rn(x) --- множество всех типов x\\
-	    Rn(0) --- все типы без кванторов\\
-	    Rn(x+1) = Rn(x) | Rn(x) $\rightarrow$ Rn(x+1) | $\forall\alpha.Rn(x+1)$
-	\end{definition}
-	 
-	\textbf{Примеры}
-	 1. $ \alpha\in $Rn(0) \\
-	 2. $ \forall\alpha.\alpha \in$Rn(1)\\
-	 3. $ (\forall\alpha.\alpha)\rightarrow(\forall\beta.\beta) \in$Rn(2), так как каждый тип вида $ \forall\alpha.\alpha \in$Rn(1), то по третьему правилу весь тип $ \in $Rn(2) \\
 
-	\begin{definition}
-		Тип с поверхностными кванторами --- это любой тип вида $ \forall\alpha.\tau $, где в $ \tau $ отсутствуют кванторы. Очевидно, что любой такой тип $ \in $Rn(1). Действительно, тип внутри квантора точно имеет ранг 0. Навешивание одного или нескольких кванторов всеобщности увеличит его ранг на единицу.
-	\end{definition}
-	 
-	 \subsection{Типовая схема}
-	 Возьмем только типы с поверхностными кванторами(из Rn(1)). \\
-	 Также можно превратить любую формулу из Rn(1) в формулу с поверхностными кванторами. \\
-	 Например:\\ 
-	 $ \beta\rightarrow\forall\alpha.\alpha\equiv\forall\alpha.(\beta\rightarrow\alpha) $
-	 \\
-	 
-	 \begin{definition}
-	 	{Типовой схемой} назовем выражение вида: 
-
-\begin{center}
-		 $ \sigma\equiv\forall\alpha_1.\forall\alpha_2.....\forall\alpha_n.t $ где t$ \in $Rn(0)
-\end{center}
-	 	 \end{definition}
- 	 
-	 Также будем считать, что $ \sigma_1 <= \sigma_2 $\\
-	 ($\sigma_1$ является спецификацией $\sigma_2$) если: \\\\
-	 $\sigma_2\equiv\forall\alpha_1...\forall\alpha.\tau_1$\\
-	 $\sigma_1\equiv\forall\beta_1...\beta_n.\tau_1[\alpha_1:=\Theta_1]...[\alpha_n:=\Theta_n]  $
-	 
-	 \noindent Например:\\
-	 $ \forall\beta_1.\forall\beta_2.(\beta_1\rightarrow\beta_2)\rightarrow(\beta_1\rightarrow\beta_2) $\\
-	 является спецификацией $ \forall\alpha.\alpha\rightarrow\alpha $\\
-	 \subsection{Экзистенциальные типы}
+\subsection{Экзистенциальные типы}
 	 1) $\dfrac{\Gamma\vdash\phi[\alpha:=\theta]}{\Gamma\vdash\exists\alpha.\phi}$\\ \\
 	 2) $\dfrac{\Gamma\vdash\exists\alpha.\phi\qquad\Gamma,\phi\vdash\psi}{\Gamma\vdash\psi}$
 	 
@@ -51,7 +12,7 @@
 	 Тогда очевидно, что тип stack$\equiv\alpha\&(\alpha\&\nu\rightarrow\alpha)\&(\alpha\rightarrow\alpha\&\nu)$.
 	 Но что если мы реализовали хранилище как-то по-особенному, не меняя типов операций. Мы хотим скрыть данные о реализации, в частности о типе $\alpha$. Вместо деталей просто скажем, что существует интерфейс, удовлетворяющий такому типу:\\$\exists\alpha.\alpha\&(\alpha\&\nu\rightarrow\alpha)\&(\alpha\rightarrow\alpha\&\nu)$
 	 
-	 \subsection{Абстрактные типы}	 
+\subsection{Абстрактные типы}	 
 	 Предположим, что мы захотим создать стек, в котором лежат целые числа. Рассмотрим, как тогда будет выглядеть тип созданного стека: \\
 	 \textbf{stack}$\equiv\forall\nu.\exists\alpha.\alpha\&(\alpha\&\nu\rightarrow\alpha)\&(\alpha\rightarrow\alpha\&\nu)$\\
  	По аналогии с правилом удаления квантора существования, можно определить правила вывода для выражений абстрактных типов: \\
@@ -70,53 +31,13 @@
 		}
 	\end{verbatim}
 	Поскольку выводимые формулы выглядят слишком громоздко, перепишем их, вспомнив, что: \\
-	$\exists\alpha.\beta\equiv\forall\beta.(\forall\alpha.\sigma\rightarrow\beta)\rightarrow\beta$\\\\
+	$\exists\alpha.\sigma\equiv\forall\beta.(\forall\alpha.\sigma\rightarrow\beta)\rightarrow\beta$\\\\
 	Тогда: \\
 	$	\text{\textbf{pack} } M, \theta \text{ \textbf{to} } \exists \alpha . \varphi =
 		\Lambda \beta . \lambda x^{\forall \alpha . \varphi \to \beta} . x \theta M \\
 		\text{\textbf{abstype} } \alpha \text{ \textbf{with} } x:\varphi \text{ \textbf{in} } M \text{ \textbf{is} } N:\psi =
 		M \psi (\Lambda \alpha . \lambda x ^ \varphi . N)
 	$
-	
-	 \subsection{Типовая система Хиндли-Милнера}
-	   
-	 Начнем с определения типа. \underline{Тип в системе Хиндли-Милнера}: \\ \\
-	 Монотип --- выражение в грамматике вида $\tau::=\alpha|\tau\rightarrow\tau|(\tau)$\\
-	 Политип --- выражение в грамматике вида $\sigma::=\tau|\forall\alpha.\sigma$\\
-	 
-	 \noindent Поэтому типы вида $\alpha\rightarrow\forall\beta.\beta$ - некорректны в системе ХМ\\
-	 
-	 \noindent Грамматика в системе Хиндли-Милнера имеет вид:\\
-	 
-	 \begin{center}
-	 $\Lambda::=x | \lambda x.\Lambda | \Lambda\Lambda | (\Lambda) | \text{let x = }\Lambda \text{ in }\Lambda $ 
-	 \end{center}
- 		
- 	 \noindent Обозначим контекст $\Gamma$ без типа x как $\Gamma_x$\\
- 	 В новой системе получаем следующие правила вывода: \\ \\
- 	 
- 	 \noindent 1. Тавтология $\dfrac{}{\Gamma\vdash x.\phi}$ \\\\
- 	
- 	 \noindent 2. Уточнение $\dfrac{\Gamma\vdash e:\sigma\qquad\sigma' <= \sigma}{\Gamma\vdash e:\sigma'}$ \\\\
- 	 
- 	 \noindent 3. Обобщение $\dfrac{\Gamma\vdash e:\sigma}{\Gamma\vdash e:\forall\alpha.\sigma}$ \\ \\
- 	 \noindent 4. Абстракция $\dfrac{\Gamma_x, x:\tau'\vdash e:\tau}{\Gamma\vdash \lambda x.e:\tau'\rightarrow\tau}$ \\ \\
- 	 \noindent 5. Применение $\dfrac{\Gamma\vdash e:\tau'\rightarrow\tau\qquad\Gamma\vdash e':\tau'}{\Gamma ee':\tau}$ \\ \\
- 	 \noindent 6. Let $\dfrac{\Gamma\vdash e:\sigma\qquad\Gamma_x,x:\sigma\vdash e':\tau}{\Gamma\vdash\text{ \textbf{let} } x = e \textbf{ in }e':\tau}$ \\
- 	 
- 	 Хотя в системе Хиндли-Милнера (как и во всех рассматриваемых нами типовых системах) нельзя типизировать $\mathcal{Y} $-комбинатор,
- 	 можно добавить его, расширив язык.
- 	 Давайте определим его как $\mathcal{Y} f = f \left(\mathcal{Y} f\right)$.
- 	 Какой у него должен быть тип? Пусть $\mathcal{Y}$ принимает $f$ типа $\alpha$, и возвращает нечто типа $\beta$,
- 	 то есть $\mathcal{Y}: \alpha\to\beta$.
- 	 Функция $f$ должна принимать то же, что возвращает $\mathcal{Y}$, так как результат $\mathcal{Y}$ передаётся в $f$,
- 	 и возвращать она должна то же, что возвращает $\mathcal{Y}$, так как тип выражений с обеих сторон равенства должен быть одинаковый,
- 	 то есть $f : \beta\to\beta$
- 	 Кроме того, $\alpha$ и тип $f$ это одно и то же, $\alpha=\beta\to\beta$.
- 	 После подстановки и заключения свободной переменной под квантор получаем $\mathcal{Y} : \forall\beta.(\beta\to\beta)\to\beta$.
- 	 
- 	 Через такой $\mathcal{Y}$ можно определять рекурсивные функции, и они будут типизироваться.
- 	 
  
  	 
 
