@@ -22,7 +22,20 @@ $R(x)$ --- все типы ранга $x$.
 Тут видно, если выражение слева от знака импликации имеет ранг $n$, то все выражение будет иметь ранг $\geq (n + 1)$.
 \end{paracol}
 
-\textbf{Утверждение}: Пусть $x$ --- выражение только с поверхностными кванторами, тогда $x \in R(1)$.
+\subsection{Типовая система Хиндли-Милнера}
+
+Начнем с определения типа. В ХМ они могут быть двух видов:
+\begin{itemize}
+\item Тип или монотип --- выражение в грамматике вида $\tau::=\alpha|\tau\rightarrow\tau|(\tau)$\\
+\item Типовая схема или политип --- выражение в грамматике вида $\sigma::=\tau|\forall\alpha.\sigma$ (типы с поверхностными кванторами)\\
+\end{itemize}
+
+Термы же в ХМ имеют грамматику: 
+\begin{center}
+  $\Lambda::=x | \lambda x.\Lambda | \Lambda\Lambda | (\Lambda) | \text{let x = }\Lambda \text{ in }\Lambda $ 
+\end{center}
+
+\subsubsection{Типовые схемы и специализация}
 
 \begin{definition}[Типовая схема]\
 
@@ -54,16 +67,26 @@ $\forall \alpha . \alpha \rightarrow \alpha
 \end{example}
 
 
-\subsection{Хиндли-Милнер}
+\subsubsection{$Y$-комбинатор в ХМ}
 
-\begin{enumerate}
-    \item Все типы только с поверхностными кванторами ($R(1)$)
-    \item $\overline{HM} ::= p\ |\ \overline{HM}\ \overline{HM}\ |\ \lambda p. \overline{HM}\ |\ let =  \overline{HM}\ in\ \overline{HM}$
-\end{enumerate}
+Хотя в системе Хиндли-Милнера (как и во всех рассматриваемых нами типовых системах) нельзя типизировать $\mathcal{Y} $-комбинатор,
+можно добавить его, расширив язык.
+Давайте определим его как $\mathcal{Y} f = f \left(\mathcal{Y} f\right)$.
+Какой у него должен быть тип? Пусть $\mathcal{Y}$ принимает $f$ типа $\alpha$, и возвращает нечто типа $\beta$,
+то есть $\mathcal{Y}: \alpha\to\beta$.
+Функция $f$ должна принимать то же, что возвращает $\mathcal{Y}$, так как результат $\mathcal{Y}$ передаётся в $f$,
+и возвращать она должна то же, что возвращает $\mathcal{Y}$, так как тип выражений с обеих сторон равенства должен быть одинаковый,
+то есть $f : \beta\to\beta$
+Кроме того, $\alpha$ и тип $f$ это одно и то же, $\alpha=\beta\to\beta$.
+После подстановки и заключения свободной переменной под квантор получаем $\mathcal{Y} : \forall\beta.(\beta\to\beta)\to\beta$.
+
+Через такой $\mathcal{Y}$ можно определять рекурсивные функции, и они будут типизироваться.
+
+\subsubsection{Экзистенциальные типы в ХМ (TODO)}
+
 
 \begin{itemize}
-    \item $\exists p.\phi = \forall b.(\forall p. (\phi \rightarrow b)) \rightarrow b$
-    \item $\phi \rightarrow \bot \equiv \forall b. (\phi \rightarrow b)$
+    \item $\exists p.\phi \equiv \forall b.(\forall p. (\phi \rightarrow b)) \rightarrow b$
 
     \item $\vcenter{\infer[]{\Gamma \vdash \forall b.(\forall p.(\phi \rightarrow b)) \rightarrow b}{\infer{\Gamma \vdash (\forall p. (\phi \rightarrow b)) \rightarrow b}{\infer{\Gamma, \forall p. (\phi \rightarrow b) \vdash b}{\infer{\Gamma, \forall p. (\phi \rightarrow b) \vdash \phi [p := \Theta] \rightarrow b}{\Gamma, \forall p. (\phi \rightarrow b) \vdash \forall p.(\phi \rightarrow b)}}}}}$
     % \item $\Gamma, \forall p. (\phi \rightarrow b) \vdash \forall p.(\phi \rightarrow b)$
@@ -73,12 +96,14 @@ $\forall \alpha . \alpha \rightarrow \alpha
     % \item $\Gamma \vdash \forall b.(\forall p.(\phi \rightarrow b)) \rightarrow b$
 \end{itemize}
 
-Соглашение:
+\subsubsection{Ложь и отрицание в ХМ (TODO)}
+
 \begin{itemize}
-    \item $\sigma$ --- типовая схема
-    \item $\tau$ --- простой тип
+\item $\bot \equiv \forall b. b $
+\item $\phi \rightarrow \bot \equiv \forall b. (\phi \rightarrow b)$
 \end{itemize}
 
+\subsection{Правила вывода в системе Хиндли-Милнер}
 
 \begin{enumerate}
     \item $\vcenter{\infer{\Gamma, x : \sigma \vdash x : \sigma}{}} \; \;
