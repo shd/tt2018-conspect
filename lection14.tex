@@ -237,7 +237,7 @@ path (\lam _ => 0)
     | mkExists a b => a
 \end{minted}
 
-Но мы можем с этим \ard{a} работать, не возвращая его:
+Но мы можем элиминировать \ard{Exists}, если возвращаемый тип тоже является утверждением:
 \begin{minted}{latex}
 \func existsSuc (p : Exists Nat (\lam n => n = 3))
     : Exists Nat (\lam n => suc n = 4)
