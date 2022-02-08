@@ -247,6 +247,9 @@ path (\lam _ => 0)
 Таким образом мы можем избавляться от конструктивности. Например, мы можем определить аксиому выбора через \ard{TruncP}, которое аналогично \ard{\truncated} производит пропозициональное обрезание:
 
 \begin{minted}{latex}
+\truncated \data TruncP (A : \Type) : \Prop
+    | inP A
+
 \func choice (A : \Set) (B : A -> \Set) :
     (\Pi (x : A) -> TruncP (B x)) -> TruncP (\Pi (x : A) -> B x)
 \end{minted}
