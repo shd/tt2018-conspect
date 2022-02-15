@@ -1,4 +1,4 @@
-		\section{Лекция 6 \\ Реконструкция типов в просто типизированном $\lambda$-исчислении, комбинаторы}
+		\section{Лекция 6 \\ Реконструкция типов в просто типизированном \\ $\lambda$-исчислении, комбинаторы}
 		\subsection{Алгоритм вывода типов}
 					
 			Пусть есть: $?\:\vdash \:A\: :\: ?$, хотим найти пару $\big \langle \text{контекст}, \text{тип} \big \rangle$\par
@@ -147,6 +147,6 @@
 	 \begin{enumerate}
 		\item $B=\lambda x\:\lambda y\:\lambda z.\:x\:(y\:z)\: : \:(a\:\rightarrow\:b)\:\rightarrow\:(c\:\rightarrow\:a)\:\rightarrow\:c\:\rightarrow\:b$
 		\item $C=\lambda x\:\lambda y\:\lambda z.\:((x\:z)\:y)\: : \:(a\:\rightarrow\:b\:\rightarrow\:c)\:\rightarrow\:b\:\rightarrow\:a\:\rightarrow\:c$
+		\item $K=\lambda x\:\lambda y.\:x : a\:\rightarrow\:b\:\rightarrow\:a$
 		\item $W=\lambda x\:\lambda y.\:((x\:y)\:y)\: : \: (a\:\rightarrow\:a\:\rightarrow\:b)\:\rightarrow\:a\:\rightarrow\:b$
-		\\\\\\
 	 \end{enumerate}
