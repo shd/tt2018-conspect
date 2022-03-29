@@ -7,7 +7,7 @@
 		\item Если $\Gamma\vdash\sigma$, то существует M и существует $\Delta$, такое что $|\Delta|=\Gamma$, что $\Delta \vdash M: \sigma$, где $\Delta=\{x_{\sigma} : \sigma\:|\:\sigma\in\Gamma  \}$
 	\end{enumerate}
 	\begin{example}
-	$\{f\: :\:\alpha\:\rightarrow\:\beta,\:x\: :\:\beta\}\:\vdash\:f\:x\::\:\beta$ \\Применив изоморфизм Карри-Ховарда, получим: $\{\alpha\:\rightarrow\:\beta,\:\beta\}\:\vdash\:\beta$
+	$\{f\: :\:\alpha\:\rightarrow\:\beta,\:x\: :\:\alpha\}\:\vdash\:f\:x\::\:\beta$ \\Применив изоморфизм Карри-Ховарда, получим: $\{\alpha\:\rightarrow\:\beta,\:\alpha\}\:\vdash\:\beta$
 	\end{example}
 	\begin{proof}
 		\par П.1 доказывается индукцией по длине выражения
