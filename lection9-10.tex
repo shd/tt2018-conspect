@@ -129,9 +129,8 @@ $\forall \alpha . \alpha \rightarrow \alpha
     \item $M = \lambda n.e$
     \begin{itemize}
         \item $\tau$ --- новая типовая переменная
-        \item $\Gamma' = \Gamma \setminus \{n : \_ \}$ (т.е. $\Gamma$ без переменной $n$)
-        \item $\Gamma'' = \Gamma' \cup {n : \tau}$
-        \item $(S',\ \tau') = W(\Gamma'', e)$
+        \item $\Gamma' = \Gamma \cup {n : \tau}$ --- $n$ раньше не входила в $\Gamma$, иначе нужно переименовать все связанные этой лямбдой вхождения 
+        \item $(S',\ \tau') = W(\Gamma', e)$
     \end{itemize}
     $(S', S'(\tau) \rightarrow \tau')$
     \item $M = P\ Q$
@@ -239,34 +238,58 @@ $\lambda a. \lambda b. b\ (\lambda a. \lambda b. a\ O) : \forall \alpha. (\alpha
     Ранее мы ввели $Y$-комбинатор аксиоматически, а можем ли мы его типизировать используя рекурсивные типы? Ответ: Да, можем. Напомним, что $Y = \lambda f.(\lambda x. f\ (x\ x))\ (\lambda x. f\ (x\ x))$.
 
     \newcommand{\scl}{:\!} % short colon
-    $\vcenter{\infer[]
-      {\vdash \lambda f.(\lambda x. f\ (x\ x))\ (\lambda x. f\ (x\ x)) \scl
-      \forall \beta. (\beta \rightarrow \beta) \rightarrow \beta}
-      {\infer[]
-        {\vdash \lambda f.(\lambda x. f\ (x\ x))\ (\lambda x. f\ (x\ x)) \scl
-        (\beta \rightarrow \beta) \rightarrow \beta}
-        {\infer[]
-          {f\scl \beta \rightarrow \beta \vdash (\lambda x. f\ (x\ x))\
-          (\lambda
-          x. f\ (x\ x))\scl \beta}
-          {\infer[]
-            {\lambda f\scl \beta \rightarrow \beta \vdash \lambda x. f\ (x\
-            x)\scl
-            \tau \rightarrow \beta}
-            {\infer[]
-              {f\scl \beta \rightarrow \beta \vdash \lambda x. f\ (x\ x)\scl
-              \tau}
-              {\infer[]
-                {f\scl \beta \rightarrow \beta, x\scl \tau \vdash f\ (x\ x)}
-                {\lambda f \scl \beta \rightarrow \beta,\ x\scl \tau \vdash
-                  f\scl \beta \rightarrow \beta
-                ~~~
-                f : \beta \rightarrow \beta,\ x \scl \tau \vdash x\ x\scl
-                \beta}}}
-             \!\!\!\!\!\!\!\!\!\!\! \infer
-                {\lambda f\scl \beta \rightarrow \beta \vdash \lambda x. f\
-                  (x\ x)\scl \tau}
-                {\text{аналогично}}}}}}$
+$\vcenter{
+	\infer[]
+	{
+		\vdash \lambda f.(\lambda x. f\ (x\ x))\ (\lambda x. f\ (x\ x)) \scl \forall \beta. (\beta \rightarrow \beta) \rightarrow \beta
+	}
+	{
+		\infer[]
+		{
+			\vdash \lambda f.(\lambda x. f\ (x\ x)) (\lambda x. f\ (x\ x)) \scl (\beta \rightarrow \beta) \rightarrow \beta
+		}
+		{
+			\infer[]
+			{
+				f\scl \beta \rightarrow \beta \vdash (\lambda x. f\ (x\ x)) (\lambda x. f\ (x\ x)) \scl \beta
+			}
+			{
+				\infer[]
+				{
+					f\scl \beta \rightarrow \beta \vdash \lambda x. f\ (x x)\scl \tau \rightarrow \beta
+				}
+				{
+					\infer[]
+					{
+						f\scl \beta \rightarrow \beta, x\scl \tau \vdash f\ (x\ x) \scl \beta
+					}
+					{
+						\infer[]
+						{
+							f \scl \beta \rightarrow \beta,\ x\scl \tau \vdash f\scl \beta \rightarrow \beta
+						}
+						{}
+					~~~
+						\infer[]
+						{
+							f : \beta \rightarrow \beta,\ x \scl \tau \vdash x\ x\scl \beta
+						}
+						{
+							\text{док-во выше}
+						}
+					}
+					\infer[]
+					{
+						f\scl \beta \rightarrow \beta \vdash \lambda x. f (x\ x)\scl \tau
+					}
+					{
+						\text{аналогично}
+					}
+				}
+			}
+		}
+	}
+}$
 
     Загадочка: А можно ли типизировать, скажем $\lambda x : Nat. x (S x)$?
     \item Изорекурсивный
