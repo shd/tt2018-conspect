@@ -19,7 +19,7 @@
 
 	
  	$\dfrac{\Gamma \vdash M : \varphi[\alpha := \theta]}{\Gamma\vdash (\text{pack } M, \theta \text{ to } \exists \alpha . \varphi) : \exists \alpha.\varphi}\\ \\ \\
-	$ Это правило вывода позволяет скрыть реализацию стека, так как если $\alpha$ --- это тип стека, то $\alpha[\nu := \theta]$ --- его конкретная реализация, например ArrayStack, LinkedListStack и подобные \\ \\
+	$ Это правило вывода позволяет скрыть реализацию стека, так как если $\textbf{stack}$ --- это тип стека, то $\textbf{stack}[\alpha := \theta]$ --- его конкретная реализация, например ArrayStack, LinkedListStack и подобные \\ \\
  	 $
  	\dfrac{\Gamma \vdash M : \exists \alpha . \varphi\qquad\Gamma, x : \varphi \vdash N : \psi}{\Gamma \vdash \text{abstype } \alpha \text{ with } x:\varphi \text{ in } M \text{ is } N:\psi}
 	(\alpha \notin FV(\Gamma, \psi))$
