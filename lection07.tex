@@ -4,11 +4,10 @@
  		\begin{definition}
  			Назовем \textit{\underline{грамматикой ИИП второго порядка}} конструкцию вида: 
  		\end{definition}
- 	\textbf{A} ::= 
- 	(\textbf{A}) |
+ 	\textbf{A} ::=
  	\textbf{p} |
- 	\textbf{A} $\rightarrow$ \textbf{A} |
- 	$\forall$\textbf{p}.\textbf{A} 
+	(\textbf{A} $\rightarrow$ \textbf{A}) |
+	($\forall$\textbf{p}.\textbf{A})
  	
  	\end{center}
  
@@ -97,7 +96,7 @@
  \begin{definition}
  		Введем определение грамматики в системе F:
  	\begin{center}
- 		$\Lambda$ ::= x | $\lambda x^{\tau}.\Lambda$ | $\Lambda\Lambda$ | ($\Lambda$) | $\Lambda\alpha.\Lambda$ | $\Lambda\tau$ 
+		$\mathcal{L}$ ::= x | $\left(\lambda x^{\tau}.\mathcal{L}\right)$ | $\left(\mathcal{L}\ \mathcal{L}\right)$ | $\left(\Lambda\alpha.\mathcal{L}\right)$ | $\left(\mathcal{L}\tau\right)$
  	\end{center}
  \end{definition}
  	

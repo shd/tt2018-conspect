@@ -26,13 +26,13 @@ $R(x)$ --- все типы ранга $x$.
 
 Начнем с определения типа. В ХМ они могут быть двух видов:
 \begin{itemize}
-\item Тип или монотип --- выражение в грамматике вида $\tau::=\alpha|\tau\rightarrow\tau|(\tau)$\\
+\item Тип или монотип --- выражение в грамматике вида $\tau::=\alpha|\left(\tau\rightarrow\tau\right$\\
 \item Типовая схема или политип --- выражение в грамматике вида $\sigma::=\tau|\forall\alpha.\sigma$ (типы с поверхностными кванторами)\\
 \end{itemize}
 
 Термы же в ХМ имеют грамматику: 
 \begin{center}
-  $\Lambda::=x | \lambda x.\Lambda | \Lambda\Lambda | (\Lambda) | \text{let x = }\Lambda \text{ in }\Lambda $ 
+  $\Lambda::=x | \left(\lambda x.\Lambda\right) | \left(\Lambda\Lambda\right) | \left(\text{let x = }\Lambda \text{ in }\Lambda\right) $
 \end{center}
 
 \subsubsection{Типовые схемы и специализация}
@@ -458,7 +458,7 @@ valueType>)$
     \end{itemize}
 \end{itemize}
 
-\item $T ::= x \mid c \mid T\ T \mid \lambda x:T.\ T \mid \Pi x:T.\ T$
+\item $T ::= x \mid c \mid \left(T\ T\right) \mid \left(\lambda x:T.\ T\right) \mid \left(\Pi x:T.\ T\right)$
 
 \item Аксиома:
 \begin{itemize}

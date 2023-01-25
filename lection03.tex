@@ -116,7 +116,7 @@ $\Phi_{\alpha} \equiv F_{\alpha}  \; F_{\alpha}  \equiv (\lambda x. (x \; x) \ri
 
 Рассмотрим подмножество ИИВ, со следующей грамматикой:
 
-$\Phi ::= x \; | \; \Phi \rightarrow \Phi \; | \; (\Phi)$
+$\Phi ::= x \; | \; \left(\Phi \rightarrow \Phi\right) \;$
 
 То есть состоящее только из переменных и импликаций. 
 
@@ -245,7 +245,7 @@ $$\Gamma, \varphi \vdash \varphi$$
 \begin{definition}
 	Тип в просто типизированном $\lambda$-исчислении по Карри --- это либо маленькая греческая буква ($\alpha, \phi, \theta, \ldots$), либо импликация ($\theta_1 \rightarrow \theta_2$)
 	
-	Таким образом, $\Theta ::= \theta_{i} | \Theta \rightarrow \Theta | (\Theta)$
+	Таким образом, $\Theta ::= \theta_{i} | \left(\Theta \rightarrow \Theta\right)$
 	
 	Импликация при этом считается правоассоциативной операцией.
 \end{definition}
