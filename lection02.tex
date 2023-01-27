@@ -19,7 +19,7 @@
 	$P[x\coloneqq{}Q]=_{\alpha}P[x\coloneqq{}y][y\coloneqq{}Q]$, если замена допустима.
 \end{lemma}
 
-\subsection{Нормальная форма, $\lambda$-выражения без нормальной формы, \\комбинаторы $K$, $I$, $\Omega$}
+\subsection{Нормальная форма, $\lambda$-выражения без нормальной формы, \\комбинаторы $S$, $K$, $I$, $\Omega$}
 
 \begin{definition}
 	$\lambda$-выражение $A$ находится в нормальной форме, если оно не содержит $\beta$-редексов.
@@ -36,8 +36,9 @@
 \begin{definition} 
 	\hfill
 	\begin{itemize}
+            \item $S \equiv \lambda{}x. \lambda{}y. \lambda{}z.(x z) (y z)$ (Substitution)
+            \item $K \equiv \lambda{}a.\lambda{}b.a$ (Konstanz)
 		\item $I \equiv \lambda{}x.x$ (Identitant)
-		\item $K \equiv \lambda{}a.\lambda{}b.a$ (Konstanz)
 		\item $\Omega \equiv (\lambda{}x.xx)(\lambda{}x.xx)$
 	\end{itemize}
 \end{definition}
