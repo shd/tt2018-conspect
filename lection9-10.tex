@@ -224,7 +224,7 @@ $\lambda a. \lambda b. b\ (\lambda a. \lambda b. a\ O) : \forall \alpha. (\alpha
     На практике такой подход используется и в языке программирования Java:
 
     \begin{minted}{java}
-        class Enum <extends Enum<E>>
+        class Enum <E extends Enum<E>>
     \end{minted}
 
     Также приведем пример вывода типа $\lambda x. x\ x$ (можно вспомнить, что именно этот терм помешал нам типизировать $Y$-комбинатор в просто типизированном $\lambda$-исчислении):
