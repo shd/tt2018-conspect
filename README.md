@@ -2,7 +2,7 @@
 
 Конспекты студентов КТ ИТМО по лекциям Штукенберга Д. Г.
 
-[Pdf конспекта](https://github.com/shd/tt2018-conspect/blob/pdfs/conspect.pdf)
+[Pdf конспекта](https://github.com/shd/tt2018-conspect/blob/master/conspect.pdf)
 
 По поводу улучшений конспекта писать можно [GoPavel](https://github.com/GoPavel) или в issue.
 
