@@ -117,7 +117,7 @@ $\forall \alpha . \alpha \rightarrow \alpha
 
 
 \subsection{Алгоритм вывода типов в системе Хиндли-Милнера W}
-На вход подаются $\Gamma,\ M$, на выходе наиболее общая пара $(S, \tau)$
+На вход подаются $\Gamma,\ M$, на выходе наиболее общий тип $\tau$ и подстановка $S$
 \begin{enumerate}
     \item $M = x ,\ x:\tau  \in \Gamma$ (иначе ошибка)
     \begin{itemize}
@@ -151,7 +151,7 @@ $\forall \alpha . \alpha \rightarrow \alpha
     $((S_2 \circ S_1), \tau_2)$
 \end{enumerate}
 
-Надеемся, что логика второго порядка противоречива. \\
+
 
 \subsection{Рекурсивные типы}
 

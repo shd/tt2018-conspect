@@ -1,6 +1,6 @@
 \section{Лекция 5 \\ Изоморфизм Карри-Ховарда (завершение), \\Унификация}
 		\subsection{Изоморфизм Карри-Ховарда}
-	\begin{definition}Изоморфизм Карри-Ховарда\end{definition}
+	\begin{theorem}Изоморфизм Карри-Ховарда\end{theorem}
 
 	\begin{enumerate}
 		\item $\Gamma\vdash M:\sigma$ влечет $|\Gamma|\vdash \sigma$ т.е. $|\{x_1:\Theta_1\:\hdots \:x_n:\Theta_n\}|=\{\Theta_1\:\hdots\:\Theta_n\}$
@@ -34,7 +34,7 @@
 	\[\text{ где }C-\text{константа, }\\p_1,\:p_2,\:p_3-\text{выражения, составленные из }*,\:+,\:p,\:q\text{ и констант.}\]
 \end{definition}\par
 
-	Пусть $\upsilon$ = $(\alpha\to\alpha)\to(\alpha\to\alpha)$, где $\alpha-$произвольный тип и пусть $F\in\Lambda\text{, что }F:\upsilon\to\upsilon\to\upsilon$, то существует расширенный полином $E$, такой что $\forall a,\:b\in \mathbb{N}$ $F(\overline{a},\:\overline{b})=_\beta\: \overline{E(a,\:b)}$, где $\overline{a}-$черчевский нумерал.
+	Пусть $\upsilon$ = $(\alpha\to\alpha)\to(\alpha\to\alpha)$, где $\alpha-$произвольный тип и пусть $F\in\Lambda\text{, что }F:\upsilon\to\upsilon\to\upsilon$, то существует расширенный полином $E$, такой что $\forall a,\:b\in \mathbb{N}_0$ $F(\overline{a},\:\overline{b})=_\beta\: \overline{E(a,\:b)}$, где $\overline{a}-$черчевский нумерал.
 		\begin{theorem}
 	У каждого терма в просто типизируемом $\lambda$ исчислении существует расширенный полином.
 	\end{theorem}
@@ -85,7 +85,7 @@
 		\end{cases}
 	$\par где $\Theta_i \text{ и } \sigma_i-\text{термы}$\par
 	\begin{definition}$\{a_i\}=A-$множество переменных, $\{\Theta_i\}=T-$множество термов.\end{definition}
-	\begin{definition}Подстановка$-$отображение вида: $S_0:A\to T$, которое является решением в алгебраических термах.\par $S_0(a)$ может быть либо $S_0(a)=\Theta_i\text{, либо }S_0(a)=a$.\end{definition} 
+	\begin{definition}Подстановка$-$отображение вида: $S_0:A\to T$, которое является решением в алгебраических термах, а также является тождественным везде, кроме конечного множества переменных.\par $S_0(a)$ может быть либо $S_0(a)=\Theta_i\text{, либо }S_0(a)=a$.\end{definition} 
 	$S$ то же, что и много $if'$ов, либо $map$ строк. Доопределим $S:T\to T$, где \begin{enumerate}
 		\item $S(a)=S_0(a)$
 		\item $S(f(\Theta_1 \ldots \Theta_k))=f(S(\Theta_1) \ldots S(\Theta_k))$
@@ -96,7 +96,7 @@
 	\begin{example}\end{example}
 		Заранее обозначим: $a,\:b-\text{переменные}\hspace{1em} f,\:g,\:h-\text{функции}$
 		\begin{enumerate}
-			\item $f\:(a\:(g\:b))=f\:(h\:e)\:d$ имеет решение $S(a)=h\:e\text{ и }S(d)=g\:b$
+			\item $f\:a\:(g\:b)=f\:(h\:e)\:d$ имеет решение $S(a)=h\:e\text{ и }S(d)=g\:b$
 				\begin{enumerate}
 					\item $S(f\:a\:(g\:b))=f\:(h\:e)\:(g\:b)$
 					\item $S(f\:(h\:e)\:d)=f\:(h\:e)\:(g\:b)$
@@ -120,7 +120,7 @@
 		\end{cases}
 		$\par
 		это же уравнение можно записать как$-$ $f\:\Theta_1\hdots\Theta_n=f\:\sigma_1 \hdots\sigma_n$\par
-		Если существует подстановка $S$ такая, что\par $S(\Theta_i)=S(\sigma_i)\:\forall\:i$,
+		Если существует подстановка $S$ такая, что\par $S(\Theta_i)=S(\sigma_i)$,
 		то $S(f\:\Theta_1\hdots\Theta_n)=f\:S(\sigma_1)\hdots S(\sigma_n)$ \par Обратное аналогично.\end{proof}
 		\item Рассмотрим операции
 		\begin{enumerate}
@@ -154,7 +154,7 @@
 			\item $f\:\Theta_1\hdots\Theta_n=f\:\sigma_1\hdots\sigma_n-$  применим редукцию термов 
 			\item $a_i=\Theta_i-$Применим подстановку переменной $-$ подставим во все остальные уравнения $\Theta_i$ вместо $a_i$ (Если $a_i$ встречается в системе где-то еще)
 		\end{enumerate}
-		\item Проверим разрешима ли система, совместна ли система (два пункта несовместимости)
+		\item Проверим разрешена ли система, совместна ли система (два пункта несовместимости)
 		\item Повторим пункт 1 		
 		\end{enumerate}
 
