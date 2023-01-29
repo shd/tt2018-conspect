@@ -7,7 +7,7 @@
 		\item Если $\Gamma\vdash\sigma$, то существует M и существует $\Delta$, такое что $|\Delta|=\Gamma$, что $\Delta \vdash M: \sigma$, где $\Delta=\{x_{\sigma} : \sigma\:|\:\sigma\in\Gamma  \}$
 	\end{enumerate}
 	\begin{example}
-	$\{f\: :\:\alpha\:\rightarrow\:\beta,\:x\: :\:\beta\}\:\vdash\:f\:x\::\:\beta$ \\Применив изоморфизм Карри-Ховарда, получим: $\{\alpha\:\rightarrow\:\beta,\:\beta\}\:\vdash\:\beta$
+	$\{f\: :\:\alpha\:\rightarrow\:\beta,\:x\: :\:\alpha\}\:\vdash\:f\:x\::\:\beta$ \\Применив изоморфизм Карри-Ховарда, получим: $\{\alpha\:\rightarrow\:\beta,\:\alpha\}\:\vdash\:\beta$
 	\end{example}
 	\begin{proof}
 		\par П.1 доказывается индукцией по длине выражения
@@ -85,7 +85,7 @@
 		\end{cases}
 	$\par где $\Theta_i \text{ и } \sigma_i-\text{термы}$\par
 	\begin{definition}$\{a_i\}=A-$множество переменных, $\{\Theta_i\}=T-$множество термов.\end{definition}
-	\begin{definition}Подстановка$-$отображение вида: $S_0:A\to T$, которое является решением в алгебраических термах, а также является тождественным везде, кроме конечного множества переменных.\par $S_0(a)$ может быть либо $S_0(a)=\Theta_i\text{, либо }S_0(a)=a$.\end{definition} 
+	\begin{definition}Подстановка$-$отображение вида: $S_0:A\to T\cup A$, которое является решением в алгебраических термах, а также является тождественным везде, кроме конечного множества переменных..\par $S_0(a)$ может быть либо $S_0(a)=\Theta_i\text{, либо }S_0(a)=a$.\end{definition} 
 	$S$ то же, что и много $if'$ов, либо $map$ строк. Доопределим $S:T\to T$, где \begin{enumerate}
 		\item $S(a)=S_0(a)$
 		\item $S(f(\Theta_1 \ldots \Theta_k))=f(S(\Theta_1) \ldots S(\Theta_k))$
@@ -152,7 +152,7 @@
 			\item Если $\Theta_i=a_i$, то перепишем, как $a_i=\Theta_i$, $\Theta_i-$не переменная
 			\item $a_i=a_i-$ удалим
 			\item $f\:\Theta_1\hdots\Theta_n=f\:\sigma_1\hdots\sigma_n-$  применим редукцию термов 
-			\item $a_i=\Theta_i-$Применим подстановку переменной $-$ подставим во все остальные уравнения $\Theta_i$ вместо $a_i$ (Если $a_i$ встречается в системе где-то еще)
+			\item $a_i=\Theta_i-$Применим подстановку переменной $-$ подставим во все остальные уравнения $j \neq i\ \Theta_j$ вместо $a_i$ (Если $a_i$ встречается в системе где-то еще)
 		\end{enumerate}
 		\item Проверим разрешена ли система, совместна ли система (два пункта несовместимости)
 		\item Повторим пункт 1 		
@@ -169,9 +169,9 @@
 			\vdots&\\
 			a_n=\Theta_n&\\
 		\end{cases} & \text{имеет решение }-&\begin{cases}
-			S_0(a_1)=\Theta_1&\\
+			S(a_1)=\Theta_1&\\
 			\vdots&\\
-			S_0(a_n)=\Theta_n&\\
+			S(a_n)=\Theta_n&\\
 		\end{cases}\\
 	\end{align*}
 	\begin{statement}Алгоритм всегда заканчивается\end{statement}

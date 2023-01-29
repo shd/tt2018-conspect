@@ -164,10 +164,11 @@ $(\twoheadrightarrow_{\beta})$ "--- рефлексивное и транзити
 	\begin{itemize}
 		\item Пусть $P_{1}=_{\alpha}P_{2}$. Тогда лемма легко доказывается индукцией по структуре выражения.
 		\item Пусть $P_{1}\equiv{}A_{1}B_{1}$, $P_{2}\equiv{}A_{2}B_{2}$. По определению $(\bpar)$ $A_{1} \bpar A_{2}$ и $B_{1} \bpar B_{2}$.
-		Рассмотрим два случая:
+		Рассмотрим три случая:
 		\begin{enumerate}
-			\item $x \in \FV(A_{1})$. По индукционному предположению $A_{1}[x\coloneqq{}Q_{1}] \bpar A_{2}[x\coloneqq{}Q_{2}]$. Тогда $A_{1}[x\coloneqq{}Q_{1}]B_{1} \bpar A_{2}[x\coloneqq{}Q_{2}]B_{2}$. Тогда $A_{1}B_{1}[x\coloneqq{}Q_{1}] \bpar A_{2}B_{2}[x\coloneqq{}Q_{2}]$.
-			\item $x \in \FV(B_{1})$. По индукционному предположению $B_{1}[x\coloneqq{}Q_{1}] \bpar B_{2}[x\coloneqq{}Q_{2}]$. Тогда $A_{1}B_{1}[x\coloneqq{}Q_{1}] \bpar A_{2}B_{2}[x\coloneqq{}Q_{2}]$.
+			\item $x \in \FV(A_{1})$ и $x \in \FV(B_{1})$. По индукционному предположению $A_{1}[x\coloneqq{}Q_{1}] \bpar A_{2}[x\coloneqq{}Q_{2}]$ и $B_{1}[x\coloneqq{}Q_{1}] \bpar B_{2}[x\coloneqq{}Q_{2}]$. Тогда $A_{1}[x\coloneqq{}Q_{1}]B_{1}[x\coloneqq{}Q_{1}] \bpar A_{2}[x\coloneqq{}Q_{2}]B_{2}[x\coloneqq{}Q_{2}]$. Тогда $(A_{1}B_{1})[x\coloneqq{}Q_{1}] \bpar (A_{2}B_{2})[x\coloneqq{}Q_{2}]$.
+			\item $x \in \FV(A_{1})$ и $x \notin \FV(B_{1})$. По индукционному предположению $A_{1}[x\coloneqq{}Q_{1}] \bpar A_{2}[x\coloneqq{}Q_{2}]$. Тогда $A_{1}[x\coloneqq{}Q_{1}]B_{1} \bpar A_{2}[x\coloneqq{}Q_{2}]B_{2}$. Тогда $(A_{1}B_{1})[x\coloneqq{}Q_{1}] \bpar (A_{2}B_{2})[x\coloneqq{}Q_{2}]$.
+			\item $x \notin \FV(A_{1})$ и $x \in \FV(B_{1})$. Аналогично предыдущему пункту.
 		\end{enumerate}
 		\item Пусть $P_{1}\equiv{}\lambda{}y.A_{1}$, $P_{2}\equiv{}\lambda{}y.A_{2}$. По определению $(\bpar)$ $A_{1}\bpar A_{2}$. Тогда по индукционному предположению $A_{1}[x\coloneqq{}Q_{1}] \bpar A_{2}[x\coloneqq{}Q_{2}]$. Тогда 
 		$\lambda{}y.(A_{1}[x\coloneqq{}Q_{1}]) \bpar \lambda{}y.(A_{2}[x\coloneqq{}Q_{2}])$ по определению $(\bpar)$. Следовательно 	$\lambda{}y.A_{1}[x\coloneqq{}Q_{1}] \bpar \lambda{}y.A_{2}[x\coloneqq{}Q_{2}]$ по определению подстановки.
@@ -222,7 +223,7 @@ $(\twoheadrightarrow_{\beta})$ "--- рефлексивное и транзити
 	Выражение $KI\Omega$ можно редуцировать двумя способами:
 	\begin{enumerate}
 		\item $\comb K \comb I \Omega =_{\alpha} ((\lambda{}a.\lambda{}b.a) \comb I) \Omega \to_{\beta} (\lambda{}b.\comb I)\Omega  \to_{\beta} \comb I$
-		\item  $\comb K \comb I \Omega =_{\alpha} ((\lambda{}a.\lambda{}b.a) \comb I)((\lambda{}x.x \ x) (\lambda{}x.x \ x)) \twoheadrightarrow_{\beta} ((\lambda{}a.\lambda{}b.a) \comb I)((\lambda{}x.x \ x) (\lambda{}x.x \ x)) \to_{\beta} \comb K \comb I \Omega $
+		\item  $\comb K \comb I \Omega =_{\alpha} ((\lambda{}a.\lambda{}b.a) \comb I)((\lambda{}x.x \ x) (\lambda{}x.x \ x)) \twoheadrightarrow_{\beta} ((\lambda{}a.\lambda{}b.a) \comb I)((\lambda{}x.x \ x) (\lambda{}x.x \ x)) =_{\alpha} \comb K \comb I \Omega $
 	\end{enumerate}
 	
 \end{example}
